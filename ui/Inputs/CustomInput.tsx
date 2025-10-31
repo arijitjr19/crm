@@ -30,7 +30,7 @@ function CustomInput({ size = "small", ...props }: CustomInputProps) {
             {...props}
             size={size}
             label=""
-            fullWidth
+            // fullWidth
             error={invalid}
             helperText={error?.message}
           />
