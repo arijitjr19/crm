@@ -7,7 +7,8 @@ export function middleware(request: NextRequest) {
     "/auth/signup",
     "/auth/forgot-password",
     "/auth/reset-password",
-    "/auth/verify"
+    "/auth/verify",
+    "/auth/client/signin",
   ];
 
   if (

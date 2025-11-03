@@ -3,7 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 
-import { loginMutation, loginMutationPayload } from "@/api/functions/user.api";
+import { clientLoginMutation, loginMutation, loginMutationPayload } from "@/api/functions/user.api";
 import Logo from "@/components/logo/logo";
 import { useAppSelector } from "@/hooks/redux/useAppSelector";
 import validationText from "@/json/messages/validationText";
@@ -96,7 +96,7 @@ export default function LoginView() {
   // });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: loginMutation,
+    mutationFn: clientLoginMutation,
     onSuccess: (data: any) => {
       setCookieClient(process.env.NEXT_APP_TOKEN_NAME!, data.jwtToken);
       // setCookieClient("user_role", data.role[0]?.name);

@@ -47,6 +47,13 @@ export const loginMutation = async (body: loginMutationPayload) => {
   return res.data;
 };
 
+export const clientLoginMutation = async (body: loginMutationPayload) => {
+  const res = await axiosInstance.post(endpoints.auth.client_login, body);
+  return res.data;
+};
+
+
+
 export const signupMutation = async (body: signupMutationPayload) => {
   const res = await axiosInstance.post(endpoints.auth.signup, body);
   return res.data;

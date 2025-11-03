@@ -338,7 +338,7 @@ export default function Index() {
                 >
                   <Typography variant="h5">Login</Typography>
                   <Typography variant="body2">
-                    {data.last_login["Last Login"] ? (
+                    {data?.last_login && data?.last_login["Last Login"] ? (
                       moment().diff(data.last_login["Last Login"], "hours") <
                       23 ? (
                         moment(data.last_login["Last Login"]).fromNow()
@@ -371,7 +371,7 @@ export default function Index() {
               <Settings settings={data.settings} />
             </Grid>
             <Grid item lg={12} md={12} sm={12} xs={12}>
-              <Notes note={data.notes.notes} />
+              <Notes note={data?.notes?.notes} />
             </Grid>
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <PayrollSetting />

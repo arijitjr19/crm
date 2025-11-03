@@ -533,8 +533,8 @@ export const getAllTemporaryClients = async (token?: string) => {
     {
       headers: token
         ? {
-            Authorization: `Bearer ${token}`
-          }
+          Authorization: `Bearer ${token}`
+        }
         : {}
     }
   );
@@ -632,6 +632,77 @@ export const priceImport = async (body: { file: FormData }) => {
     body.file
   );
   return res.data;
+};
+
+export const getAllActiveShifts = async ({
+  startDate = "",
+  endDate = ""
+}: {
+  startDate?: string;
+  endDate?: string;
+}) => {
+  const res = await axiosInstance.get(endpoints.client.get_all_shifts, {
+    params: {
+      startDate,
+      endDate
+    }
+  });
+  return res.data;
+};
+
+export const getSignDocumentPendingClient = async ({ id }: { id: string }) => {
+  try {
+    const res = await axiosInstance.get(
+      endpoints.client.get_sign_document_pending_client(id),
+      {}
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const submitSignDocumentReview = async ({
+  consentId,
+  approved,
+  rejectionNotes,
+  signatureBase64,
+}: {
+  consentId: string;
+  approved: boolean;
+  rejectionNotes: string;
+  signatureBase64: string;
+}) => {
+  try {
+    const res = await axiosInstance.post(
+      endpoints.client.submit_sign_document_Review(consentId),
+      {
+        approved,
+        rejectionNotes,
+        signatureBase64,
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const getSignDocumentHistory = async ({ id }: { id: string }) => {
+  try {
+    const res = await axiosInstance.get(
+      endpoints.client.get_sign_document_history(id),
+      {}
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
 };
 
 // export const getAllTemporaryClients = async (token?: string) => {
