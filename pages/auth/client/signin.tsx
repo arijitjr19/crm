@@ -103,13 +103,8 @@ export default function LoginView() {
       sessionStorage.setItem("user_role", data.role[0]?.name);
       // console.log("User Role::::::::")
       delete data.jwtToken;
-      setCookieClient("user", JSON.stringify(data));
-      if (data.role[0].name === "ROLE_ADMIN") {
-        window.location.href = "/";
-      } else {
-        window.location.href = "/staff-roster";
-      }
-
+      setCookieClient("client", JSON.stringify(data));
+      window.location.href = "/client-roster";
       // router.push(data.role[0].name === "ROLE_ADMIN" ? "/" : "/staff-roster");
     }
   });
@@ -163,13 +158,13 @@ export default function LoginView() {
                   label="Email Address"
                   type="email"
                   size="small"
-                  sx={{width: "100%"}}
+                  sx={{ width: "100%" }}
                 />
                 <CustomInput
                   label="Password"
                   name="password"
                   size="small"
-                  sx={{width: "100%"}}
+                  sx={{ width: "100%" }}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (

@@ -3,12 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const has_token = request.cookies.get(process.env.NEXT_APP_TOKEN_NAME!);
   const auth_routes = [
+    "/",
     "/auth/signin",
     "/auth/signup",
     "/auth/forgot-password",
     "/auth/reset-password",
     "/auth/verify",
     "/auth/client/signin",
+    "/auth/employee/signin"
   ];
 
   if (
@@ -16,7 +18,7 @@ export function middleware(request: NextRequest) {
     !auth_routes.includes(request.nextUrl.pathname)
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = "/auth/signin";
+    url.pathname = "/";
     const response = NextResponse.redirect(url);
     response.headers.set("x-middleware-cache", "no-cache");
     return response;

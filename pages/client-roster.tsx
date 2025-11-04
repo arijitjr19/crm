@@ -89,9 +89,9 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
           </IconButton>
         </Tooltip>
       )}
-  
+
       <Box sx={{ flexGrow: 1 }} />
-  
+
       <Stack direction="row" alignItems="center" spacing={1}>
         <Tooltip title="Notifications">
           <Box>
@@ -102,7 +102,7 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
       </Stack>
     </>
   );
-  
+
 
   const renderDocument = (
     <>
@@ -111,18 +111,18 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
           <MenuIcon />
         </IconButton>
       )}
-  
+
       <Box sx={{ flexGrow: 1 }} />
-  
+
       <Stack direction="row" alignItems="center" spacing={1}>
         <Tooltip title="Documents">
           <IconButton
             color="primary"
-            onClick={() => {setIsModalPending(true)}}
+            onClick={() => { setIsModalPending(true) }}
           >
             <DescriptionIcon />
           </IconButton>
-        </Tooltip>  
+        </Tooltip>
       </Stack>
     </>
   );
@@ -166,18 +166,18 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
           {renderContent}
           {renderDocument}
         </Box>
-        
+
 
         {/* Right side: Calendar */}
         <CalendarToolbar date={date} setDate={setDate} />
       </Box>
-      <Box sx={{padding:2}}>
-      <CalendarComponent date={date} shifts={data} />
+      <Box sx={{ padding: 2 }}>
+        <CalendarComponent date={date} shifts={data} />
       </Box>
 
-      {userData?.id!=="" &&(
+      {userData?.id !== "" && (
         <ClientSignDocumentPending clientId={userData?.id} open={isModalPending} onClose={handleCloseModalPending}></ClientSignDocumentPending>
-        )}
+      )}
     </>
-  );   
+  );
 }

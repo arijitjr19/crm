@@ -37,6 +37,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
+import { useRouter } from "next/router";
 
 const StyledBox = styled(Box)`
   padding: 20px 10px;
@@ -128,6 +129,7 @@ const schema = yup.object().shape({
 
 export default function Index() {
   const [salutation, setSalutation] = useState(true);
+  const router = useRouter();
 
   const { data: roles, isLoading } = useQuery({
     queryKey: ["roles"],
@@ -162,7 +164,8 @@ export default function Index() {
   };
 
   const { mutate, isPending } = useMutation({
-    mutationFn: addStaff
+    mutationFn: addStaff,
+    onSuccess: router.back
   });
 
   const onSubmit = (data: IStaffPost) => {
@@ -582,7 +585,7 @@ export default function Index() {
             className="footer"
             spacing={2}
           >
-            <Button variant="outlined" disabled={isPending}>
+            <Button variant="outlined" disabled={isPending} onClick={() => router.back()}>
               Cancel
             </Button>
             <LoadingButton

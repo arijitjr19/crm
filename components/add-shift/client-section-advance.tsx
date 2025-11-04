@@ -94,10 +94,10 @@ export default function ClientSectionAdvance({
   //   data
   // );
 
-  const { data: price, isLoading: isloading } = useQuery({
-    queryKey: ["price-books", router.query.page],
-    queryFn: () => getPriceBooks((router.query.page as string) || "1")
-  });
+  // const { data: price, isLoading: isloading } = useQuery({
+  //   queryKey: ["price-books", router.query.page],
+  //   queryFn: () => getPriceBooks((router.query.page as string) || "1")
+  // });
   // console.log(price ? price.priceBooks : "Price data not loaded yet");
 
   const [selectedClientId, setSelectedClientId] = useState("");
@@ -377,7 +377,7 @@ export default function ClientSectionAdvance({
                                   : () => "Select Price Book"
                               }
                             >
-                              {isLoading ? (
+                              {/* {isLoading ? (
                                 <MenuItem disabled>
                                   <CircularProgress size={20} />
                                   Loading...
@@ -395,7 +395,7 @@ export default function ClientSectionAdvance({
                                 <MenuItem disabled>
                                   No Price Books Available
                                 </MenuItem>
-                              )}
+                              )} */}
                             </Select>
                             {invalid && (
                               <FormHelperText>{error?.message}</FormHelperText>

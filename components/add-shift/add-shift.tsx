@@ -86,7 +86,7 @@ interface DrawerInterface extends DrawerProps {
   open?: boolean;
 }
 
-export const StyledDrawer = styled(Drawer)<DrawerInterface>`
+export const StyledDrawer = styled(Drawer) <DrawerInterface>`
   z-index: 3000;
   > .drawer {
     width: 700px;
@@ -581,13 +581,13 @@ export default function AddShift({
       clientIds: router.pathname.includes("participants")
         ? [parseInt(id as string)]
         : client
-        ? [parseInt(client as string)]
-        : [],
+          ? [parseInt(client as string)]
+          : [],
       employeeIds: router.pathname.includes("staff")
         ? [parseInt(id as string)]
         : staff
-        ? [parseInt(staff as string)]
-        : [],
+          ? [parseInt(staff as string)]
+          : [],
       isOpenShift: false,
       clientPriceBooks: [
         { clientId: 0, priceBookIds: "" } // Initialize with an empty object for the first entry
@@ -775,10 +775,10 @@ export default function AddShift({
           setEditAdvanceModal(false);
         }}
         shift={shift}
-        // open={shiftModalAdvance}
-        // onClose={() => {
-        //   setShiftModalAdvance(false);
-        // }}
+      // open={shiftModalAdvance}
+      // onClose={() => {
+      //   setShiftModalAdvance(false);
+      // }}
       />
       <StyledDrawer
         anchor="right"
@@ -796,30 +796,14 @@ export default function AddShift({
           gap={2}
           className="header"
         >
-          {!edit ? (
-            <Button
-              variant="outlined"
-              startIcon={<Iconify icon="mingcute:close-fill" />}
-              onClick={props.onClose}
-              disabled={isPending}
-            >
-              Close
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              startIcon={<Iconify icon="ion:chevron-back-outline" />}
-              onClick={() => {
-                if (setEditModal && setViewModal) {
-                  setEditModal(false);
-                  setViewModal(true);
-                }
-              }}
-              disabled={isPending}
-            >
-              Back
-            </Button>
-          )}
+          <Button
+            variant="outlined"
+            startIcon={<Iconify icon="mingcute:close-fill" />}
+            onClick={props.onClose}
+            disabled={isPending}
+          >
+            Close
+          </Button>
 
           {role === "ROLE_CARER" ? (
             <Button
@@ -1017,7 +1001,7 @@ export default function AddShift({
                 //   </Button>
                 // </Stack>
                 <>
-                  {shift?.isPickupJob ? null : (
+                  {/* {shift?.isPickupJob ? null : (
                     <Stack direction="row" alignItems="center" gap={1}>
                       <LoadingButton
                         variant="contained"
@@ -1063,7 +1047,7 @@ export default function AddShift({
                         Edit
                       </Button>
                     </Stack>
-                  )}
+                  )} */}
                 </>
               )}
             </>
@@ -1120,7 +1104,7 @@ export default function AddShift({
                   {!view && <TaskSection edit={edit} />}
                   <InstructionSection view={view} edit={edit} shift={shift} />
                   {/* <TimeLocation view={view} edit={edit} shift={shift} /> */}
-                  <Button
+                  {/* <Button
                     variant="contained"
                     startIcon={<NoteIcon />} // Change to NoteIcon
                     onClick={() => {
@@ -1132,8 +1116,8 @@ export default function AddShift({
                     }} // Set the background color
                   >
                     Create Shift Notes
-                  </Button>
-                  {view && <ShiftRelatedNotes shift={shift} />}
+                  </Button> */}
+                  {/* {view && <ShiftRelatedNotes shift={shift} />} */}
                 </>
               )}
             </FormProvider>
