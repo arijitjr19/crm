@@ -109,10 +109,10 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from "rea
   //   data
   // );
 
-  // const { data: price, isLoading: isloading } = useQuery({
-  //   queryKey: ["price-books", router.query.page],
-  //   queryFn: () => getPriceBooks((router.query.page as string) || "1")
-  // });
+  const { data: price, isLoading: isloading } = useQuery({
+    queryKey: ["price-books", router.query.page],
+    queryFn: () => getPriceBooks((router.query.page as string) || "1")
+  });
   // console.log(price ? price.priceBooks : "Price data not loaded yet");
 
   const [selectedClientId, setSelectedClientId] = useState("");
@@ -469,7 +469,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from "rea
                                   : () => "Select Price Book"
                               }
                             >
-                              {/* {isLoading ? (
+                              {isLoading ? (
                                 <MenuItem disabled>
                                   <CircularProgress size={20} />
                                   Loading...
@@ -487,7 +487,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from "rea
                                 <MenuItem disabled>
                                   No Price Books Available
                                 </MenuItem>
-                              )} */}
+                              )}
                             </Select>
                             {invalid && (
                               <FormHelperText>{error?.message}</FormHelperText>

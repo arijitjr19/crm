@@ -87,7 +87,7 @@ const navConfig: NavItem[] = (() => {
     return [
       {
         title: "Scheduler",
-        path: "/",
+        path: "/home",
         icon: DashboardIcon,
         children: [],
         hasChild: false

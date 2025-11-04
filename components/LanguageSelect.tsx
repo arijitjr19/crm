@@ -5,7 +5,7 @@ import {
   ListItemText,
   MenuItem,
   Select,
-  type SelectChangeEvent,
+  SelectChangeEvent,
 } from "@mui/material";
 
   import React from "react";

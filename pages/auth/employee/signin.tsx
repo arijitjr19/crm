@@ -105,7 +105,7 @@ export default function LoginView() {
       delete data.jwtToken;
       setCookieClient("user", JSON.stringify(data));
       if (data.role[0].name === "ROLE_ADMIN") {
-        window.location.href = "/";
+        window.location.href = "/home";
       } else {
         window.location.href = "/staff-roster";
       }

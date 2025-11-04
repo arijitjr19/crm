@@ -800,7 +800,7 @@ export default function AdvanceShift({
               {/* Column 1 */}
               <Stack direction="column" sx={{ width: "50%" }}>
                 {/* Content for Column 1 */}
-                <ClientSectionAdvance view={view} edit={edit} shift={shift} ref={clientSectionRef} />
+                <ClientSectionAdvance view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef} />
                 <br></br>
                 <TimeLocation
                   view={view}
