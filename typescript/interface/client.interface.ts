@@ -122,6 +122,7 @@ export interface ClientContact {
   customField: string;
   primaryContact: boolean;
   billingContact: boolean;
+  isSalutationRequired: boolean;
 }
 
 export interface ClientContactBody {

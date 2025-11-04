@@ -386,8 +386,11 @@ export default function TimeSheetTable({
   }, [selectall]);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: cancelShiftInBulk
-    // onSuccess: () => {}
+    mutationFn: cancelShiftInBulk,
+    onSuccess: () => {
+      // Invalidate and refetch the "all_shifts" query
+      queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+    },
   });
 
   const cancelBulkShift = () => {
@@ -395,7 +398,7 @@ export default function TimeSheetTable({
     const savedIds = sessionStorage.getItem("shiftIds");
 
     if (selectall === true) {
-      if (savedIds) {
+      if (savedIds && savedIds.length > 0) {
         const shiftIdsArray = JSON.parse(savedIds) as number[];
         mutate(shiftIdsArray);
 
@@ -404,20 +407,27 @@ export default function TimeSheetTable({
         sessionStorage.setItem("shiftIds", JSON.stringify([]));
       }
     } else {
-      if (savedIds) {
+      console.log("------- Selected Id 1 --------",savedIds)
+      // if (savedIds) {
+      if (savedIds && savedIds.length > 0) {
+        console.log("------- Selected Id 2 --------",savedIds)
         const shiftIdsArray = JSON.parse(savedIds) as number[];
-        mutate(shiftIdsArray);
-        // console.log("Cancel the selected Shift:", shiftIdsArray);
-
-        // Uncomment the below code once the above function begin to work fine
-        // // Clear the session storage
-        sessionStorage.removeItem("shiftIds");
-
-        // // Optionally, you could save an empty array to the session storage (not strictly necessary)
-        sessionStorage.setItem("shiftIds", JSON.stringify([]));
-
-        // // Update the component state to reflect the cleared array
-        // setShiftIds([]);
+        if(shiftIdsArray && shiftIdsArray.length>0)
+        {
+          mutate(shiftIdsArray);
+          // console.log("Cancel the selected Shift:", shiftIdsArray);
+  
+          // Uncomment the below code once the above function begin to work fine
+          // // Clear the session storage
+          sessionStorage.removeItem("shiftIds");
+  
+          // // Optionally, you could save an empty array to the session storage (not strictly necessary)
+          sessionStorage.setItem("shiftIds", JSON.stringify([]));
+  
+          // // Update the component state to reflect the cleared array
+          // setShiftIds([]);
+        }
+       
       }
     }
   };

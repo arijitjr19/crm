@@ -59,7 +59,7 @@ export default function PriceImport({
   return (
     <Container>
       <Typography variant="body1" gutterBottom>
-        This is the Price Import page. Upload a CSV file below.
+        This is the Price Import page. Upload a CSV file below.  
       </Typography>
 
       <form onSubmit={handleSubmit(onSubmit)}>

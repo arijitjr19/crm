@@ -148,6 +148,20 @@ export const endpoints = {
       `/documents/consent/review/${consentId}`,
     get_sign_document_history: (documentId: string) =>
       `/documents/consent/${documentId}/history`,
+      //  create_price_import: () => `/priceBook/import`
+    create_price_import: () => `/priceBook/uploadNew`,
+    get_admin_notifications: (clientId: string) =>
+      `/notification/get/admin/${clientId}`,
+    get_employee_notifications: (clientId: string) =>
+      `/notification/get/employee/${clientId}`,
+    get_client_notifications: (clientId: string) =>
+      `/notification/get/client/${clientId}`,
+    update_mark_read: (notificationId: string, userId: string) =>
+      `/notification/update/mark-read/${notificationId}/forUser/${userId}`,
+    get_document_by_document_id_from_notification: (documentId: string) =>
+      `/document/getExpiredDocument/${documentId}`,
+    get_shift_by_id_from_notification: (shiftId: string) =>
+      `/shift/getShiftById/${shiftId}`,
   },
   teams: {
     get_all: "/teams/allTeams",

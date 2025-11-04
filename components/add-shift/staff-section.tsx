@@ -248,77 +248,120 @@ export default function StaffSection({
                         name="employeeIds"
                         render={({ field, fieldState: { error, invalid } }) => {
                           return (
+                            // <Box>
+                            //   <Select
+                            //     fullWidth
+                            //     size="small"
+                            //     {...field}
+                            //     value={field.value || []} 
+                            //     onChange={(e) => {
+                            //       const _value = e.target.value;
+                            //       field.onChange(_value); 
+                            //       const selectedNames = data
+                            //         ?.filter((client: any) =>
+                            //           _value.includes(client.id)
+                            //         )
+                            //         .map((client: any) => client.name)
+                            //         .join(", ");
+                            //       setSelectedDisplayNames(selectedNames);
+
+                            //       const selectedId = data
+                            //         ?.filter((client: any) =>
+                            //           _value.includes(client.id)
+                            //         )
+                            //         .map((client: any) => client.id)
+                            //         .join(", ");
+                            //       if (selectedId) {
+                            //         setSelectedCarerId(selectedId);
+                            //       }
+
+                            //       setOpen(selectedNames.length);
+                            //     }}
+                            //     displayEmpty
+                            //     renderValue={
+                            //       field.value?.length !== 0
+                            //         ? undefined
+                            //         : () => "Select Carer"
+                            //     }
+                            //     multiple
+                            //   >
+                            //     {isLoading ? (
+                            //       <MenuItem disabled>Loading...</MenuItem>
+                            //     ) : isPickupJob ? (
+                            //       <MenuItem disabled>
+                            //         No carers available for pickup jobs
+                            //       </MenuItem>
+                            //     ) : (
+                            //       data?.slice(2).map((_data: IStaff) => (
+                            //         <MenuItem value={_data.id} key={_data.id}>
+                            //           {_data.name}
+                            //         </MenuItem>
+                            //       ))
+                            //     )}
+                            //   </Select>
+                            //   {invalid && (
+                            //     <FormHelperText>
+                            //       {error?.message}
+                            //     </FormHelperText>
+                            //   )}
+                            // </Box>
+
                             <Box>
-                              <Select
-                                fullWidth
-                                size="small"
-                                {...field}
-                                value={field.value || []} // Ensure value is an array
-                                onChange={(e) => {
-                                  const _value = e.target.value;
-                                  field.onChange(_value); // _value should already be an array
+  <Select
+    fullWidth
+    size="small"
+    {...field}
+    value={Array.isArray(field.value) ? field.value : []}
+    onChange={(e) => {
+      const _value = e.target.value;
+      field.onChange(_value);
 
-                                  // Get the selected display names and update state directly
-                                  const selectedNames = data
-                                    ?.filter((client: any) =>
-                                      _value.includes(client.id)
-                                    )
-                                    .map((client: any) => client.name)
-                                    .join(", ");
-                                  setSelectedDisplayNames(selectedNames);
+      const selectedClients = data?.filter((client: any) =>
+        _value.includes(client.id)
+      );
 
-                                  // Get the selected IDs and update state
-                                  const selectedId = data
-                                    ?.filter((client: any) =>
-                                      _value.includes(client.id)
-                                    )
-                                    .map((client: any) => client.id)
-                                    .join(", ");
-                                  if (selectedId) {
-                                    setSelectedCarerId(selectedId);
-                                  }
+      const selectedNames = selectedClients
+        ?.map((client: any) => client.name)
+        .join(", ");
+      setSelectedDisplayNames(selectedNames);
 
-                                  // Optionally set open state based on selected names length
-                                  setOpen(selectedNames.length);
-                                }}
-                                displayEmpty
-                                renderValue={
-                                  field.value?.length !== 0
-                                    ? undefined
-                                    : () => "Select Carer"
-                                }
-                                multiple
-                              >
-                                {/* {isLoading ? (
-                                  <MenuItem disabled>Loading...</MenuItem>
-                                ) : (
-                                  data?.slice(1).map((_data: IStaff) => (
-                                    <MenuItem value={_data.id} key={_data.id}>
-                                      {_data.name}
-                                    </MenuItem>
-                                  ))
-                                )} */}
-                                {isLoading ? (
-                                  <MenuItem disabled>Loading...</MenuItem>
-                                ) : isPickupJob ? (
-                                  <MenuItem disabled>
-                                    No carers available for pickup jobs
-                                  </MenuItem>
-                                ) : (
-                                  // Only display carers if it's not a pickup job
-                                  data?.slice(2).map((_data: IStaff) => (
-                                    <MenuItem value={_data.id} key={_data.id}>
-                                      {_data.name}
-                                    </MenuItem>
-                                  ))
-                                )}
-                              </Select>
-                              {invalid && (
-                                <FormHelperText>
-                                  {error?.message}
-                                </FormHelperText>
-                              )}
+      const selectedId = selectedClients?.map((client: any) => client.id).join(", ");
+      if (selectedId) setSelectedCarerId(selectedId);
+
+      setOpen(!!selectedNames?.length);
+    }}
+    displayEmpty
+    renderValue={
+      field.value?.length
+        ? (selected) =>
+            data
+              ?.filter((client: any) => selected.includes(client.id))
+              .map((client: any) => client.name)
+              .join(", ")
+        : () => "Select Carer"
+    }
+    multiple
+  >
+    {isLoading ? (
+      <MenuItem disabled>Loading...</MenuItem>
+    ) : isPickupJob ? (
+      <MenuItem disabled>No carers available for pickup jobs</MenuItem>
+    ) : (
+      data?.slice(2).map((_data: IStaff) => (
+        <MenuItem value={_data.id} key={_data.id}>
+          <Checkbox
+            checked={field.value?.includes(_data.id)}
+            size="small"
+          />
+          {_data.name}
+        </MenuItem>
+      ))
+    )}
+  </Select>
+
+  {invalid && <FormHelperText>{error?.message}</FormHelperText>}
                             </Box>
+
                           );
                         }}
                       />

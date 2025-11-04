@@ -21,7 +21,7 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import Iconify from "../Iconify/Iconify";
 import { Box, Stack } from "@mui/system";
 import StyledPaper from "@/ui/Paper/Paper";
@@ -541,6 +541,13 @@ export default function AddShift({
     enabled: Boolean(client) && role === "ROLE_ADMINS"
   });
 
+  // --------- Parent to child access start here ----------
+  const clientSectionRef = useRef<any>(null);
+  const handleClearAll = () => {
+    clientSectionRef.current?.handleRemoveAllNames(); // ✅ Calls child function
+  };
+  // --------- Parent to child access end here ----------
+
   const [viewAdvanceModal, setViewAdvanceModal] = useState(false);
   const [editAdvanceModal, setEditAdvanceModal] = useState(false);
   const [advanceShift, setAdvanceShift] = useState(false);
@@ -804,6 +811,35 @@ export default function AddShift({
           >
             Close
           </Button>
+          {!edit ? (
+            <Button
+              variant="outlined"
+              startIcon={<Iconify icon="mingcute:close-fill" />}
+              // onClick={props.onClose}
+              onClick={() => {
+                handleClearAll();
+                props.onClose();
+              }}
+              
+              disabled={isPending}
+            >
+              Close
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              startIcon={<Iconify icon="ion:chevron-back-outline" />}
+              onClick={() => {
+                if (setEditModal && setViewModal) {
+                  setEditModal(false);
+                  setViewModal(true);
+                }
+              }}
+              disabled={isPending}
+            >
+              Back
+            </Button>
+          )}
 
           {role === "ROLE_CARER" ? (
             <Button
@@ -1003,6 +1039,19 @@ export default function AddShift({
                 <>
                   {/* {shift?.isPickupJob ? null : (
                     <Stack direction="row" alignItems="center" gap={1}>
+                       {/* <Button
+                          variant="contained"
+                          startIcon={<NoteIcon />} 
+                          onClick={() => {
+                            handleCreateShiftNotes(shift?.id as number); 
+                          } }
+                          sx={{
+                            backgroundColor: "#00a65a",
+                            "&:hover": { backgroundColor: "#008d45" }
+                          }} 
+                        >
+                          Create Shift Notes
+                        </Button> */}
                       <LoadingButton
                         variant="contained"
                         color="error"
@@ -1017,6 +1066,21 @@ export default function AddShift({
                       >
                         Cancel Shift
                       </LoadingButton>
+                      {view &&
+                      <Button
+                          variant="contained"
+                          startIcon={<NoteIcon />} 
+                          onClick={() => {
+                            handleCreateShiftNotes(shift?.id as number); 
+                          } }
+                          sx={{
+                            backgroundColor: "#00a65a",
+                            "&:hover": { backgroundColor: "#008d45" }
+                          }} 
+                        >
+                          Shift Notes
+                        </Button> 
+                      }
                       <Button
                         variant="contained"
                         startIcon={<RepeatIcon />}
@@ -1072,7 +1136,7 @@ export default function AddShift({
                 <Typography></Typography>
               ) : (
                 <>
-                  <ClientSection view={view} edit={edit} shift={shift} />
+                  <ClientSection view={view} edit={edit} shift={shift}  />
                   <StaffSection
                     view={view}
                     edit={edit}
@@ -1093,7 +1157,7 @@ export default function AddShift({
                 <JobApplicant view={view} edit={edit} shift={shift} />
               ) : (
                 <>
-                  <ClientSection view={view} edit={edit} shift={shift} />
+                  <ClientSection view={view} edit={edit} shift={shift} ref={clientSectionRef}/>
                   <StaffSection
                     view={view}
                     edit={edit}
@@ -1118,6 +1182,23 @@ export default function AddShift({
                     Create Shift Notes
                   </Button> */}
                   {/* {view && <ShiftRelatedNotes shift={shift} />} */}
+                 
+                  {view &&
+                   <>
+                        {/* <Button
+                          variant="contained"
+                          startIcon={<NoteIcon />} // Change to NoteIcon
+                          onClick={() => {
+                            handleCreateShiftNotes(shift?.id as number); // Pass the ID here
+                          } }
+                          sx={{
+                            backgroundColor: "#00a65a",
+                            "&:hover": { backgroundColor: "#008d45" }
+                          }} 
+                        >
+                          Create Shift Notes
+                        </Button> */}
+                        <ShiftRelatedNotes shift={shift} /></>}
                 </>
               )}
             </FormProvider>
@@ -1155,11 +1236,12 @@ export default function AddShift({
         <Divider />
         <DialogContent>
           <ShiftNotesIndividualShift
+           onClose={handleCloseModalShiftNotes}
             clients={[]}
             id={selectedId}
           ></ShiftNotesIndividualShift>
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
             <Button
               variant="contained"
@@ -1168,11 +1250,8 @@ export default function AddShift({
             >
               Close
             </Button>
-            {/* <Button variant="contained" color="success">
-              Update
-            </Button> */}
           </Box>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </>
   );

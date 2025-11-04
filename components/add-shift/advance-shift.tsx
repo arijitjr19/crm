@@ -17,7 +17,7 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import Iconify from "../Iconify/Iconify";
 import { Box, Stack } from "@mui/system";
 import StyledPaper from "@/ui/Paper/Paper";
@@ -201,6 +201,8 @@ const AddressInput = ({ ...props }: CustomAutoCompleteProps) => {
       </Stack>
     );
   };
+
+
 
   return (
     <Autocomplete
@@ -655,6 +657,13 @@ export default function AdvanceShift({
     console.log("---------------Repeating shift with ID:---------------------",id);
   };
 
+      // --------- Parent to child access start here ----------
+      const clientSectionRef = useRef<any>(null);
+      const handleClearAll = () => {
+        clientSectionRef.current?.handleRemoveAllNames(); // ✅ Calls child function
+      };
+      // --------- Parent to child access end here ----------
+
   return (
     <StyledDrawer
       anchor="right"
@@ -676,7 +685,10 @@ export default function AdvanceShift({
           <Button
             variant="outlined"
             startIcon={<Iconify icon="mingcute:close-fill" />}
-            onClick={props.onClose}
+            onClick={() => {
+              handleClearAll();
+              props.onClose();
+            }}
             disabled={isPending}
           >
             Close
@@ -788,7 +800,7 @@ export default function AdvanceShift({
               {/* Column 1 */}
               <Stack direction="column" sx={{ width: "50%" }}>
                 {/* Content for Column 1 */}
-                <ClientSectionAdvance view={view} edit={edit} shift={shift} />
+                <ClientSectionAdvance view={view} edit={edit} shift={shift} ref={clientSectionRef} />
                 <br></br>
                 <TimeLocation
                   view={view}

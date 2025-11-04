@@ -307,6 +307,9 @@ export default function TemplateSubsection({
       queryClient.invalidateQueries({
         queryKey: ["admin_subcategory_list"]
       });
+      queryClient.invalidateQueries({
+        queryKey: ["templates_document_list_admin"]
+      });
       toast.success(resonse.message);
       setLoading(false); // Stop loading on success
       setOpenComplianceModalSubcategory(false);
@@ -321,11 +324,12 @@ export default function TemplateSubsection({
   const { mutate } = useMutation({
     mutationFn: addTemplateDocument,
     onSuccess: () => {
-      setLoading(false); // Stop loading on success
-      handleClose();
       queryClient.invalidateQueries({
         queryKey: ["templates_document_list_admin"]
       });
+      setLoading(false); // Stop loading on success
+      handleClose();
+      
       // console.log("Compliance Data saved successfully");
     },
     onError: (error) => {
@@ -541,6 +545,9 @@ export default function TemplateSubsection({
       queryClient.invalidateQueries({
         queryKey: ["additional_document_list"]
       });
+      queryClient.invalidateQueries({
+        queryKey: ["templates_document_list_admin"]
+      });
       setOpenDocumentDeleteModal(false);
       setOpenListModal(true);
     }
@@ -724,7 +731,7 @@ export default function TemplateSubsection({
       <Divider />
 
       <StyledBox>
-        {(Object.keys(templates[1]) as (keyof TenplateAllDocuments)[]).map(
+        {/* {(Object?.keys(templates[1]) as (keyof TenplateAllDocuments)[]).map(
           (category) => (
             <Accordion key={category}>
               <AccordionSummary
@@ -768,7 +775,56 @@ export default function TemplateSubsection({
               </AccordionDetails>
             </Accordion>
           )
-        )}
+        )} */}
+
+{templates[1] &&
+  Object.keys(templates[1]).length > 0 &&
+  (Object.keys(templates[1]) as (keyof TenplateAllDocuments)[]).map(
+    (category) => (
+      <Accordion key={category}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={`${category}-content`}
+          id={`${category}-header`}
+        >
+          <Typography>{category}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Scrollbar>
+            <TableContainer sx={{ overflow: "unset" }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Sub Category</TableCell>
+                    <TableCell>Expires At</TableCell>
+                    <TableCell>Last Update</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {templates[1][category]?.map(
+                    (
+                      _data: JSX.IntrinsicAttributes &
+                        documents & { onClick?: () => void },
+                      index: React.Key | null | undefined
+                    ) => (
+                      <ComplianceTableRow
+                        {..._data}
+                        key={index}
+                        onClick={() => handleRowClick(_data)}
+                      />
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </AccordionDetails>
+      </Accordion>
+    )
+  )}
+
       </StyledBox>
 
       {/* -------------------- List Document -------------------- */}
@@ -795,7 +851,7 @@ export default function TemplateSubsection({
               </TableHead>
               <TableBody>
                 {/* Render a single table with documents where fileName is not empty */}
-                {(Object.keys(templates[1]) as (keyof TenplateAllDocuments)[])
+                {/* {(Object?.keys(templates[1]) as (keyof TenplateAllDocuments)[])
                   .flatMap((category) =>
                     templates[1][category]?.filter((doc: any) => doc.fileName)
                   )
@@ -839,7 +895,6 @@ export default function TemplateSubsection({
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            {/* Download button */}
                             <Tooltip title="Download Document">
                               <IconButton
                                 href={_data.downloadURL}
@@ -852,7 +907,6 @@ export default function TemplateSubsection({
                               </IconButton>
                             </Tooltip>
 
-                            {/* Edit button */}
                             <Tooltip title="Edit Document">
                               <IconButton
                                 color="default"
@@ -865,7 +919,6 @@ export default function TemplateSubsection({
                               </IconButton>
                             </Tooltip>
 
-                            {/* Delete button */}
                             <Tooltip title="Delete Document">
                               <IconButton
                                 color="error"
@@ -883,7 +936,98 @@ export default function TemplateSubsection({
                         )}
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
+
+
+{templates[1] &&
+  Object.keys(templates[1]).length > 0 && (
+    (Object.keys(templates[1]) as (keyof TenplateAllDocuments)[])
+      .flatMap((category) =>
+        templates[1][category]?.filter((doc: any) => doc.fileName)
+      )
+      .map((_data, index) => (
+        <TableRow key={index}>
+          <TableCell>{_data.clientDocumentSubCategory}</TableCell>
+          <TableCell>{_data.fileName}</TableCell>
+          <TableCell>
+            {_data.expiryDate
+              ? moment(_data.expiryDate).format("LL")
+              : "-"}
+          </TableCell>
+          <TableCell>
+            {_data.lastUpdated
+              ? moment(_data.lastUpdated).format("LL")
+              : "-"}
+          </TableCell>
+          <TableCell>
+            <Chip
+              label={
+                _data.expiry
+                  ? "Expired"
+                  : _data.status
+                  ? "Active"
+                  : "Pending"
+              }
+              color={
+                _data.expiry
+                  ? "error"
+                  : _data.status
+                  ? "success"
+                  : "warning"
+              }
+              variant="outlined"
+            />
+          </TableCell>
+          <TableCell>
+            {_data.downloadURL ? (
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {/* Download button */}
+                <Tooltip title="Download Document">
+                  <IconButton
+                    href={_data.downloadURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    color="primary"
+                    aria-label="download"
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+                </Tooltip>
+
+                {/* Edit button */}
+                <Tooltip title="Edit Document">
+                  <IconButton
+                    color="default"
+                    aria-label="edit"
+                    onClick={() => handleOpenDocumentEditModal(_data)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+
+                {/* Delete button */}
+                <Tooltip title="Delete Document">
+                  <IconButton
+                    color="error"
+                    aria-label="delete"
+                    onClick={() => handleOpenDocumentDeleteModal(_data)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            ) : (
+              "-"
+            )}
+          </TableCell>
+        </TableRow>
+      ))
+  )}
+
               </TableBody>
             </Table>
           </TableContainer>

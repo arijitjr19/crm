@@ -8,10 +8,11 @@ import { useTheme } from "@mui/material/styles";
 import { useResponsive } from "@/hooks/utils/use-responsive";
 
 import AccountPopover from "@/components/common/account-popover";
-import NotificationsPopover from "@/components/notification/NotificationsPopover";
+// import NotificationsPopover from "@/components/notification/NotificationsPopover";
 import { HEADER, NAV } from "@/config/constants";
 import { bgBlur } from "@/themes/css";
 import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsPopover from "@/components/notification/NotificationsPopover";
 
 // ----------------------------------------------------------------------
 

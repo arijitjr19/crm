@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Grid,
   InputAdornment,
+  ListItemText,
   MenuItem,
   Select,
   ToggleButtonGroup,
@@ -34,6 +35,9 @@ import { useMutation } from "@tanstack/react-query";
 import { addClient } from "@/api/functions/client.api";
 import { ClientBody } from "@/interface/client.interface";
 import { useRouter } from "next/router";
+import LanguageSelect from "@/components/LanguageSelect";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 
 const StyledBox = styled(Box)`
   padding: 20px 10px;
@@ -109,14 +113,14 @@ const schema = yup.object().shape({
   apartmentNumber: yup.string().trim().required(validationText.error.apartment),
   address: yup.string().trim().required(validationText.error.address),
   contactNumber: yup.string().trim().required(validationText.error.phone),
-  mobileNumber: yup.string().trim().required(validationText.error.mobile),
+  mobileNumber: yup.string().trim(),
   email: yup.string().email().trim().required(validationText.error.enter_email),
-  religion: yup.string().trim().required(validationText.error.religion),
+  religion: yup.string().trim(),
   maritalStatus: yup
     .string()
     .trim()
     .required(validationText.error.maritalStatus),
-  nationality: yup.string().trim().required(validationText.error.nationality),
+  nationality: yup.string().trim(),
   language: yup.array().of(yup.string()),
   prospect: yup.boolean(),
   isTemporary: yup.boolean()
@@ -326,6 +330,7 @@ export default function Index() {
                             value={value}
                             onChange={onChange}
                             maxDate={dayjs().subtract(18, "years")}
+                            format="DD/MM/YYYY" // ✅ Set date format
                             slotProps={{
                               textField: {
                                 size: "small"
@@ -369,7 +374,7 @@ export default function Index() {
               <Grid item lg={9} md={12} sm={12} xs={12}>
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
+                    {/* <CustomInput
                       fullWidth
                       name="contactNumber"
                       type="number"
@@ -381,10 +386,39 @@ export default function Index() {
                           </InputAdornment>
                         )
                       }}
+                    /> */}
+                    <Controller
+                      control={methods.control}
+                      name="contactNumber"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          {/* <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+                            Phone Number (Optional)
+                          </Typography> */}
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter phone number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
+                    {/* <CustomInput
                       fullWidth
                       name="mobileNumber"
                       type="number"
@@ -396,6 +430,32 @@ export default function Index() {
                           </InputAdornment>
                         )
                       }}
+                    /> */}
+                    <Controller
+                      control={methods.control}
+                      name="mobileNumber"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter mobile number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
                 </Grid>
@@ -483,7 +543,7 @@ export default function Index() {
                 <Typography variant="body1">Languages Spoken:</Typography>
               </Grid>
               <Grid item lg={9} md={12} sm={12} xs={12}>
-                <Controller
+                {/* <Controller
                   control={methods.control}
                   name="language"
                   render={({
@@ -531,8 +591,26 @@ export default function Index() {
                         </FormHelperText>
                       )}
                     </Box>
+
+                  
                   )}
-                />
+                /> */}
+
+<Controller
+  name="language"
+  control={methods.control}
+  defaultValue={[]} // ✅ must be an array
+  render={({ field, fieldState }) => (
+    <LanguageSelect
+      value={field.value || []}
+      onChange={field.onChange}
+      invalid={!!fieldState.error}
+      error={fieldState.error}
+      language_list={language_list}
+    />
+  )}
+/>
+
               </Grid>
               <Grid item lg={3} md={12} sm={12} xs={12}>
                 Client Status:
@@ -578,7 +656,7 @@ export default function Index() {
             className="footer"
             spacing={2}
           >
-            <Button variant="outlined" disabled={isPending}>
+            <Button variant="outlined" disabled={isPending} onClick={() => router.back()}>
               Cancel
             </Button>
             <LoadingButton
