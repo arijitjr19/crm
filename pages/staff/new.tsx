@@ -35,6 +35,9 @@ import dayjs from "dayjs";
 import { SyntheticEvent, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
+import { useRouter } from "next/router";
 
 const StyledBox = styled(Box)`
   padding: 20px 10px;
@@ -93,6 +96,8 @@ const gender_list = [
 
 const employment_list = ["Employee", "Contractor"];
 
+const phoneRegex = /^\+?[0-9]{1,4}?[-.\s]?[0-9]{3,15}$/;
+
 const schema = yup.object().shape({
   salutation: yup.string(),
   name: yup.string().required(validationText.error.name),
@@ -101,8 +106,13 @@ const schema = yup.object().shape({
     .email(validationText.error.email_format)
     .trim()
     .required(validationText.error.enter_email),
-  mobileNo: yup.string().trim().required(validationText.error.mobile),
-  phoneNo: yup.string().trim().required(validationText.error.phone),
+  mobileNo: yup
+    .string()
+    .required("Mobile number is required"),
+  phoneNo: yup
+    .string()
+    .nullable()
+    .notRequired(),
   typeOfUser: yup.string().trim().required(validationText.error.type_of_user),
   role: yup.number().when("typeOfUser", {
     is: "office_user",
@@ -119,6 +129,7 @@ const schema = yup.object().shape({
 
 export default function Index() {
   const [salutation, setSalutation] = useState(true);
+  const router = useRouter();
 
   const { data: roles, isLoading } = useQuery({
     queryKey: ["roles"],
@@ -152,12 +163,15 @@ export default function Index() {
     }
   };
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: addStaff,
+    onSuccess: router.back
   const { mutate, isPending } = useMutation({  
     mutationFn: addStaff
   });
 
   const onSubmit = (data: IStaffPost) => {
-    // data.dateOfBirth = dayjs(data.dateOfBirth).toISOString();
+    console.log("Submitting data:", data); // 👈 check this
     data.roleIds = data.typeOfUser === "carer" ? [7] : [data.role];
     mutate(data);
   };
@@ -174,20 +188,7 @@ export default function Index() {
             className="header"
           >
             <Typography variant="h5">Staff detail</Typography>
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label={
-                <Stack direction="row" alignItems="center" gap={1}>
-                  <Typography variant="caption">No Access</Typography>
-                  <Tooltip
-                    placement="top-start"
-                    title="User will not be able to access. This user will not be counted towards subscription limit either."
-                  >
-                    <InfoIcon fontSize="small" />
-                  </Tooltip>
-                </Stack>
-              }
-            />
+
           </Stack>
           <Divider />
           <FormProvider {...methods}>
@@ -275,125 +276,163 @@ export default function Index() {
               </Grid>
               <Grid item lg={9} md={12} sm={12} xs={12}>
                 <Grid container spacing={2}>
-                  <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
-                      fullWidth
-                      name="phoneNo"
-                      type="number"
-                      placeholder="Enter Mobile Number"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PhoneIphoneIcon fontSize="small" />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </Grid>
-                  <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
-                      fullWidth
-                      name="mobileNo"
-                      type="number"
-                      placeholder="Enter Phone Number"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PhoneIcon fontSize="small" />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </Grid>
+                  {/* Mobile Number - Required */}
                   <Grid item lg={6} md={12} sm={12} xs={12}>
                     <Controller
                       control={methods.control}
-                      name="typeOfUser"
+                      name="mobileNo"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+                            Mobile Number (Required)
+                          </Typography>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter mobile number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
+                    />
+                  </Grid>
+
+                  {/* Phone Number - Optional */}
+                  <Grid item lg={6} md={12} sm={12} xs={12}>
+                    <Controller
+                      control={methods.control}
+                      name="phoneNo"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+                            Phone Number (Optional)
+                          </Typography>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter phone number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
+
+              <Grid item lg={6} md={12} sm={12} xs={12}>
+                <Controller
+                  control={methods.control}
+                  name="typeOfUser"
+                  render={({
+                    field: { value, onChange },
+                    fieldState: { error, invalid }
+                  }) => (
+                    <>
+                      <ToggleButtonGroup
+                        value={value}
+                        exclusive
+                        onChange={(e, newValue) =>
+                          handleToggle(e, newValue, onChange)
+                        }
+                      >
+                        <ToggleButton value="carer">
+                          <Typography variant="body1">Carer</Typography>
+                        </ToggleButton>
+                        <ToggleButton value="office_user">
+                          <Typography variant="body1">
+                            Office User
+                          </Typography>
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                      {invalid && (
+                        <FormHelperText sx={{ color: "#FF5630" }}>
+                          {error?.message}
+                        </FormHelperText>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item lg={6} md={12} sm={12} xs={12}>
+                {methods.watch("typeOfUser") === "office_user" && (
+                  <Stack direction="row" alignItems="center" spacing={3}>
+                    <Typography variant="body1">Role:</Typography>
+                    <Controller
+                      control={methods.control}
+                      name="role"
                       render={({
                         field: { value, onChange },
                         fieldState: { error, invalid }
                       }) => (
-                        <>
-                          <ToggleButtonGroup
-                            value={value}
-                            exclusive
-                            onChange={(e, newValue) =>
-                              handleToggle(e, newValue, onChange)
+                        <Box>
+                          <Select
+                            sx={{
+                              width: "200px",
+                              textTransform: "capitalize"
+                            }}
+                            displayEmpty
+                            renderValue={
+                              value ? undefined : () => "Select Role"
                             }
+                            value={value.toString()}
+                            onChange={onChange}
+                            defaultValue={""}
+                            size="small"
                           >
-                            <ToggleButton value="carer">
-                              <Typography variant="body1">Carer</Typography>
-                            </ToggleButton>
-                            <ToggleButton value="office_user">
-                              <Typography variant="body1">
-                                Office User
-                              </Typography>
-                            </ToggleButton>
-                          </ToggleButtonGroup>
+                            {roles.map(
+                              (role: { id: number; name: string }) => (
+                                <MenuItem
+                                  value={role.id}
+                                  key={role.id}
+                                  sx={{ textTransform: "capitalize" }}
+                                >
+                                  {role.name
+                                    .replace("ROLE_", "")
+                                    .replaceAll("_", " ")
+                                    .toLowerCase()}
+                                </MenuItem>
+                              )
+                            )}
+                          </Select>
+
                           {invalid && (
                             <FormHelperText sx={{ color: "#FF5630" }}>
                               {error?.message}
                             </FormHelperText>
                           )}
-                        </>
+                        </Box>
                       )}
                     />
-                  </Grid>
-                  <Grid item lg={6} md={12} sm={12} xs={12}>
-                    {methods.watch("typeOfUser") === "office_user" && (
-                      <Stack direction="row" alignItems="center" spacing={3}>
-                        <Typography variant="body1">Role:</Typography>
-                        <Controller
-                          control={methods.control}
-                          name="role"
-                          render={({
-                            field: { value, onChange },
-                            fieldState: { error, invalid }
-                          }) => (
-                            <Box>
-                              <Select
-                                sx={{
-                                  width: "200px",
-                                  textTransform: "capitalize"
-                                }}
-                                displayEmpty
-                                renderValue={
-                                  value ? undefined : () => "Select Role"
-                                }
-                                value={value.toString()}
-                                onChange={onChange}
-                                defaultValue={""}
-                                size="small"
-                              >
-                                {roles.map(
-                                  (role: { id: number; name: string }) => (
-                                    <MenuItem
-                                      value={role.id}
-                                      key={role.id}
-                                      sx={{ textTransform: "capitalize" }}
-                                    >
-                                      {role.name
-                                        .replace("ROLE_", "")
-                                        .replaceAll("_", " ")
-                                        .toLowerCase()}
-                                    </MenuItem>
-                                  )
-                                )}
-                              </Select>
-
-                              {invalid && (
-                                <FormHelperText sx={{ color: "#FF5630" }}>
-                                  {error?.message}
-                                </FormHelperText>
-                              )}
-                            </Box>
-                          )}
-                        />
-                      </Stack>
-                    )}
-                  </Grid>
-                </Grid>
+                  </Stack>
+                )}
               </Grid>
+
               <Grid item lg={6} md={12} sm={12} xs={12}>
                 <Grid container spacing={{ lg: 0, md: 2, sm: 2, xs: 2 }}>
                   <Grid item lg={6.15} md={12} sm={12} xs={12}>
@@ -548,7 +587,7 @@ export default function Index() {
             className="footer"
             spacing={2}
           >
-            <Button variant="outlined" disabled={isPending}>
+            <Button variant="outlined" disabled={isPending} onClick={() => router.back()}>
               Cancel
             </Button>
             <LoadingButton
@@ -567,7 +606,7 @@ export default function Index() {
             </LoadingButton>
           </Stack>
         </Box>
-      </StyledBox>
-    </DashboardLayout>
+      </StyledBox >
+    </DashboardLayout >
   );
 }

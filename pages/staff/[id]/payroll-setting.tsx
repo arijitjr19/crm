@@ -219,7 +219,7 @@ export default function PayrollSetting() {
               </Grid>
 
               {/* Employee ID */}
-              <Grid item xs={12} md={12}>
+              {/* <Grid item xs={12} md={12}>
                 <TextField
                   label="Employee ID"
                   fullWidth
@@ -227,10 +227,10 @@ export default function PayrollSetting() {
                   variant="outlined"
                   {...control.register("employeeId")}
                 />
-              </Grid>
+              </Grid> */}
 
               {/* Pay Group */}
-              <Grid item xs={12} md={12}>
+              {/* <Grid item xs={12} md={12}>
                 <TextField
                   label="Pay Group"
                   fullWidth
@@ -238,7 +238,7 @@ export default function PayrollSetting() {
                   variant="outlined"
                   {...control.register("payGroupId")}
                 />
-              </Grid>
+              </Grid> */}
 
               {/* Pay Group Name */}
               <Grid item xs={12} md={12}>

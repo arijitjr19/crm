@@ -51,8 +51,10 @@ export interface ISettings {
   id: number;
   roleId: number;
   roleName: string;
-  teams: StaffTeam[];
-  teamIds: number[];
+  clients: any[];
+  clientIds: number[];
+  numberOfClients: string;
+  hasAccessToAllClients: boolean;
   isNotifyTimesheetApproval: boolean;
   isSubscribeToNotifications: boolean;
   subscribedEmailCategories: number[];
@@ -66,9 +68,8 @@ export interface ISettings {
 
 export interface IUpdateSettings {
   roleId: number;
-  teamIds: number[];
+  hasAccessToAllClients: boolean;
   isNotifyTimesheetApproval: boolean;
-  isSubscribeToNotifications: boolean;
   subscribedEmailCategories: number[];
   isAvailableForRostering: boolean;
   isReadAndWriteClientPrivateNotes: boolean;

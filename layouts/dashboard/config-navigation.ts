@@ -392,7 +392,18 @@ const navConfig: NavItem[] = (() => {
         hasChild: false
       }
     ];
-  } else {
+  } else if (role === "ROLE_CLIENT") {
+    return [
+       {
+        title: "Web Guidance",
+        path: "/web-guidance",
+        icon: MenuBookIcon,
+        children: [],
+        hasChild: false
+      }
+    ]
+  }
+   else {
     return [
       // {
       //   title: "Roster",

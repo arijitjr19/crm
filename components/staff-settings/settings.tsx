@@ -38,15 +38,17 @@ const StyledBox = styled(Box)`
 
 const schema = yup.object().shape({
   roleId: yup.string().required(validationText.error.role),
-  teamIds: yup.array().of(yup.string()),
+  hasAccessToAllClients: yup.boolean().required(),
+  clients: yup.array().notRequired(),
+  clientIds: yup.array().of(yup.string()),
   isNotifyTimesheetApproval: yup.boolean(),
-  isSubscribeToNotifications: yup.boolean(),
-  subscribedEmailCategories: yup.array().of(yup.string()),
+  // isSubscribeToNotifications: yup.boolean(),
+  // subscribedEmailCategories: yup.array().of(yup.string()),
   isAvailableForRostering: yup.boolean(),
-  isReadAndWriteClientPrivateNotes: yup.boolean(),
-  isReadAndWriteStaffPrivateNotes: yup.boolean(),
+  // isReadAndWriteClientPrivateNotes: yup.boolean(),
+  // isReadAndWriteStaffPrivateNotes: yup.boolean(),
   isAccess: yup.boolean(),
-  isAccountOwner: yup.boolean()
+  // isAccountOwner: yup.boolean()
 });
 
 export default function Settings({ settings }: { settings: ISettings }) {
@@ -73,24 +75,27 @@ export default function Settings({ settings }: { settings: ISettings }) {
     }
   });
 
-  console.log("===================== SETTING DATA =========================",data);
+  console.log("===================== SETTING DATA =========================", data);
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      roleId: settings.roleId,
-      teamIds: settings.teamIds,
-      isNotifyTimesheetApproval: settings.isNotifyTimesheetApproval,
-      isSubscribeToNotifications: settings.isSubscribeToNotifications || false,
-      subscribedEmailCategories: settings.subscribedEmailCategories,
-      isAvailableForRostering: settings.isAvailableForRostering,
+      roleId: settings?.roleId,
+      hasAccessToAllClients: settings?.hasAccessToAllClients,
+      clients: settings?.clients,
+      clientIds: settings?.clientIds,
+      isNotifyTimesheetApproval: settings?.isNotifyTimesheetApproval,
+      subscribedEmailCategories: settings?.subscribedEmailCategories,
+      isAvailableForRostering: settings?.isAvailableForRostering,
       isReadAndWriteClientPrivateNotes:
-        settings.isReadAndWriteClientPrivateNotes,
-      isReadAndWriteStaffPrivateNotes: settings.isReadAndWriteStaffPrivateNotes,
-      isAccess: settings.isAccess,
-      isAccountOwner: settings.isAccountOwner
+        settings?.isReadAndWriteClientPrivateNotes,
+      isReadAndWriteStaffPrivateNotes: settings?.isReadAndWriteStaffPrivateNotes,
+      isAccess: settings?.isAccess,
+      isAccountOwner: settings?.isAccountOwner
     }
   });
+
+  const hasAccessToAllClients = watch("hasAccessToAllClients");
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateSettings,
@@ -166,7 +171,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
             ) : (
               <Chip
                 variant="outlined"
-                label={settings.roleName
+                label={settings?.roleName
                   ?.replace("ROLE_", "")
                   .replaceAll("_", " ")
                   .toLowerCase()}
@@ -177,6 +182,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
             )}
           </Grid>
           <Grid item lg={5} md={6} sm={12} xs={12}>
+            <Typography variant="body1">Access To All Participants</Typography>
             <Typography variant="body1">Teams:</Typography>
           </Grid>
           <Grid item lg={7} md={6} sm={12} xs={12}>
@@ -248,7 +254,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
           <Grid item lg={7} md={6} sm={12} xs={12}>
             {edit ? (
               <Controller
-                name="isNotifyTimesheetApproval"
+                name="hasAccessToAllClients"
                 control={control}
                 render={({ field }) => (
                   <FormControlLabel
@@ -261,11 +267,16 @@ export default function Settings({ settings }: { settings: ISettings }) {
               />
             ) : (
               <Iconify
-                icon={`eva:${
-                  settings.isNotifyTimesheetApproval ? "checkmark" : "close"
-                }-fill`}
+                icon={`eva:${settings?.hasAccessToAllClients ? "checkmark" : "close"
+                  }-fill`}
               ></Iconify>
             )}
+          </Grid>
+          <Grid item lg={5} md={6} sm={12} xs={12}>
+            <Typography variant="body1">Number of Participant</Typography>
+          </Grid>
+          <Grid item lg={7} md={6} sm={12} xs={12}>
+            <Typography>{settings?.numberOfClients}</Typography>
           </Grid>
           <Grid item lg={5} md={6} sm={12} xs={12}>
             <Typography variant="body1">Available For Rostering</Typography>
@@ -286,76 +297,93 @@ export default function Settings({ settings }: { settings: ISettings }) {
               />
             ) : (
               <Iconify
-                icon={`eva:${
-                  settings.isAvailableForRostering ? "checkmark" : "close"
-                }-fill`}
+                icon={`eva:${settings.isAvailableForRostering ? "checkmark" : "close"
+                  }-fill`}
               ></Iconify>
             )}
           </Grid>
-          <Grid item lg={5} md={6} sm={12} xs={12}>
-            <Typography variant="body1">
-              Read and write private notes
-            </Typography>
-          </Grid>
-          <Grid item lg={7} md={6} sm={12} xs={12}>
-            {edit ? (
-              <>
-                <Controller
-                  name="isReadAndWriteClientPrivateNotes"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Client Notes"
-                      {...field}
-                      checked={field.value}
-                    />
-                  )}
-                />
-                <Controller
-                  name="isReadAndWriteStaffPrivateNotes"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label="Staff Notes"
-                      {...field}
-                      checked={field.value}
-                    />
-                  )}
-                />
-              </>
+          {/* <Grid item lg={5} md={6} sm={12} xs={12}>
+           {!edit &&<Typography variant="body1">
+              Participant
+            </Typography>}
+          </Grid> */}
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            {edit && !hasAccessToAllClients ? (
+              <Grid container spacing={2}>
+                <Grid item lg={5} md={6} sm={12} xs={12}>
+                  <Typography variant="body1">Select Clients</Typography>
+                </Grid>
+                <Grid item lg={7} md={6} sm={12} xs={12}>
+                  <Controller
+                    name="clientIds"
+                    control={control}
+                    render={({
+                      field: { value = [], onChange }, // Ensure `value` is an array
+                      fieldState: { invalid, error }
+                    }) => (
+                      <Box>
+                        <Select
+                          fullWidth
+                          size="small"
+                          displayEmpty
+                          renderValue={
+                            value.length !== 0
+                              ? undefined
+                              : () => "Select Participant"
+                          }
+                          multiple
+                          sx={{ width: "150px" }}
+                          value={value}
+                          onChange={(e) => {
+                            const _value = e.target.value;
+                            onChange(
+                              Array.isArray(_value) ? _value : _value.split(",")
+                            );
+                          }}
+                        >
+                          {settings.clients.map(
+                            (_client: { id: number; displayName: string }) => (
+                              <MenuItem value={_client.id} key={_client.id}>
+                                {_client.displayName}
+                              </MenuItem>
+                            )
+                          )}
+                        </Select>
+                        {invalid && (
+                          <FormHelperText sx={{ color: "#FF5630" }}>
+                            {error?.message}
+                          </FormHelperText>
+                        )}
+                      </Box>
+                    )}
+                  />
+                </Grid>
+              </Grid>
             ) : (
-              <>
-                <Typography
-                  variant="subtitle2"
-                  display="flex"
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <Grid item lg={12} md={12} sm={12} xs={12}>
+                  <Typography variant="body1">Participant</Typography>
+                </Grid>
+                <Stack
+                  direction="row"
                   alignItems="center"
+                  gap={1}
+                  flexWrap="wrap"
+                  overflow="scroll"
                 >
-                  Client Notes
-                  <Iconify
-                    icon={`eva:${
-                      settings.isReadAndWriteClientPrivateNotes
-                        ? "checkmark"
-                        : "close"
-                    }-fill`}
-                  ></Iconify>
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  display="flex"
-                  alignItems="center"
-                >
-                  Staff Notes
-                  <Iconify
-                    icon={`eva:${
-                      settings.isReadAndWriteStaffPrivateNotes
-                        ? "checkmark"
-                        : "close"
-                    }-fill`}
-                  ></Iconify>
-                </Typography>
-              </>
+                  {settings?.clients && settings?.clients?.length > 0 &&
+                    settings?.clients?.map((_client) => (
+                      <Chip
+                        variant="outlined"
+                        label={_client.displayName}
+                        color="primary"
+                        size="small"
+                        key={_client.id}
+                      />
+                    ))
+                  }
+                </Stack>
+              </Grid>
             )}
           </Grid>
           <Grid item lg={5} md={6} sm={12} xs={12}>
@@ -378,31 +406,6 @@ export default function Settings({ settings }: { settings: ISettings }) {
             ) : (
               <Iconify
                 icon={`eva:${settings.isAccess ? "checkmark" : "close"}-fill`}
-              ></Iconify>
-            )}
-          </Grid>
-          <Grid item lg={5} md={6} sm={12} xs={12}>
-            <Typography variant="body1">Account Owner</Typography>
-          </Grid>
-          <Grid item lg={7} md={6} sm={12} xs={12}>
-            {edit ? (
-              <Controller
-                name="isAccountOwner"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label=""
-                    {...field}
-                    checked={field.value}
-                  />
-                )}
-              />
-            ) : (
-              <Iconify
-                icon={`eva:${
-                  settings.isAccountOwner ? "checkmark" : "close"
-                }-fill`}
               ></Iconify>
             )}
           </Grid>

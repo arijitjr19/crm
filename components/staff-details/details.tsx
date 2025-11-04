@@ -38,6 +38,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { LoadingButton } from "@mui/lab";
 import languages from "language-list";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const StyledDetailsBox = styled(Paper)`
   box-shadow: rgba(145, 158, 171, 0.2) 0px 5px 5px -3px,
@@ -104,7 +106,7 @@ const schema = yup.object().shape({
     .trim()
     .required(validationText.error.enter_email),
   mobileNo: yup.string().trim().required(validationText.error.mobile),
-  phoneNo: yup.string().trim().required(validationText.error.phone),
+  phoneNo: yup.string().trim().notRequired(),
   gender: yup.string().trim().required(validationText.error.gender),
   dateOfBirth: yup.date().nullable().required(validationText.error.dob),
   employmentType: yup
@@ -148,7 +150,7 @@ export default function Details({ staff }: { staff: IStaff }) {
       dateOfBirth: dayjs(staff?.dateOfBirth),
       employmentType: staff?.employmentType,
       address: staff?.address,
-      languagesSpoken: staff.languagesSpoken || []
+      languagesSpoken: staff?.languagesSpoken || []
     }
   });
 
@@ -284,45 +286,81 @@ export default function Details({ staff }: { staff: IStaff }) {
                   }}
                 />
               </Grid>
+
               <Grid item lg={3} md={12} sm={12} xs={12}>
-                <Typography variant="body1">Contact:</Typography>
+                <Typography variant="body1" sx={{ mt: 2 }}>Contact:</Typography>
               </Grid>
-              <Grid item lg={9} md={12} sm={12} xs={12}>
-                <Grid container spacing={{ lg: 2, md: 1, sm: 1, xs: 1 }}>
+
+              <Box sx={{ ml: 2.5, mt: 2, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <Grid container spacing={2}>
+                  {/* Mobile Number */}
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
-                      fullWidth
-                      name="phoneNo"
-                      type="number"
-                      placeholder="Enter Mobile Number"
-                      size="small"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PhoneIphoneIcon fontSize="small" />
-                          </InputAdornment>
-                        )
-                      }}
+                    <Controller
+                      control={methods.control}
+                      name="mobileNo"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <Typography variant="body2" sx={{ mb: 0.5, fontSize: 14 }}>
+                            Mobile Number (*)
+                          </Typography>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none", display: "auto" }}
+                            placeholder="Enter mobile number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
+
+                  {/* Phone Number */}
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
-                      fullWidth
-                      name="mobileNo"
-                      type="number"
-                      placeholder="Enter Phone Number"
-                      size="small"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PhoneIcon fontSize="small" />
-                          </InputAdornment>
-                        )
-                      }}
+                    <Controller
+                      control={methods.control}
+                      name="phoneNo"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <Typography variant="body2" sx={{ mb: 0.5, fontSize: 14 }}>
+                            Phone Number (optional)
+                          </Typography>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter phone number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
                 </Grid>
-              </Grid>
+              </Box>
+
               <Grid item lg={6} md={12} sm={12} xs={12}>
                 <Grid container spacing={{ lg: 0, md: 2, sm: 2, xs: 2 }}>
                   <Grid item lg={6.35} md={12} sm={12} xs={12}>
@@ -370,7 +408,7 @@ export default function Details({ staff }: { staff: IStaff }) {
                 </Grid>
               </Grid>
               <Grid item lg={6} md={12} sm={12} xs={12}>
-                <Grid container gap={{ lg: 4, md: 2, sm: 2, xs: 2 }}>
+                <Grid container display={"flex"} gap={{ lg: 4, md: 2, sm: 2, xs: 2 }} >
                   <Grid
                     item
                     lg={3}

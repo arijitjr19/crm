@@ -12,6 +12,7 @@ export const endpoints = {
   auth: {
     signup: "/auth/register",
     login: "/auth/signin",
+    client_login: "/auth/signin/client",
     set_password: "/auth/set-password",
     forgot_password: "/auth/forgot-password",
     reset_password: "/auth/reset-password",
@@ -139,6 +140,14 @@ export const endpoints = {
     get_client_sub_category: "/clientDocument-subcategories/all",
     update_client_document: (subCategoryId: string, documentId: string) =>
       `/clientDocument-subcategories/update-documents/${subCategoryId}/${documentId}`,
+    create_price_import: () => `/priceBook/import`,
+    get_all_shifts: "/shift/getAllActiveShift/ForAClient",
+    get_sign_document_pending_client: (clientId: string) =>
+      `/documents/consent/client/${clientId}/pending`,
+    submit_sign_document_Review: (consentId: string) =>
+      `/documents/consent/review/${consentId}`,
+    get_sign_document_history: (documentId: string) =>
+      `/documents/consent/${documentId}/history`,
       //  create_price_import: () => `/priceBook/import`
     create_price_import: () => `/priceBook/uploadNew`,
     get_admin_notifications: (clientId: string) =>

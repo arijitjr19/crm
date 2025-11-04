@@ -163,11 +163,13 @@ export default function LoginView() {
                   label="Email Address"
                   type="email"
                   size="small"
+                  sx={{width: "100%"}}
                 />
                 <CustomInput
                   label="Password"
                   name="password"
                   size="small"
+                  sx={{width: "100%"}}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (

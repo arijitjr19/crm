@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import moment, { Moment } from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ShiftBox } from "../Timesheet/TimeSheetTable";
+import { getRole } from "@/lib/functions/_helpers.lib";
+import { ShiftBoxParticipant } from "../Timesheet/TimeSheetTableParticipant";
 
 const StyledContainer = styled(Box)`
   table {
@@ -49,11 +51,20 @@ export default function CalendarComponent({
   date: Moment;
   shifts: Shift[];
 }) {
+  const [role, setRole] = useState("");
+
   const startOfMonth = moment(date).startOf("month");
   const endOfMonth = moment(date).endOf("month");
   const firstWeek = startOfMonth.weeks();
   const endWeek = endOfMonth.weeks();
   const numberOfWeeksInMonth = endWeek - firstWeek + 1;
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedRole = sessionStorage.getItem("user_role") || "";
+      setRole(storedRole);
+    }
+  }, [typeof window]);
 
   return (
     <StyledContainer>
@@ -99,7 +110,16 @@ export default function CalendarComponent({
                         >
                           {day.format("DD")}
                         </Typography>
-                        <ShiftBox shifts={filteredShifts} isMonthly />
+
+                        {role === "ROLE_CLIENT" ? (
+                          <ShiftBoxParticipant
+                            shifts={filteredShifts}
+                            isMonthly
+                          />
+                        ) : (
+                          <></>
+                          // <ShiftBox shifts={filteredShifts} isMonthly />
+                        )}
                       </TableCell>
                     );
                   })}

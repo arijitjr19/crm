@@ -30,8 +30,12 @@ export const userSlice = createSlice({
       state.accessToken = null;
       destroyCookie(null, "user", { path: "/" });
       destroyCookie(null, process.env.NEXT_APP_TOKEN_NAME!, { path: "/" });
-
-      window.location.href = "/auth/signin";
+      const role = sessionStorage.getItem("user_role");
+      if (role === "ROLE_CLIENT") {
+        window.location.href = "/auth/client/signin";
+      } else {
+        window.location.href = "/auth/signin";
+      }
     }
   },
   extraReducers: {}

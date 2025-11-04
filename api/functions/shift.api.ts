@@ -158,14 +158,8 @@ export const cancelShiftInBulk = async (shiftIds: number[]) => {
   return res.data;
 };
 
-export const getAllShiftsIdList = async ({ token }: { token?: string }) => {
-  const res = await axiosInstance.get(endpoints.shift.get_all_shift_id, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`
-        }
-      : {}
-  });
+export const getAllShiftsIdList = async () => {
+  const res = await axiosInstance.get(endpoints.shift.get_all_shift_id);
   return res.data;
 };
 
