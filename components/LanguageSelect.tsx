@@ -1,12 +1,13 @@
 import {
-    Box,
-    Select,
-    MenuItem,
-    Checkbox,
-    ListItemText,
-    FormHelperText,
-    SelectChangeEvent,
-  } from "@mui/material";
+  Box,
+  Checkbox,
+  FormHelperText,
+  ListItemText,
+  MenuItem,
+  Select,
+  type SelectChangeEvent,
+} from "@mui/material";
+
   import React from "react";
   
   interface LanguageOption {

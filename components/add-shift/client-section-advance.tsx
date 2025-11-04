@@ -58,9 +58,9 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from "rea
       edit,
       shift,
     }: {
-      view?: boolean;
-      edit?: boolean;
-      shift?: Shift;
+      view: boolean;
+      edit: boolean;
+      shift: Shift;
     },
     ref
   ) {
