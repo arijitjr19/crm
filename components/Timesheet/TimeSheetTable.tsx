@@ -340,7 +340,7 @@ export default function TimeSheetTable({
 
   const { data: ShiftIdList } = useQuery({
     queryKey: ["shift_id_list"],
-    queryFn: () => getAllShiftsIdList({ token })
+    queryFn: getAllShiftsIdList
   });
   // console.log(":::::::::::::TOKEN::::::::::::", token);
 

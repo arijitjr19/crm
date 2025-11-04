@@ -140,7 +140,7 @@ export const endpoints = {
     get_client_sub_category: "/clientDocument-subcategories/all",
     update_client_document: (subCategoryId: string, documentId: string) =>
       `/clientDocument-subcategories/update-documents/${subCategoryId}/${documentId}`,
-    create_price_import: () => `/priceBook/import`,
+    // create_price_import: () => `/priceBook/import`,
     get_all_shifts: "/shift/getAllActiveShift/ForAClient",
     get_sign_document_pending_client: (clientId: string) =>
       `/documents/consent/client/${clientId}/pending`,

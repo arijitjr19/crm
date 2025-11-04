@@ -165,10 +165,8 @@ export default function Index() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: addStaff,
-    onSuccess: router.back
-  const { mutate, isPending } = useMutation({  
-    mutationFn: addStaff
-  });
+    onSuccess: router.back,
+  })
 
   const onSubmit = (data: IStaffPost) => {
     console.log("Submitting data:", data); // 👈 check this

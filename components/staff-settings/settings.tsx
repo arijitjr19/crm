@@ -185,7 +185,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
             <Typography variant="body1">Access To All Participants</Typography>
             <Typography variant="body1">Teams:</Typography>
           </Grid>
-          <Grid item lg={7} md={6} sm={12} xs={12}>
+          {/* <Grid item lg={7} md={6} sm={12} xs={12}>
             {edit ? (
               <Controller
                 name="teamIds"
@@ -247,7 +247,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
                 ))}
               </Stack>
             )}
-          </Grid>
+          </Grid> */}
           <Grid item lg={5} md={6} sm={12} xs={12}>
             <Typography variant="body1">Notify Timesheet Approval</Typography>
           </Grid>

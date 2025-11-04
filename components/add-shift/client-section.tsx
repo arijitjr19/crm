@@ -58,9 +58,9 @@ import CloseIcon from "@mui/icons-material/Close";
       edit,
       shift,
     }: {
-      view?: boolean;
-      edit?: boolean;
-      shift?: Shift;
+      view: boolean;
+      edit: boolean;
+      shift: Shift;
     },
     ref
   ) {
