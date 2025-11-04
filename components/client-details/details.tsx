@@ -40,6 +40,9 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import Iconify from "../Iconify/Iconify";
 import { getRole } from "@/lib/functions/_helpers.lib";
+import LanguageSelect from "../LanguageSelect";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 
 const StyledDetailsBox = styled(Paper)`
   box-shadow: rgba(145, 158, 171, 0.2) 0px 5px 5px -3px,
@@ -114,7 +117,7 @@ const schema = yup.object().shape({
   apartmentNumber: yup.string().trim().required(validationText.error.apartment),
   address: yup.string().trim().required(validationText.error.address),
   contactNumber: yup.string().trim().required(validationText.error.phone),
-  mobileNumber: yup.string().trim().required(validationText.error.mobile),
+  mobileNumber: yup.string().trim(),
   email: yup.string().email().trim().required(validationText.error.enter_email),
   religion: yup.string().trim().required(validationText.error.religion),
   maritalStatus: yup
@@ -403,9 +406,9 @@ export default function Details({ client }: { client: IClient }) {
               <Grid item lg={9} md={12} sm={12} xs={12}>
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
+                    {/* <CustomInput
                       fullWidth
-                      name="contactNumber"
+                      name="contactNumber"    
                       type="number"
                       placeholder="Enter Mobile Number"
                       InputProps={{
@@ -415,10 +418,37 @@ export default function Details({ client }: { client: IClient }) {
                           </InputAdornment>
                         )
                       }}
+                    /> */}
+                    
+                    <Controller
+                      control={methods.control}
+                      name="contactNumber"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter mobile number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
-                    <CustomInput
+                    {/* <CustomInput
                       fullWidth
                       name="mobileNumber"
                       type="number"
@@ -430,6 +460,32 @@ export default function Details({ client }: { client: IClient }) {
                           </InputAdornment>
                         )
                       }}
+                    /> */}
+                     <Controller
+                      control={methods.control}
+                      name="mobileNumber"
+                      render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <Box>
+                          <PhoneInput
+                            country={"au"}
+                            value={value}
+                            onChange={onChange}
+                            inputStyle={{
+                              width: "100%",
+                              height: "40px",
+                              fontSize: "14px",
+                              paddingLeft: "48px",
+                            }}
+                            buttonStyle={{ border: "none" }}
+                            placeholder="Enter mobile number"
+                          />
+                          {error && (
+                            <FormHelperText sx={{ color: "#FF5630" }}>
+                              {error.message}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                      )}
                     />
                   </Grid>
                 </Grid>
@@ -517,7 +573,7 @@ export default function Details({ client }: { client: IClient }) {
                 <Typography variant="body1">Languages Spoken:</Typography>
               </Grid>
               <Grid item lg={9} md={12} sm={12} xs={12}>
-                <Controller
+                {/* <Controller
                   control={methods.control}
                   name="language"
                   render={({
@@ -565,6 +621,21 @@ export default function Details({ client }: { client: IClient }) {
                         </FormHelperText>
                       )}
                     </Box>
+                  )}
+                /> */}
+
+                <Controller
+                  name="language"
+                  control={methods.control}
+                  defaultValue={[]} // ✅ must be an array
+                  render={({ field, fieldState }) => (
+                    <LanguageSelect
+                      value={field.value || []}
+                      onChange={field.onChange}
+                      invalid={!!fieldState.error}
+                      error={fieldState.error}
+                      language_list={language_list}
+                    />
                   )}
                 />
               </Grid>
@@ -614,13 +685,13 @@ export default function Details({ client }: { client: IClient }) {
                   {client.contactNumber ? (
                     <>
                       <Iconify icon="eva:smartphone-outline"></Iconify>
-                      {client.contactNumber}
+                      +{client.contactNumber}
                     </>
                   ) : null}{" "}
                   {client.mobileNumber ? (
                     <>
                       <Iconify icon="eva:phone-fill"></Iconify>
-                      {client.mobileNumber}
+                      +{client.mobileNumber}
                     </>
                   ) : null}{" "}
                   {client.email ? (

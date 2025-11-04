@@ -106,7 +106,7 @@ function renderContent(notification: Notification) {
 
 interface NotificationItemProps {
   notification: Notification;
-  userid: string;
+  userid: string;   
 }
 
 function NotificationItem({ notification, userid }: NotificationItemProps) {

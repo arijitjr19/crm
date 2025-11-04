@@ -647,3 +647,59 @@ export const priceImport = async (body: { file: FormData }) => {
 //   );
 //   return res.data;
 // };
+
+export const getAdminNotifications = async (clientId: string) => {
+  const res = await axiosInstance.get(
+    endpoints.client.get_admin_notifications(clientId)
+  );
+  return res.data;
+};
+
+export const getEmployeeNotifications = async (clientId: string) => {
+  const res = await axiosInstance.get(
+    endpoints.client.get_employee_notifications(clientId)
+  );
+  return res.data;
+};
+
+export const getClientNotifications = async (clientId: string) => {
+  const res = await axiosInstance.get(
+    endpoints.client.get_client_notifications(clientId)
+  );
+  return res.data;
+};
+
+export const getShiftByIdFromNotification = async (clientId: string) => {
+  const res = await axiosInstance.get(
+    endpoints.client.get_shift_by_id_from_notification(clientId)
+  );
+  return res.data;
+};
+
+export const getShiftByDocumentIdFromNotification = async (
+  clientId: string
+) => {
+  const res = await axiosInstance.get(
+    endpoints.client.get_document_by_document_id_from_notification(clientId)
+  );
+  return res.data;
+};
+
+export const updateMarkRead = async ({
+  notificationId,
+  userId
+}: {
+  notificationId: string;
+  userId: string;
+}) => {
+  try {
+    const res = await axiosInstance.put(
+      endpoints.client.update_mark_read(notificationId, userId),
+      {}
+    );
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};

@@ -6,13 +6,14 @@ import {
   DialogActions,
   Divider,
   FormControlLabel,
+  FormHelperText,
   Grid,
   MenuItem,
   Select,
   Typography
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Iconify from "../Iconify/Iconify";
 import { ClientContact, ClientContactBody } from "@/interface/client.interface";
 import MuiModalWrapper from "@/ui/Modal/MuiModalWrapper";
@@ -32,6 +33,8 @@ import { idID } from "@mui/material/locale";
 import { useParams } from "next/navigation";
 import CustomInput from "@/ui/Inputs/CustomInput";
 import { getRole } from "@/lib/functions/_helpers.lib";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 
 const StyledGrid = styled(Grid)`
   p {
@@ -55,6 +58,7 @@ const salutation_list = [
 ];
 
 const schema = yup.object().shape({
+  // isSalutationRequired:yup.boolean(),
   salutation: yup.string().nullable(),
   firstName: yup.string().required(validationText.error.firstName),
   lastName: yup.string().nullable(),
@@ -83,6 +87,7 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      // isSalutationRequired:contact.isSalutationRequired,
       salutation: contact.salutation,
       firstName: contact.firstName,
       lastName: contact.lastName,
@@ -101,6 +106,8 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
       billingContact: contact.billingContact
     }
   });
+
+
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateClientContact,
@@ -226,7 +233,10 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
               >
                 Delete
               </LoadingButton>
-              <Button variant="outlined">Cancel</Button>
+              <Button variant="outlined" onClick={() => {
+  setEdit(false);
+  setOpen(false);
+}}>Cancel</Button>
               <LoadingButton
                 variant="contained"
                 onClick={() =>
@@ -283,15 +293,19 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
                   sx={{ display: "flex", alignItems: "center", gap: "5px" }}
                 >
                   <Iconify icon="eva:smartphone-outline"></Iconify>
-                  {contact.mobileNumber}
+                  +{contact.mobileNumber}
                 </Typography>
-                <Typography
+
+                {contact.phoneNumber && (
+                  <Typography
                   variant="body1"
                   sx={{ display: "flex", alignItems: "center", gap: "5px" }}
                 >
                   <Iconify icon="eva:phone-fill"></Iconify>
-                  {contact.phoneNumber}
+                  +{contact.phoneNumber}
                 </Typography>
+                )}
+                
                 <Typography
                   variant="body1"
                   sx={{ display: "flex", alignItems: "center", gap: "5px" }}
@@ -303,7 +317,7 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
             </Grid>
             <Grid item lg={3} md={4} sm={12} xs={12}>
               <Typography variant="body1" className="left-title">
-                Company information:
+                Company information: 
               </Typography>
             </Grid>
             <Grid item lg={9} md={8} sm={12} xs={12}>
@@ -361,31 +375,34 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
                         label="Use salutation"
                       />
                     </Box>
-                    <Controller
-                      name="salutation"
-                      control={methods.control}
-                      render={({ field }) => (
-                        <Select
-                          size="small"
-                          fullWidth
-                          displayEmpty
-                          renderValue={
-                            field.value !== ""
-                              ? undefined
-                              : () => "Select Salutation"
-                          }
-                          {...field}
-                          disabled={!salutation}
-                          defaultValue={salutation ? salutation_list[0] : ""}
-                        >
-                          {salutation_list.map((_salutation) => (
-                            <MenuItem value={_salutation} key={_salutation}>
-                              {_salutation}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      )}
-                    />
+                    {salutation && (
+                        <Controller
+                        name="salutation"
+                        control={methods.control}
+                        render={({ field }) => (
+                          <Select
+                            size="small"
+                            fullWidth
+                            displayEmpty
+                            renderValue={
+                              field.value !== ""
+                                ? undefined
+                                : () => "Select Salutation"
+                            }
+                            {...field}
+                            // disabled={!salutation}
+                            defaultValue={salutation ? salutation_list[0] : ""}
+                          >
+                            {salutation_list.map((_salutation) => (
+                              <MenuItem value={_salutation} key={_salutation}>
+                                {_salutation}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                    )}
+                  
                   </Grid>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
                     <CustomInput
@@ -433,7 +450,7 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
                   Contact:
                 </Typography>
               </Grid>
-              <Grid item lg={9} md={8} sm={12} xs={12}>
+              {/* <Grid item lg={9} md={8} sm={12} xs={12}>
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={12} sm={12} xs={12}>
                     <CustomInput
@@ -448,7 +465,79 @@ const ContactCard = ({ contact }: { contact: ClientContact }) => {
                     />
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
+
+<Grid item lg={9} md={8} sm={12} xs={12}>
+  <Grid container spacing={2}>
+    {/* Mobile Number Field */}
+    <Grid item lg={6} md={12} sm={12} xs={12}>
+      <Controller
+        control={methods.control}
+        name="mobileNumber"
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <Box>
+            <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+              Mobile Number
+            </Typography>
+            <PhoneInput
+              country={"au"}
+              value={value}
+              onChange={onChange}
+              inputStyle={{
+                width: "100%",
+                height: "40px",
+                fontSize: "14px",
+                paddingLeft: "48px",
+              }}
+              buttonStyle={{ border: "none" }}
+              placeholder="Enter mobile number"
+            />
+            {error && (
+              <FormHelperText sx={{ color: "#FF5630" }}>
+                {error.message}
+              </FormHelperText>
+            )}
+          </Box>
+        )}
+      />
+    </Grid>
+
+    {/* Phone Number Field */}
+    <Grid item lg={6} md={12} sm={12} xs={12}>
+      <Controller
+        control={methods.control}
+        name="phoneNumber"
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <Box>
+            <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+              Phone Number (Optional)
+            </Typography>
+            <PhoneInput
+              country={"au"}
+              value={value}
+              onChange={onChange}
+              inputStyle={{
+                width: "100%",
+                height: "40px",
+                fontSize: "14px",
+                paddingLeft: "48px",
+              }}
+              buttonStyle={{ border: "none" }}
+              placeholder="Enter phone number"
+            />
+            {error && (
+              <FormHelperText sx={{ color: "#FF5630" }}>
+                {error.message}
+              </FormHelperText>
+            )}
+          </Box>
+        )}
+      />
+    </Grid>
+  </Grid>
+</Grid>
+
+              
               <Grid item lg={3} md={4} sm={12} xs={12}>
                 <Typography variant="body1" className="left-title">
                   Relation:
@@ -559,6 +648,8 @@ export default function ClientAdditionalContacts({
 
   const { id } = useParams();
 
+
+
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -577,9 +668,11 @@ export default function ClientAdditionalContacts({
       referenceNumber: "",
       customField: "",
       primaryContact: false,
-      billingContact: false
+      billingContact: false,
+      // isSalutationRequired:false,
     }
   });
+  
 
   const { mutate, isPending } = useMutation({
     mutationFn: addClientContact,
@@ -600,6 +693,30 @@ export default function ClientAdditionalContacts({
       }
     });
   };
+
+
+  // useEffect(() => {
+  //   if (contacts && id) {
+  //     const matchedContact = contacts.find(
+  //       (contact: any) => contact.id.toString() === id.toString()
+  //     );
+      
+  //     if (matchedContact) {
+  //       setSalutation(matchedContact.isSalutationRequired);
+  //       console.log("*********************Matched Contact", matchedContact.isSalutationRequired);
+  //     } else {
+  //       console.log("+++++++++++++++++++++No contact found with id:", id);
+  //     }
+  //   }
+  // }, [contacts, id]);
+
+  useEffect(() => {
+    if (contacts) {
+      setSalutation(contacts[1].isSalutationRequired);
+    }
+  }, [contacts, methods]);
+  
+  
 
   return (
     <StyledPaper>
@@ -649,7 +766,7 @@ export default function ClientAdditionalContacts({
               gap={2}
               sx={{ flex: 1 }}
             >
-              <Button variant="outlined">Cancel</Button>
+              <Button variant="outlined"  onClick={() => setOpen(false)} >Cancel</Button>
               <LoadingButton
                 variant="contained"
                 onClick={methods.handleSubmit(onSubmit)}
@@ -676,7 +793,7 @@ export default function ClientAdditionalContacts({
                       control={
                         <Checkbox
                           checked={salutation}
-                          size="small"
+                          size="small"  
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
@@ -687,31 +804,34 @@ export default function ClientAdditionalContacts({
                       label="Use salutation"
                     />
                   </Box>
-                  <Controller
-                    name="salutation"
-                    control={methods.control}
-                    render={({ field }) => (
-                      <Select
-                        size="small"
-                        fullWidth
-                        displayEmpty
-                        renderValue={
-                          field.value !== ""
-                            ? undefined
-                            : () => "Select Salutation"
-                        }
-                        {...field}
-                        disabled={!salutation}
-                        defaultValue={salutation ? salutation_list[0] : ""}
-                      >
-                        {salutation_list.map((_salutation) => (
-                          <MenuItem value={_salutation} key={_salutation}>
-                            {_salutation}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
+                  {salutation && (
+                      <Controller
+                      name="salutation"
+                      control={methods.control}
+                      render={({ field }) => (
+                        <Select
+                          size="small"
+                          fullWidth
+                          displayEmpty
+                          renderValue={
+                            field.value !== ""
+                              ? undefined
+                              : () => "Select Salutation"
+                          }
+                          {...field}
+                          // disabled={!salutation}
+                          defaultValue={salutation ? salutation_list[0] : ""}
+                        >
+                          {salutation_list.map((_salutation) => (
+                            <MenuItem value={_salutation} key={_salutation}>
+                              {_salutation}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                  )}
+                
                 </Grid>
                 <Grid item lg={6} md={12} sm={12} xs={12}>
                   <CustomInput
@@ -756,7 +876,7 @@ export default function ClientAdditionalContacts({
                 Contact:
               </Typography>
             </Grid>
-            <Grid item lg={9} md={8} sm={12} xs={12}>
+            {/* <Grid item lg={9} md={8} sm={12} xs={12}>
               <Grid container spacing={2}>
                 <Grid item lg={6} md={12} sm={12} xs={12}>
                   <CustomInput
@@ -771,7 +891,77 @@ export default function ClientAdditionalContacts({
                   />
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
+            <Grid item lg={9} md={8} sm={12} xs={12}>
+  <Grid container spacing={2}>
+    {/* Mobile Number Field */}
+    <Grid item lg={6} md={12} sm={12} xs={12}>
+      <Controller
+        control={methods.control}
+        name="mobileNumber"
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <Box>
+            <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+              Mobile Number
+            </Typography>
+            <PhoneInput
+              country={"au"}
+              value={value}
+              onChange={onChange}
+              inputStyle={{
+                width: "100%",
+                height: "40px",
+                fontSize: "14px",
+                paddingLeft: "48px",
+              }}
+              buttonStyle={{ border: "none" }}
+              placeholder="Enter mobile number"
+            />
+            {error && (
+              <FormHelperText sx={{ color: "#FF5630" }}>
+                {error.message}
+              </FormHelperText>
+            )}
+          </Box>
+        )}
+      />
+    </Grid>
+
+    {/* Phone Number Field */}
+    <Grid item lg={6} md={12} sm={12} xs={12}>
+      <Controller
+        control={methods.control}
+        name="phoneNumber"
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <Box>
+            <Typography variant="body2" sx={{ mb: 0.5, fontSize: 16 }}>
+              Phone Number (Optional)
+            </Typography>
+            <PhoneInput
+              country={"au"}
+              value={value}
+              onChange={onChange}
+              inputStyle={{
+                width: "100%",
+                height: "40px",
+                fontSize: "14px",
+                paddingLeft: "48px",
+              }}
+              buttonStyle={{ border: "none" }}
+              placeholder="Enter phone number"
+            />
+            {error && (
+              <FormHelperText sx={{ color: "#FF5630" }}>
+                {error.message}
+              </FormHelperText>
+            )}
+          </Box>
+        )}
+      />
+    </Grid>
+  </Grid>
+</Grid>
+
             <Grid item lg={3} md={4} sm={12} xs={12}>
               <Typography variant="body1" className="left-title">
                 Relation:

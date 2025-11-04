@@ -1074,7 +1074,7 @@ const BillingReport = () => {
           maxWidth="lg"
         >
           <DialogTitle>
-            New Invoice
+            New Invoice 
             <IconButton
               aria-label="close"
               onClick={handleCloseModalNewInvoice}

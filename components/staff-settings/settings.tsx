@@ -230,7 +230,7 @@ export default function Settings({ settings }: { settings: ISettings }) {
                 gap={1}
                 flexWrap="wrap"
               >
-                {settings.teams.map((_team) => (
+                {settings?.teams?.map((_team) => (
                   <Chip
                     variant="outlined"
                     label={_team.teamName}

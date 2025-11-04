@@ -233,7 +233,7 @@ const NewInvoice = ({
                         </TableRow>
                       )}
                       {/* Third Row - Distance */}
-                      {report.fixedRate && (
+                      {/* {report.fixedRate && (
                         <TableRow>
                           <TableCell>{report.description}</TableCell>
                           <TableCell>Fixed Rate</TableCell>
@@ -250,7 +250,26 @@ const NewInvoice = ({
                             {(report.fixedRate ?? "").toFixed(2)}
                           </TableCell>
                         </TableRow>
-                      )}
+                      )} */}
+                      {report.fixedRate != null && (
+                          <TableRow>
+                            <TableCell>{report.description}</TableCell>
+                            <TableCell>Fixed Rate</TableCell>
+                            <TableCell sx={{ textAlign: "right" }}>
+                              <Typography>1</Typography>
+                            </TableCell>
+                            <TableCell sx={{ textAlign: "right" }}>
+                              {report.fixedRate.toFixed(2)}
+                            </TableCell>
+                            <TableCell sx={{ textAlign: "right" }}>
+                              {report.fixedTax?.toFixed(2) ?? ""}
+                            </TableCell>
+                            <TableCell sx={{ textAlign: "right" }}>
+                              {report.fixedRate.toFixed(2)}
+                            </TableCell>
+                          </TableRow>
+                        )}
+
 
                       {/* Separator Row */}
                       <TableRow>

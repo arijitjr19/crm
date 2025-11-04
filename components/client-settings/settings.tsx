@@ -354,7 +354,7 @@ export default function Settings({ settings }: { settings: ClientSettings }) {
               )}
             </Grid>
             {/*  */}
-            <Grid item lg={5} md={6} sm={12} xs={12}>
+            {/* <Grid item lg={5} md={6} sm={12} xs={12}>
               <Typography variant="body1">Teams:</Typography>
             </Grid>
             <Grid item lg={7} md={6} sm={12} xs={12}>
@@ -419,7 +419,7 @@ export default function Settings({ settings }: { settings: ClientSettings }) {
                   ))}
                 </Stack>
               )}
-            </Grid>
+            </Grid> */}
             <Grid item lg={5} md={6} sm={12} xs={12}>
               <Typography variant="body1">Share Progress Notes:</Typography>
             </Grid>

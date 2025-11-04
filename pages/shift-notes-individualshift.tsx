@@ -574,10 +574,12 @@ const schema = yup.object().shape({
 
 export default function ShiftNotesIndividualShift({
   id: shiftId,
-  clients
+  clients,
+  onClose
 }: {
   id: string;
   clients: IClient[];
+  onClose: () => void;
 }) {
   const { data: tempraryclients } = useQuery({
     queryKey: ["client_list"],
@@ -944,7 +946,7 @@ export default function ShiftNotesIndividualShift({
               </Grid>
             </Grid>
           </FormProvider>
-          <Stack
+          {/* <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -964,7 +966,42 @@ export default function ShiftNotesIndividualShift({
                 Save Note
               </LoadingButton>
             </Tooltip>
-          </Stack>
+          </Stack> */}
+          <Stack
+  direction="row"
+  justifyContent="space-between"
+  alignItems="center"
+  marginTop={3}
+  marginBottom={5}
+>
+  <input
+    type="file"
+    onChange={(e) => setDocuments(e.target.files?.[0])}
+  />
+
+  <Stack direction="row" spacing={2}>
+    <Tooltip title="To save the note">
+      <LoadingButton
+        variant="contained"
+        onClick={methods.handleSubmit(onSubmit)}
+        loading={isPending}
+      >
+        Save Note
+      </LoadingButton>
+    </Tooltip>
+
+    <Tooltip title="Close this dialog">
+      <Button
+        variant="contained"
+        color="error"
+        onClick={()=>onClose()} // <-- your close handler
+      >
+        Close
+      </Button>
+    </Tooltip>
+  </Stack>
+</Stack>
+
         </Box>
       </StyledPaper>
     </StyledBox>

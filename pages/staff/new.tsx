@@ -152,7 +152,7 @@ export default function Index() {
     }
   };
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({  
     mutationFn: addStaff
   });
 

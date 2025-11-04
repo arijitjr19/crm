@@ -16,11 +16,13 @@ import StyledPaper from "@/ui/Paper/Paper";
 import {
   Button,
   CardActions,
+  Checkbox,
   CircularProgress,
   Divider,
   FormHelperText,
   Grid,
   IconButton,
+  ListItemText,
   MenuItem,
   Select,
   Typography
@@ -30,7 +32,6 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useRouter } from "next/router";
@@ -39,16 +40,30 @@ import CardContent from "@mui/material/CardContent";
 import CloseIcon from "@mui/icons-material/Close";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
-export default function ClientSectionAdvance({
-  view,
-  edit,
-  shift
-}: {
-  view?: boolean;
-  edit?: boolean;
-  shift?: Shift;
-}) {
+// export default function ClientSectionAdvance({
+//   view,
+//   edit,
+//   shift
+// }: {
+//   view?: boolean;
+//   edit?: boolean;
+//   shift?: Shift;
+// }) {
+
+  export default forwardRef(function ClientSectionAdvance(
+    {
+      view,
+      edit,
+      shift,
+    }: {
+      view?: boolean;
+      edit?: boolean;
+      shift?: Shift;
+    },
+    ref
+  ) {
   // console.log("Selcted Shift ::::::::::::::::::", shift?.funds?.fundId);
   // console.log("Selcted Shift ::::::::::::::::::", shift?.priceBooks?.id);
   // console.log("Selcted Shift ::::::::::::::::::", shift?.funds?.fundId);
@@ -175,6 +190,22 @@ export default function ClientSectionAdvance({
     }
   };
 
+
+    // ------------ Child to parent access start here -------------
+    const handleRemoveAllNames = () => {
+      console.log("------------ Selected participant get removed! ------------")
+      // Clear the displayed names
+      setSelectedDisplayNames("");
+      // Clear all client IDs from the form
+      setValue("clientIds", []);
+    };
+  
+     // ✅ Expose the function to the parent
+     useImperativeHandle(ref, () => ({
+      handleRemoveAllNames,
+    }));
+     // ------------ Child to parent access end here -------------
+
   return (
     <>
       <StyledPaper>
@@ -225,63 +256,124 @@ export default function ClientSectionAdvance({
                   name="clientIds"
                   render={({ field, fieldState: { error, invalid } }) => {
                     return (
+                      // <Box>
+                      //   <Select
+                      //     fullWidth
+                      //     size="small"
+                      //     {...field}
+                      //     value={Array.isArray(field.value) ? field.value : []} // Ensure value is an array
+                      //     onChange={(e) => {
+                      //       const _value = e.target.value;
+                      //       field.onChange(
+                      //         Array.isArray(_value) ? _value : [_value]
+                      //       ); // Ensure _value is an array
+
+                      //       // Set selectedClientId state
+                      //       setSelectedClientId(
+                      //         Array.isArray(_value) ? _value.join(", ") : _value
+                      //       );
+
+                      //       // Get the selected display names
+                      //       const selectedNames = data
+                      //         ?.filter((client: any) =>
+                      //           _value.includes(client.id)
+                      //         )
+                      //         .map((client: any) => client.displayName)
+                      //         .join(", ");
+
+                      //       setOpen(selectedNames.length);
+                      //       setSelectedDisplayNames(selectedNames);
+                      //       console.log(
+                      //         ":::::::::::::::::: Selected Name of Participant::::::::",
+                      //         selectedNames
+                      //       );
+                      //     }}
+                      //     displayEmpty
+                      //     renderValue={
+                      //       field.value?.length !== 0
+                      //         ? undefined
+                      //         : () => "Select Participant"
+                      //     }
+                      //     multiple
+                      //   >
+                      //     {isLoading ? (
+                      //       <MenuItem disabled>
+                      //         <CircularProgress size={20} />
+                      //         Loading...
+                      //       </MenuItem>
+                      //     ) : (
+                      //       data?.map((_data: IClient) => (
+                      //         <MenuItem value={_data.id} key={_data.id}>
+                      //           {_data.displayName}
+                      //         </MenuItem>
+                      //       ))
+                      //     )}
+                      //   </Select>
+                      //   {invalid && (
+                      //     <FormHelperText>{error?.message}</FormHelperText>
+                      //   )}
+                      // </Box>
+
                       <Box>
-                        <Select
-                          fullWidth
-                          size="small"
-                          {...field}
-                          value={Array.isArray(field.value) ? field.value : []} // Ensure value is an array
-                          onChange={(e) => {
-                            const _value = e.target.value;
-                            field.onChange(
-                              Array.isArray(_value) ? _value : [_value]
-                            ); // Ensure _value is an array
-
-                            // Set selectedClientId state
-                            setSelectedClientId(
-                              Array.isArray(_value) ? _value.join(", ") : _value
-                            );
-
-                            // Get the selected display names
-                            const selectedNames = data
-                              ?.filter((client: any) =>
-                                _value.includes(client.id)
-                              )
-                              .map((client: any) => client.displayName)
-                              .join(", ");
-
-                            setOpen(selectedNames.length);
-                            setSelectedDisplayNames(selectedNames);
-                            console.log(
-                              ":::::::::::::::::: Selected Name of Participant::::::::",
-                              selectedNames
-                            );
-                          }}
-                          displayEmpty
-                          renderValue={
-                            field.value?.length !== 0
-                              ? undefined
-                              : () => "Select Participant"
-                          }
-                          multiple
-                        >
-                          {isLoading ? (
-                            <MenuItem disabled>
-                              <CircularProgress size={20} />
-                              Loading...
+                      <Select
+                        fullWidth
+                        size="small"
+                        multiple
+                        {...field}
+                        value={Array.isArray(field.value) ? field.value : []}
+                        onChange={(e) => {
+                          const _value = e.target.value;
+                          const values = Array.isArray(_value) ? _value : [_value];
+                          field.onChange(values);
+            
+                          // Selected client IDs (as string)
+                          setSelectedClientId(values.join(", "));
+            
+                          // Get selected display names
+                          const selectedNames = data
+                            ?.filter((client: any) => values.includes(client.id))
+                            .map((client: any) => client.displayName)
+                            .join(", ");
+            
+                          setOpen(selectedNames.length);
+                          setSelectedDisplayNames(selectedNames);
+            
+                          console.log(
+                            ":::::::::::::::::: Selected Name of Participant::::::::",
+                            selectedNames
+                          );
+                        }}
+                        displayEmpty
+                        renderValue={(selected) => {
+                          if (!selected || (Array.isArray(selected) && selected.length === 0))
+                            return "Select Participant";
+            
+                          // Display only comma-separated names, not checkboxes
+                          const selectedNames = data
+                            ?.filter((client: any) => selected.includes(client.id))
+                            .map((client: any) => client.displayName)
+                            .join(", ");
+                          return selectedNames;
+                        }}
+                      >
+                        {isLoading ? (
+                          <MenuItem disabled>
+                            <CircularProgress size={20} />
+                            Loading...
+                          </MenuItem>
+                        ) : (
+                          data?.map((_data: any) => (
+                            <MenuItem value={_data.id} key={_data.id}>
+                              <Checkbox
+                                checked={field.value?.includes(_data.id) || false}
+                              />
+                              <ListItemText primary={_data.displayName} />
                             </MenuItem>
-                          ) : (
-                            data?.map((_data: IClient) => (
-                              <MenuItem value={_data.id} key={_data.id}>
-                                {_data.displayName}
-                              </MenuItem>
-                            ))
-                          )}
-                        </Select>
-                        {invalid && (
-                          <FormHelperText>{error?.message}</FormHelperText>
+                          ))
                         )}
-                      </Box>
+                      </Select>
+                      {invalid && <FormHelperText>{error?.message}</FormHelperText>}
+                    </Box>
                     );
                   }}
                 />
@@ -469,4 +561,4 @@ export default function ClientSectionAdvance({
       )}
     </>
   );
-}
+});
