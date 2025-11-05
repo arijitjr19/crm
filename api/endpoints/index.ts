@@ -20,6 +20,9 @@ export const endpoints = {
     last_signin: (id: string) => `/auth/${id}/last-signin`,
     resend_invite: "/auth/verification-link"
   },
+  admin: {
+    admin_dashboard: (date: string) => `/admin/dashboard?month=${date}`,
+  },
   cms: {
     about: "/aboutpolicy/details",
     faq: "/faq/all"

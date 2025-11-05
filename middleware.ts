@@ -10,7 +10,8 @@ export function middleware(request: NextRequest) {
     "/auth/reset-password",
     "/auth/verify",
     "/auth/client/signin",
-    "/auth/employee/signin"
+    "/auth/employee/signin",
+    "/admin-dashboard"
   ];
 
   if (

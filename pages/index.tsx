@@ -33,9 +33,12 @@ export default function Home() {
       {/* Header */}
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Sensible Health
+          <Typography variant="h6" sx={{ flexGrow: 1, color: "white" }}>
+            Shift Care
           </Typography>
+          <Button color="inherit" onClick={() => router.push("/auth/signup")}>
+            Admin sign up
+          </Button>
           <Button color="inherit" onClick={() => router.push("/about")}>
             About
           </Button>
@@ -44,7 +47,7 @@ export default function Home() {
           </Button>
           {/* Sign In Dropdown */}
           <Button color="inherit" onClick={handleMenuOpen}>
-            Sign In
+            Sign in
           </Button>
           <Menu
             anchorEl={anchorEl}
@@ -57,7 +60,7 @@ export default function Home() {
                 handleMenuClose();
               }}
             >
-              Employee Sign In
+              Employee Sign in
             </MenuItem>
             <MenuItem
               onClick={() => {
@@ -65,7 +68,7 @@ export default function Home() {
                 handleMenuClose();
               }}
             >
-              Client Sign In
+              Client Sign in
             </MenuItem>
           </Menu>
         </Toolbar>
@@ -118,17 +121,17 @@ export default function Home() {
       {/* Login Options */}
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Typography variant="h4" align="center" fontWeight={600} sx={{ mb: 4 }}>
-          Sign In
+          Sign in
         </Typography>
         <Grid container spacing={3} justifyContent="center">
           {[
             {
-              title: "Employee Sign In",
+              title: "Employee Sign in",
               path: "/auth/employee/signin",
               bg: "linear-gradient(135deg, #1c92d2, #3a6073)"
             },
             {
-              title: "Client Sign In",
+              title: "Client Sign in",
               path: "/auth/client/signin",
               bg: "linear-gradient(135deg, #16222A, #3A6073, #46A2D9)"
             }
@@ -171,8 +174,8 @@ export default function Home() {
           mt: 6
         }}
       >
-        <Typography variant="body2">
-          &copy; {new Date().getFullYear()} Sensible Health. All Rights
+        <Typography variant="body2" color={"white"}>
+          &copy; {new Date().getFullYear()} Shift care. All Rights
           Reserved.
         </Typography>
       </Box>
