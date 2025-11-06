@@ -149,10 +149,7 @@ const handleGoHome = () => {
       />
 
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
-        <Typography variant="h2">Sign in to your account</Typography>
-        <Typography variant="h6">
-          Or <Link href="/auth/signup">create a new account</Link>
-        </Typography>
+        <Typography variant="h2" mb={3}>Sign in to your account</Typography>
         <Card
           sx={{
             p: 5,

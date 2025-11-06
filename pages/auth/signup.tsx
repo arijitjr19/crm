@@ -137,7 +137,7 @@ export default function LoginView() {
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Typography variant="h2">Create a new account</Typography>
         <Typography variant="h6">
-          Or <Link href="/auth/signin">sign in to your account</Link>
+          Or <Link href="/auth/employee/signin">sign in to your account</Link>
         </Typography>
         <Card
           sx={{
@@ -155,6 +155,7 @@ export default function LoginView() {
                   placeholder="Enter your full name"
                   size="small"
                   type="text"
+                  sx={{width: "100%"}}
                 />
                 <CustomInput
                   label="Email Address"
@@ -162,6 +163,7 @@ export default function LoginView() {
                   placeholder="Enter you email address"
                   type="email"
                   size="small"
+                  sx={{width: "100%"}}
                 />
                 <CustomInput
                   label="Company Name"
@@ -169,6 +171,7 @@ export default function LoginView() {
                   name="company"
                   placeholder="Enter your company name"
                   size="small"
+                  sx={{width: "100%"}}
                 />
                 {/* <Controller
                 control={control}

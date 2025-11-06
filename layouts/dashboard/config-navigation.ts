@@ -24,7 +24,11 @@ import { getRole } from "@/lib/functions/_helpers.lib";
 import { getCookie } from "@/lib/functions/storage.lib";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
+
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 import { useEffect, useState } from "react";
+
 
 export interface NavItem {
   title: string;
@@ -98,9 +102,16 @@ const navConfig: NavItem[] = (() => {
   } else if (role === "ROLE_ADMIN") {
     return [
       {
+        title: "Dashboard",
+        path: "/admin-dashboard",
+        icon: DashboardIcon,
+        children: [],
+        hasChild: false
+      },
+      {
         title: "Scheduler",
         path: "/home",
-        icon: DashboardIcon,
+        icon: CalendarMonthIcon,
         children: [],
         hasChild: false
       },
