@@ -27,7 +27,7 @@ export default function Home() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  
+
 
   return (
     <>
@@ -87,80 +87,6 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        {/* Header */}
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              Sensible Health
-            </Typography>
-            <Button color="inherit" onClick={() => router.push("/about")}>
-              About
-            </Button>
-            <Button color="inherit" onClick={() => router.push("/contact")}>
-              Contact
-            </Button>
-            {/* Sign In Dropdown */}
-            <Button color="inherit" onClick={handleMenuOpen}>
-              Sign In
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem
-                onClick={() => {
-                  router.push("/auth/employee/signin");
-                  handleMenuClose();
-                }}
-              />
-            </div>
-          ))}
-        </Carousel>
-      </Box>
-
-      {/* Login Options */}
-      <Container maxWidth="lg" sx={{ py: 6 }}>
-        <Typography variant="h4" align="center" fontWeight={600} sx={{ mb: 4 }}>
-          Sign in
-        </Typography>
-        <Grid container spacing={3} justifyContent="center">
-          {[
-            {
-              title: "Employee Sign in",
-              path: "/auth/employee/signin",
-              bg: "linear-gradient(135deg, #1c92d2, #3a6073)"
-            },
-            {
-              title: "Client Sign in",
-              path: "/auth/client/signin",
-              bg: "linear-gradient(135deg, #16222A, #3A6073, #46A2D9)"
-            }
-          ].map((login, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <Card
-                sx={{
-                  textAlign: "center",
-                  borderRadius: 2,
-                  boxShadow: 3,
-                  background: login.bg,
-                  color: "white"
-              >
-                Employee Sign In
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  router.push("/auth/client/signin");
-                  handleMenuClose();
-                }}
-              >
-                Client Sign In
-              </MenuItem>
-            </Menu>
-          </Toolbar>
-        </AppBar>
-
-        {/* Main Content */}
         <Box
           sx={{
             flex: 1, // Takes remaining space between header and footer
@@ -224,21 +150,22 @@ export default function Home() {
           </Container>
         </Box>
 
-      {/* Footer */}
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: "primary.main",
-          color: "white",
-          py: 3,
-          textAlign: "center",
-          mt: 6
-        }}
-      >
-        <Typography variant="body2" color={"white"}>
-          &copy; {new Date().getFullYear()} Shift care. All Rights
-          Reserved.
-        </Typography>
+        {/* Footer */}
+        <Box
+          component="footer"
+          sx={{
+            bgcolor: "primary.main",
+            color: "white",
+            py: 3,
+            textAlign: "center",
+            mt: 6
+          }}
+        >
+          <Typography variant="body2" color={"white"}>
+            &copy; {new Date().getFullYear()} Shift care. All Rights
+            Reserved.
+          </Typography>
+        </Box>
       </Box>
     </>
   );
