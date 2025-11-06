@@ -712,7 +712,7 @@ export default function ClientAdditionalContacts({
 
   useEffect(() => {
     if (contacts) {
-      setSalutation(contacts[1].isSalutationRequired);
+      setSalutation(contacts[1]?.isSalutationRequired);
     }
   }, [contacts, methods]);
   

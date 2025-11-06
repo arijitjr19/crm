@@ -82,11 +82,21 @@ export default function StaffSection({
     }
   }, [shift?.client.displayName]);
 
+
+
   useEffect(() => {
     if (router.query.staff) {
-      setStaffId(router.query.staff as string);
+      // console.log("////////////////------ StaffId Content -------------",router.query.name);
+      setStaffId(router.query.name as string);
     }
-  }, [router.query.staff]);
+  }, [router.query.name]);
+
+  // useEffect(()=>{
+  //   if(staffId)
+  //   {
+  //     console.log("=====+++++++++ Selected Staf Name ::::::", staffId)
+  //   }
+  // },[staffId])
 
   const { data: paygroup, isLoading: isloading } = useQuery({
     queryKey: ["pay-groups", router.query.page],
@@ -134,8 +144,8 @@ export default function StaffSection({
   };
 
   useEffect(() => {
-    setValue("isOpenShift", staffId === "1");
-    setValue("isPickupJob", staffId === "2");
+    setValue("isOpenShift", staffId === "OPEN SHIFT");
+    setValue("isPickupJob", staffId === "PICKUP SHIFT");
   }, [staffId, setValue]);
 
   return (
@@ -199,7 +209,7 @@ export default function StaffSection({
           </Grid>
         ) : (
           <Grid container alignItems="center">
-             {!isPickupJob && staffId !== "2" && (
+             {!isPickupJob && staffId !== "PICKUP SHIFT" && (
             <Grid item lg={4} md={6} sm={12} xs={12}>
               <Controller
                 name="isOpenShift"
@@ -207,7 +217,7 @@ export default function StaffSection({
                 render={({ field }) => (
                   <FormControlLabel
                     control={<Checkbox size="small" />}
-                    checked={staffId === "1" ? true : field.value} // Check if staffId is 1
+                    checked={staffId === "OPEN SHIFT" ? true : field.value} // Check if staffId is 1
                     {...field}
                     label="Is Open Shift"
                   />
@@ -215,35 +225,35 @@ export default function StaffSection({
               />
             </Grid>
             )}
-            {!isOpenShift && staffId !== "1" && (
-              <Grid item lg={4} md={6} sm={12} xs={12}>
-                <Controller
-                  name="isPickupJob"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          size="small"
-                          checked={staffId === "1" ? true : field.value} // Check if staffId is 1
-                          onChange={(e) => {
-                            field.onChange(e.target.checked); // Update the field value
-                            // console.log("Checked:", e.target.checked); // Log the checked state
-                          }}
-                        />
-                      }
-                      {...field}
-                      label="Is Pickup Job"
-                    />
-                  )}
-                />
-              </Grid>
-            )}
+                     {!isOpenShift && staffId !== "OPEN SHIFT" && (
+                        <Grid item lg={4} md={6} sm={12} xs={12}>
+                          <Controller
+                            name="isPickupJob"
+                            control={control}
+                            render={({ field }) => (
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    size="small"
+                                    checked={staffId === "PICKUP SHIFT" ? true : field.value} 
+                                    onChange={(e) => {
+                                      field.onChange(e.target.checked); // Update the field value
+                                      // console.log("Checked:", e.target.checked); // Log the checked state
+                                    }}
+                                  />
+                                }
+                                {...field}
+                                label="Is Pickup Job"
+                              />
+                            )}
+                          />
+                        </Grid>
+                    )}
             {/* <Grid item lg={8} md={6} sm={12} xs={12}></Grid> */}
             {/* {!isOpenShift && ( */}
             {!isOpenShift &&
-              staffId !== "1" &&
-              staffId !== "2" &&
+              staffId !== "OPEN SHIFT" &&
+              staffId !== "PICKUP SHIFT" &&
               !isPickupJob &&(
                 <Grid container alignItems="center">
                   <Grid container spacing={2}>

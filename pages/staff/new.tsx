@@ -23,6 +23,7 @@ import {
   InputAdornment,
   MenuItem,
   Select,
+  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
@@ -515,6 +516,24 @@ export default function Index() {
                       )}
                     /> */}
                     <CustomInput fullWidth name="dateOfBirth" type="date" />
+                    {/* <Controller
+                        name="dateOfBirth"
+                         control={methods.control}
+                        render={({ field, fieldState: { error } }) => (
+                          <DatePicker
+                            label="Date of Birth"
+                            value={field.value || null}
+                            onChange={(newValue) => field.onChange(newValue)}
+                            slotProps={{
+                              textField: {
+                                fullWidth: true,
+                                error: !!error,
+                                helperText: error?.message,
+                              },
+                            }}
+                          />
+                        )}
+                      /> */}
                   </Grid>
                 </Grid>
               </Grid>

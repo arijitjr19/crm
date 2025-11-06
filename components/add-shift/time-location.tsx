@@ -36,12 +36,14 @@ export default function TimeLocation({
   view,
   edit,
   shift,
-  advanceShift
+  advanceShift,
+  selectedClientAddress
 }: {
   view?: boolean;
   edit?: boolean;
   advanceShift?: boolean;
   shift?: Shift;
+  selectedClientAddress: string;
 }) {
   const { control, watch, setValue } = useFormContext();
   // console.log(
@@ -692,13 +694,14 @@ export default function TimeLocation({
             Address
           </Grid>
           <Grid item lg={8} md={6} sm={12} xs={12}>
-            <CustomInput name="address" placeholder="Enter Address here" />
+            <CustomInput name="address" value={selectedClientAddress} placeholder="Enter Address here" fullWidth />
           </Grid>
           <Grid item lg={4} md={6} sm={12} xs={12}>
             Unit/Apartment Number
           </Grid>
           <Grid item lg={8} md={6} sm={12} xs={12}>
             <CustomInput
+            fullWidth
               name="apartmentNumber"
               placeholder="Enter Unit/Apartment Number"
               InputProps={{

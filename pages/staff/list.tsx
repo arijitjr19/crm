@@ -79,7 +79,7 @@ export default function Index() {
             loading={isLoading}
           />
         </Paper> */}
-        <DataTable
+        {/* <DataTable
           columns={columns}
           RowComponent={UserTableRow}
           // data={data?.slice(1).map((_data: IStaff, index: number) => ({
@@ -91,7 +91,25 @@ export default function Index() {
               .toLowerCase(),
             index
           }))}
-        />
+        /> */}
+        <DataTable
+  columns={columns}
+  RowComponent={UserTableRow}
+  data={data
+    ?.filter((_data: IStaff) => 
+      _data.name !== "OPEN SHIFT" && _data.name !== "PICKUP SHIFT"
+    )
+    .map((_data: IStaff, index: number) => ({
+      ..._data,
+      role: _data.rolesName?.[0]
+        .replace("ROLE_", "")
+        .replaceAll("_", " ")
+        .toLowerCase(),
+      index,
+    }))
+  }
+/>
+
         {/* </SimpleBar> */}
       </StyledUserPage>
     </DashboardLayout>
