@@ -26,6 +26,9 @@ import StyledPaper from "@/ui/Paper/Paper";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
   Button,
   Grid,
@@ -52,6 +55,8 @@ import DocumentTemplate from "../document-templates";
 import DocumentTemplateInside from "../template-document-inside";
 import AddShift from "@/components/add-shift/add-shift";
 import { getRole } from "@/lib/functions/_helpers.lib";
+import ParticipantSignDocument from "./participant-sign-document";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const StyledViewPage = styled(Grid)`
   padding: 20px 10px;
@@ -289,27 +294,75 @@ export default function Index() {
           </Popover>
         </Stack>
       </Box>
-      <StyledViewPage container spacing={4}>
-        <Grid item md={8} sm={12} xs={12}>
+      <StyledViewPage container spacing={4} mt={1}>
+        {/* <Grid item md={8} sm={12} xs={12}>
           <Grid container spacing={4}>
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <Details client={data.client} />
             </Grid>
             <Grid item lg={12} md={12} sm={12} xs={12}>
-              {/* <ClientDocuments document_data={data.documents} /> */}
               <DocumentTemplateInside></DocumentTemplateInside>
             </Grid>
-
-            {/* <Grid item lg={12} md={12} sm={12} xs={12}>
-              <ClientFunds funds_data={data.funds[0]?.funds} />
-            </Grid> */}
             {role === "ROLE_ADMIN" && (
               <Grid item lg={12} md={12} sm={12} xs={12}>
                 <ClientFunds funds_data={data.funds[0]?.funds} />
               </Grid>
             )}
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+              <ParticipantSignDocument />
+            </Grid>
           </Grid>
+        </Grid> */}
+
+          <Grid item md={8} sm={12} xs={12}  >
+            <Grid container spacing={2} >
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <Box sx={{ paddingBlock: "0px" }}>
+                  <Details client={data.client} />
+                </Box>
+              </Grid>
+            </Grid>
+          <br></br>
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Document Template</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ paddingBlock: "0px" }}>
+              <DocumentTemplateInside></DocumentTemplateInside>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Client Fund</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ paddingBlock: "0px" }}>
+              {role === "ROLE_ADMIN" && (
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <ClientFunds funds_data={data.funds[0]?.funds} />
+              </Grid>
+            )}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Document Signature</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ paddingBlock: "0px" }}>
+              <ParticipantSignDocument />
+              </Box>
+            </AccordionDetails>
+          </Accordion>   
         </Grid>
+
+
+
         <Grid item md={4} sm={12} xs={12}>
           <Grid container spacing={4}>
             {data?.contacts.primaryContacts.length ? (

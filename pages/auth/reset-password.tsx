@@ -86,7 +86,7 @@ export default function Index() {
   const { mutate, isPending } = useMutation({
     mutationFn: resetPasswordMutation,
     onSuccess: () => {
-      router.push("/auth/signin");
+      router.push("/auth/employee/signin");
     }
   });
 
@@ -135,6 +135,7 @@ export default function Index() {
                   type="password"
                   size="small"
                   autoComplete="password"
+                  fullWidth
                 />
 
                 <CustomInput
@@ -144,6 +145,7 @@ export default function Index() {
                   size="small"
                   placeholder="********"
                   type={showPassword ? "text" : "password"}
+                  fullWidth
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

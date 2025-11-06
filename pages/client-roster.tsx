@@ -18,7 +18,7 @@ import AccountPopover from "@/components/common/account-popover";
 import { padding } from "@mui/system";
 import DescriptionIcon from '@mui/icons-material/Description';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import { getCookie } from "@/lib/functions/storage.lib";
+import { getCookie, setCookieClient } from "@/lib/functions/storage.lib";
 import ClientSignDocumentPending from "./clients/client-document-pending";
 
 interface HeaderProps {
@@ -71,7 +71,8 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
           onClick={() => {
             dispatch(logout());
             setOpen(null);
-            router.push("/auth/client-signin");
+            // router.push("/");
+            // router.push("/auth/client-signin");
           }}
         >
           <PowerSettingsNewIcon />
@@ -126,6 +127,29 @@ export default function StaffRoster({ onOpenNav }: HeaderProps) {
       </Stack>
     </>
   );
+
+   setCookieClient("firstLoad", "false");
+    const [isFirstLoadComplete, setIsFirstLoadComplete] = useState(false);
+    console.log("-------------- First Load --------------");
+    useEffect(() => {
+      // window.location.href = "https://your-new-page-url.com";
+      const isFirstLoad = getCookie("firstLoad");
+  
+      if (!isFirstLoad) {
+        setCookieClient("firstLoad", "true");
+        setIsFirstLoadComplete(true); // Update state to trigger a re-render
+        console.log("-------------- Second Load --------------");
+        window.location.reload();
+      } else {
+        setIsFirstLoadComplete(true);
+      }
+    }, []);
+  
+    // Prevent rendering the content before the first load is complete
+    if (!isFirstLoadComplete) {
+      return null;
+    }
+  
 
   return (
     <>

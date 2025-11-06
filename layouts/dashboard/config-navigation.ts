@@ -24,6 +24,7 @@ import { getRole } from "@/lib/functions/_helpers.lib";
 import { getCookie } from "@/lib/functions/storage.lib";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import { useEffect, useState } from "react";
 
 export interface NavItem {
   title: string;
@@ -34,12 +35,23 @@ export interface NavItem {
 }
 
 // const role = getRole();
-// const userrole = getCookie("user_role");
-const role =
-  typeof window !== "undefined" ? sessionStorage.getItem("user_role") : null;
+const userrole = getCookie("user_role");
+// const role =
+//   typeof window !== "undefined" ? sessionStorage.getItem("user_role") : null;
+function getUserRole() {
+  if (typeof window === "undefined") return null;
+  return sessionStorage.getItem("user_role");
+}
+
+// const role = getUserRole();
+let role: string | null = null;
+
+if (typeof window !== "undefined") {
+  role = localStorage.getItem("user_role");
+}
 
 console.log(
-  ":::::::::::::::::::::::::================= USER ROLE from Session ========================:::::::::::::::::",
+  ":::::::::::::::::::::::::================= USER ROLE from Session Config Navigation ========================:::::::::::::::::",
   role
 );
 const navConfig: NavItem[] = (() => {

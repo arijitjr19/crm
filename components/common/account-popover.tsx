@@ -136,7 +136,7 @@ const AccountPopover: React.FC = () => {
           disableTouchRipple
           onClick={() => {
             dispatch(logout());
-            handleClose(null, null, "/auth/signin");
+            handleClose(null, null, "/auth/employee/signin");
           }}
           sx={{ typography: "body2", color: "error.main", py: 1.5 }}
         >

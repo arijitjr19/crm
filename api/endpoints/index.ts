@@ -162,6 +162,16 @@ export const endpoints = {
       `/document/getExpiredDocument/${documentId}`,
     get_shift_by_id_from_notification: (shiftId: string) =>
       `/shift/getShiftById/${shiftId}`,
+    get_consent_signed: (docId: string) =>
+      `/documents/consent/signed/${docId}`,
+    get_sign_document: (clientId: string) =>
+      `/documents/consent/client/documentList/${clientId}`,
+    update_service_agreement: (agreementId: string) =>
+      `/service-agreement/update/${agreementId}`,
+    create_sign_document: (clientId: string) =>
+      `/documents/consent/upload/client/${clientId}`,
+    send_for_consent: (documentId: string,employeeId: string) =>
+      `/documents/consent/${documentId}/sendForConsent/${employeeId}`,
   },
   teams: {
     get_all: "/teams/allTeams",
