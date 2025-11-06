@@ -117,7 +117,7 @@ export default function Home({
   shifts,
   dehydratedState
 }: {
-  shifts: Shift[];
+  shifts: Shift[];       
   dehydratedState: DehydratedState;
 }) {
   setCookieClient("firstLoad", "false");

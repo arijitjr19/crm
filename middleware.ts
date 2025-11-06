@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-// If the incoming request has the "token" cookie
+
 export function middleware(request: NextRequest) {
-  const has_token = request.cookies.get(process.env.NEXT_APP_TOKEN_NAME!);
-  const auth_routes = [
+  // Read token and role cookies
+  const tokenName = process.env.NEXT_PUBLIC_APP_TOKEN_NAME || "token";
+  const hasToken = request.cookies.get(tokenName)?.value;
+  const role = request.cookies.get("user_role")?.value; // Optional, if you set role cookie
+
+  // Define public routes
+  const publicRoutes = [
     "/",
-    "/auth/signin",
+    // "/auth/signin",
     "/auth/signup",
     "/auth/forgot-password",
     "/auth/reset-password",
@@ -14,28 +19,38 @@ export function middleware(request: NextRequest) {
     "/admin-dashboard"
   ];
 
-  if (
-    (has_token === undefined || has_token === null) &&
-    !auth_routes.includes(request.nextUrl.pathname)
-  ) {
+  const pathname = request.nextUrl.pathname;
+
+  // 🔹 1. Redirect unauthenticated users away from private routes
+  if (!hasToken && !publicRoutes.includes(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
-    const response = NextResponse.redirect(url);
-    response.headers.set("x-middleware-cache", "no-cache");
-    return response;
-  } else if (has_token && request.nextUrl.pathname.startsWith("/auth/")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
-    const response = NextResponse.redirect(url);
-    response.headers.set("x-middleware-cache", "no-cache");
-    return response;
-  } else {
-    return NextResponse.next();
+    const res = NextResponse.redirect(url);
+    res.headers.set("x-middleware-cache", "no-cache");
+    return res;
   }
+
+  // 🔹 2. Redirect authenticated users away from auth routes
+  if (hasToken && pathname.startsWith("/auth")) {
+    const url = request.nextUrl.clone();
+
+    // Optional: redirect based on role
+    if (role === "ROLE_ADMIN") url.pathname = "/admin/dashboard";
+    else if (role === "ROLE_EMPLOYEE") url.pathname = "/employee/dashboard";
+    else if (role === "ROLE_CLIENT") url.pathname = "/client/dashboard";
+    else url.pathname = "/home"; // fallback
+
+    const res = NextResponse.redirect(url);
+    res.headers.set("x-middleware-cache", "no-cache");
+    return res;
+  }
+
+  // 🔹 3. Allow normal requests
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|assets|sitemap.xml).*)"
-  ]
+    "/((?!api|_next/static|_next/image|favicon.ico|assets|sitemap.xml).*)",
+  ],
 };

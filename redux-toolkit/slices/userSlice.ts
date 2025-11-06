@@ -33,9 +33,11 @@ export const userSlice = createSlice({
       const role = sessionStorage.getItem("user_role");
       if (role === "ROLE_CLIENT") {
         window.location.href = "/auth/client/signin";
-      } else {
-        window.location.href = "/auth/signin";
-      }
+        // window.location.href = "/";
+      } else if(role === "ROLE_ADMIN") {
+        // window.location.href = "/";
+        window.location.href = "/auth/employee/signin";
+      }     
     }
   },
   extraReducers: {}

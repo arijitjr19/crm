@@ -191,7 +191,7 @@ export default function Details({ client }: { client: IClient }) {
   };
 
   return (
-    <StyledDetailsBox>
+    <StyledDetailsBox style={{marginLeft:0}}>
       <Stack
         direction="row"
         alignItems="center"

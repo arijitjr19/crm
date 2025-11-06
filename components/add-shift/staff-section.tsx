@@ -133,6 +133,11 @@ export default function StaffSection({
     }
   };
 
+  useEffect(() => {
+    setValue("isOpenShift", staffId === "1");
+    setValue("isPickupJob", staffId === "2");
+  }, [staffId, setValue]);
+
   return (
     <>
       <StyledPaper>
@@ -194,6 +199,7 @@ export default function StaffSection({
           </Grid>
         ) : (
           <Grid container alignItems="center">
+             {!isPickupJob && staffId !== "2" && (
             <Grid item lg={4} md={6} sm={12} xs={12}>
               <Controller
                 name="isOpenShift"
@@ -208,6 +214,7 @@ export default function StaffSection({
                 )}
               />
             </Grid>
+            )}
             {!isOpenShift && staffId !== "1" && (
               <Grid item lg={4} md={6} sm={12} xs={12}>
                 <Controller
@@ -236,6 +243,7 @@ export default function StaffSection({
             {/* {!isOpenShift && ( */}
             {!isOpenShift &&
               staffId !== "1" &&
+              staffId !== "2" &&
               !isPickupJob &&(
                 <Grid container alignItems="center">
                   <Grid container spacing={2}>

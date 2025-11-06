@@ -774,3 +774,89 @@ export const updateMarkRead = async ({
     throw error;
   }
 };
+
+export const getConsentSigned = async ({ id }: { id: string }) => {
+  try {
+    const res = await axiosInstance.get(
+      endpoints.client.get_consent_signed(id),
+      {}
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const getSignDocumentList = async ({ id }: { id: string }) => {
+  try {
+    const res = await axiosInstance.get(
+      endpoints.client.get_sign_document(id),
+      {}
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const updateServiceAgreement = async ({
+  clientId,
+  documentName,
+  fileName,
+  documentID,
+  data
+}: {
+  clientId: string;
+  documentName: string;
+  fileName: string;
+  documentID: string;
+  data: FormData;
+}) => {
+  try {
+    const res = await axiosInstance.put(
+      endpoints.client.update_service_agreement(clientId),
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const addSignDocument = async ({
+  clientId,
+  data  
+}: {
+  clientId: string;
+  data: FormData;
+}) => {
+  try {
+    const res = await axiosInstance.post(
+      endpoints.client.create_sign_document(clientId),
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+export const sendForConsent = async (documentId: string, employeeId: string) => {
+  try {
+    const res = await axiosInstance.post(
+      endpoints.client.send_for_consent(documentId, employeeId)
+    );
+    return res.data;
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
+  }
+};
+
+

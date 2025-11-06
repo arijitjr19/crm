@@ -13,7 +13,7 @@ import CustomInput from "@/ui/Inputs/CustomInput";
 import styled from "@emotion/styled";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import Card from "@mui/material/Card";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -101,6 +101,7 @@ export default function LoginView() {
       setCookieClient(process.env.NEXT_APP_TOKEN_NAME!, data.jwtToken);
       // setCookieClient("user_role", data.role[0]?.name);
       sessionStorage.setItem("user_role", data.role[0]?.name);
+      localStorage.setItem("user_role", data.role[0]?.name);
       // console.log("User Role::::::::")
       delete data.jwtToken;
       setCookieClient("client", JSON.stringify(data));
@@ -116,7 +117,9 @@ export default function LoginView() {
   const handleLogin = (data: loginMutationPayload) => {
     mutate(data);
   };
-
+  const handleGoHome = () => {
+    router.push('/');
+  };
   return (
     <StyledLoginPage
       sx={{
@@ -206,6 +209,9 @@ export default function LoginView() {
                 >
                   Sign In
                 </LoadingButton>
+                <Button onClick={handleGoHome} variant="text" color="primary">
+      Go to Home
+    </Button>
               </Stack>
             </FormProvider>
           </Box>

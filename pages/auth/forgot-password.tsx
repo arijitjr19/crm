@@ -77,7 +77,7 @@ export default function Index() {
   const { mutate, isPending } = useMutation({
     mutationFn: forgotPasswordMutatuion,
     onSuccess: () => {
-      router.push("/auth/signin");
+      router.push("/auth/employee/signin");
     }
   });
 
@@ -115,14 +115,16 @@ export default function Index() {
         >
           <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
             <FormProvider {...methods}>
-              <Stack spacing={3}>
-                <CustomInput
-                  name="email"
-                  label="Email"
-                  placeholder="johndoe@example.com"
-                  type="email"
-                  size="small"
-                />
+              <Stack spacing={2}>
+              <CustomInput
+                name="email"
+                label="Email"
+                placeholder="johndoe@example.com"
+                type="email"
+                size="small"
+                fullWidth
+              />
+
 
                 <LoadingButton
                   fullWidth

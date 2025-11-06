@@ -1,19 +1,19 @@
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { loginMutation, loginMutationPayload } from "@/api/functions/user.api";
 import Logo from "@/components/logo/logo";
 import { useAppSelector } from "@/hooks/redux/useAppSelector";
 import validationText from "@/json/messages/validationText";
-import { setCookieClient } from "@/lib/functions/storage.lib";
+import { getCookie, setCookieClient } from "@/lib/functions/storage.lib";
 import { bgGradient } from "@/themes/css";
 import CustomInput from "@/ui/Inputs/CustomInput";
 import styled from "@emotion/styled";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import Card from "@mui/material/Card";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -101,13 +101,15 @@ export default function LoginView() {
       setCookieClient(process.env.NEXT_APP_TOKEN_NAME!, data.jwtToken);
       // setCookieClient("user_role", data.role[0]?.name);
       sessionStorage.setItem("user_role", data.role[0]?.name);
+      localStorage.setItem("user_role", data.role[0]?.name);
       // console.log("User Role::::::::")
       delete data.jwtToken;
       setCookieClient("user", JSON.stringify(data));
       if (data.role[0].name === "ROLE_ADMIN") {
         window.location.href = "/home";
       } else {
-        window.location.href = "/staff-roster";
+        // window.location.href = "/staff-roster";
+        // window.location.href = "/";
       }
 
       // router.push(data.role[0].name === "ROLE_ADMIN" ? "/" : "/staff-roster");
@@ -122,6 +124,13 @@ export default function LoginView() {
     mutate(data);
   };
 
+useEffect(()=>{
+  console.log("----- Auth Employee Signin-----")
+},[])
+
+const handleGoHome = () => {
+  router.push('/');
+};
   return (
     <StyledLoginPage
       sx={{
@@ -211,6 +220,9 @@ export default function LoginView() {
                 >
                   Sign In
                 </LoadingButton>
+                 <Button onClick={handleGoHome} variant="text" color="primary">
+                      Go to Home
+                    </Button>
               </Stack>
             </FormProvider>
           </Box>
