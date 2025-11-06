@@ -433,7 +433,17 @@ export default function TimeSheetTable({
   };
 
   // ----------------- CODE FOR STAFFs --------------------
-  const renderStaffs = staffs?.map((_carer: IStaff) => {
+  const renderStaffs = staffs
+  ?.slice() // make a shallow copy to avoid mutating original array
+  .sort((a: IStaff, b: IStaff) => {
+    const priority = (name: string) => {
+      if (name === "OPEN SHIFT") return 1;
+      if (name === "PICKUP SHIFT") return 2;
+      return 3; // normal carers after special ones
+    };
+    return priority(a.name) - priority(b.name);
+  })
+  .map((_carer: IStaff) => {
     let hours = 0;
     shifts?.forEach((_shift) => {
       if (type === "daily") {
@@ -460,24 +470,9 @@ export default function TimeSheetTable({
     });
 
     return (
-      // ------------------ FIRST COLUMN OF ROSTER START HERE -----------------
+      // ------------------ ROSTER ROW START HERE -----------------
       <TableRow key={_carer.id}>
-        {/* <TableCell className="named-cell">
-          <Link href={`/staff/${_carer.id}/view`}>
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: "500",
-                fontSize: "15px",
-                marginBottom: "5px"
-              }}
-            >
-              {_carer.name}
-            </Typography>
-          </Link>
-          {hours} Hours
-        </TableCell> */}
-
+        {/* -------- First Column: Staff Name -------- */}
         <TableCell className="named-cell">
           <Link href={`/staff/${_carer.id}/view`}>
             <Typography
@@ -486,9 +481,16 @@ export default function TimeSheetTable({
                 fontWeight: "500",
                 fontSize: "15px",
                 marginBottom: "5px",
-                color: _carer.name === "Open Shift" ? "red" : "#000000",
+                color:
+                  _carer.name === "OPEN SHIFT" ||
+                  _carer.name === "PICKUP SHIFT"
+                    ? "red"
+                    : "#000000",
                 textTransform:
-                  _carer.name === "Open Shift" ? "uppercase" : "none"
+                  _carer.name === "OPEN SHIFT" ||
+                  _carer.name === "PICKUP SHIFT"
+                    ? "uppercase"
+                    : "none",
               }}
             >
               {_carer.name}
@@ -497,6 +499,7 @@ export default function TimeSheetTable({
           {hours} Hours
         </TableCell>
 
+        {/* -------- Daily View -------- */}
         {type === "daily"
           ? times.map((_time) => {
               const shifts_based_on_time = shifts.find(
@@ -538,14 +541,12 @@ export default function TimeSheetTable({
                   sx={{ minWidth: "150px" }}
                 >
                   {exactShift ? (
-                    // --------------- Alloted Shift start here --------------
                     <Shift
                       shift={exactShift}
                       key={exactShift?.id}
                       type={"comfortable"}
                     />
-                  ) : // --------------- Alloted Shift end here --------------
-                  null}
+                  ) : null}
                 </TableCell>
               ) : null;
             })
@@ -577,7 +578,7 @@ export default function TimeSheetTable({
                       moment().format("DD/MM/YYYY") ===
                       _date.format("DD/MM/YYYY")
                         ? "rgba(0, 169, 169, 0.08) !important"
-                        : "rgb(249, 250, 251)"
+                        : "rgb(249, 250, 251)",
                   }}
                   colSpan={
                     carerShiftsByDate && carerShiftsByDate[0]?.isShiftEndsNextDay &&
@@ -598,9 +599,7 @@ export default function TimeSheetTable({
                         onClick={() => {
                           router.replace(
                             {
-                              query: {
-                                staff: _carer.id
-                              }
+                              query: { staff: _carer.id },
                             },
                             undefined,
                             { shallow: true }
@@ -609,7 +608,6 @@ export default function TimeSheetTable({
                         }}
                       >
                         <Typography variant="body1" className="new-shift-title">
-                          {/* <AddIcon sx={{ marginRight: "10px" }} /> Shift */}
                           Add more shift
                         </Typography>
                       </Box>
@@ -620,9 +618,7 @@ export default function TimeSheetTable({
                       onClick={() => {
                         router.replace(
                           {
-                            query: {
-                              staff: _carer.id
-                            }
+                            query: { staff: _carer.id,name: _carer.name, },
                           },
                           undefined,
                           { shallow: true }
@@ -641,6 +637,7 @@ export default function TimeSheetTable({
       </TableRow>
     );
   });
+
 
   // ----------------- CODE FOR CLIENTs --------------------
   const renderClients = clients?.map((_client: IClient) => {

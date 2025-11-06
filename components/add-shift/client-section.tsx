@@ -57,15 +57,19 @@ import CloseIcon from "@mui/icons-material/Close";
       view,
       edit,
       shift,
+      setSelectedClientAddress
     }: {
       view: boolean;
       edit: boolean;
       shift: Shift;
+      setSelectedClientAddress: (address: string) => void;
     },
     ref
   ) {
   const role = getRole();
   const [selectedDisplayNames, setSelectedDisplayNames] = useState("");
+
+  
   const { control, setValue, getValues } = useFormContext();
   const [open, setOpen] = React.useState(true);
   const [selectedClientId, setSelectedClientId] = useState("");
@@ -132,7 +136,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
   // ------------ Child to parent access start here -------------
   const handleRemoveAllNames = () => {
-    console.log("------------ Selected participant get removed! ------------")
+    // console.log("------------ Selected participant get removed! ------------")
     // Clear the displayed names
     setSelectedDisplayNames("");
     // Clear all client IDs from the form
@@ -157,7 +161,7 @@ import CloseIcon from "@mui/icons-material/Close";
             height={512}
             className="icon"
           />
-          <Typography variant="h6">Participant</Typography>
+          <Typography variant="h6">Participant </Typography>
         </Stack>
         <Divider sx={{ marginBlock: "10px" }} />
         {view ? (
@@ -197,7 +201,7 @@ import CloseIcon from "@mui/icons-material/Close";
                             paddingLeft: "10px",
                           }}
                         >
-                          Choose Participant
+                          Choose Participant  
                         </Typography>
                         <Typography
                           component="span"
@@ -217,64 +221,6 @@ import CloseIcon from "@mui/icons-material/Close";
                   control={control}
                   name="clientIds"
                   render={({ field, fieldState: { error, invalid } }) => (
-                    // <Box>
-                    //   <Select
-                    //     fullWidth
-                    //     size="small"
-                    //     {...field}
-                    //     value={Array.isArray(field.value) ? field.value : []} // Ensure value is an array
-                    //     onChange={(e) => {
-                    //       const _value = e.target.value;
-                    //       field.onChange(
-                    //         Array.isArray(_value) ? _value : [_value]
-                    //       ); // Ensure _value is an array
-
-                    //       // Set selectedClientId state
-                    //       setSelectedClientId(
-                    //         Array.isArray(_value) ? _value.join(", ") : _value
-                    //       );
-
-                    //       // Get the selected display names
-                    //       const selectedNames = data
-                    //         ?.filter((client: any) =>
-                    //           _value.includes(client.id)
-                    //         )
-                    //         .map((client: any) => client.displayName)
-                    //         .join(", ");
-
-                    //       setOpen(selectedNames.length);
-                    //       setSelectedDisplayNames(selectedNames);
-                    //       console.log(
-                    //         ":::::::::::::::::: Selected Name of Participant::::::::",
-                    //         selectedNames
-                    //       );
-                    //     }}
-                    //     displayEmpty
-                    //     renderValue={
-                    //       field.value?.length !== 0
-                    //         ? undefined
-                    //         : () => "Select Participant"
-                    //     }
-                    //     multiple
-                    //   >
-                    //     {isLoading ? (
-                    //       <MenuItem disabled>
-                    //         <CircularProgress size={20} />
-                    //         Loading...
-                    //       </MenuItem>
-                    //     ) : (
-                    //       data?.map((_data: IClient) => (
-                    //         <MenuItem value={_data.id} key={_data.id}>
-                    //           {_data.displayName}
-                    //         </MenuItem>
-                    //       ))
-                    //     )}
-                    //   </Select>
-                    //   {invalid && (
-                    //     <FormHelperText>{error?.message}</FormHelperText>
-                    //   )}
-                    // </Box>
-
                     <Box>
                     <Select
                       fullWidth
@@ -298,9 +244,20 @@ import CloseIcon from "@mui/icons-material/Close";
 
                         setOpen(selectedNames.length);
                         setSelectedDisplayNames(selectedNames);
+
+                        // Get the selected display names
+                        const selectedAddress =
+                        selectedArray.length > 0
+                          ? data
+                              ?.filter((client: any) => selectedArray.includes(client.id))
+                              .map((client: any) => client.address)
+                              .join(", ")
+                          : "";
+                      
+                      setSelectedClientAddress(selectedAddress);
                         console.log(
-                          ":::::::::::::::::: Selected Name of Participant::::::::",
-                          selectedNames
+                          ":::::::::::::::::: Selected Name and Address of Participant::::::::",
+                          {selectedNames,selectedAddress}
                         );
                       }}
                       displayEmpty

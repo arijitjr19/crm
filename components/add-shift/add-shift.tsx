@@ -529,6 +529,7 @@ export default function AddShift({
   shift,
   ...props
 }: AddShiftProps) {
+  const [selectedClientAddress, setSelectedClientAddress] = useState("");
   const router = useRouter();
   const { id } = useParams();
   const role = getRole();
@@ -1128,14 +1129,14 @@ export default function AddShift({
                 <Typography></Typography>
               ) : (
                 <>
-                  <ClientSection view={!!view} edit={!!edit} shift={shift!}  />
+                  <ClientSection setSelectedClientAddress={setSelectedClientAddress} view={!!view} edit={!!edit} shift={shift!}  />
                   <StaffSection
                     view={view}
                     edit={edit}
                     shift={shift}
                     advanceShift={advanceShift}
                   />
-                  <TimeLocation view={view} edit={edit} shift={shift} />
+                  <TimeLocation selectedClientAddress={selectedClientAddress} view={view} edit={edit} shift={shift} />
                   {!view && <TaskSection edit={edit} />}
                   <InstructionSection view={view} edit={edit} shift={shift} />
                   {/* <TimeLocation view={view} edit={edit} shift={shift} /> */}
@@ -1149,14 +1150,14 @@ export default function AddShift({
                 <JobApplicant view={view} edit={edit} shift={shift} />
               ) : (
                 <>
-                  <ClientSection view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef}/>
+                  <ClientSection setSelectedClientAddress={setSelectedClientAddress} view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef}/>
                   <StaffSection
                     view={view}
                     edit={edit}
                     shift={shift}
                     advanceShift={advanceShift}
                   />
-                  <TimeLocation view={view} edit={edit} shift={shift} />
+                  <TimeLocation selectedClientAddress={selectedClientAddress} view={view} edit={edit} shift={shift} />
                   {!view && <TaskSection edit={edit} />}
                   <InstructionSection view={view} edit={edit} shift={shift} />
                   {/* <TimeLocation view={view} edit={edit} shift={shift} /> */}

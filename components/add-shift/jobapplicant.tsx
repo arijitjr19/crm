@@ -71,8 +71,10 @@ export default function JobApplicant({
     mutationFn: appliedShiftApprove,
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["applied_shift"] });
+      queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+      
       toast.success(response);
-    },
+    },   
     onError: (error) => {
       console.error("Error saving Compliance Data:", error);
     }
