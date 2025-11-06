@@ -70,7 +70,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout";
 import { Container } from "@mui/material";
 import { getAllClients } from "@/api/functions/client.api";
-import { getAllShifts } from "@/api/functions/shift.api";
+// import { getAllShifts } from "@/api/functions/shift.api";
 import { getStaffList } from "@/api/functions/staff.api";
 import Timesheet from "@/components/Timesheet/Timesheet";
 import { Shift } from "@/interface/shift.interface";
@@ -93,7 +93,7 @@ export const getServerSideProps = async ({
   const cookie = req.cookies;
   const startDate = moment().startOf("week").format("YYYY-MM-DDT00:00:00.000");
   const endDate = moment().endOf("week").format("YYYY-MM-DDT23:59:59.999");
-  const data = await getAllShifts({ token: cookie?.token, startDate, endDate });
+  // const data = await getAllShifts({ token: cookie?.token, startDate, endDate });
 
   await queryClient.prefetchQuery({
     queryKey: ["user_list"],
@@ -107,7 +107,7 @@ export const getServerSideProps = async ({
 
   return {
     props: {
-      shifts: data,
+      // shifts: data,
       dehydratedState: dehydrate(queryClient)
     }
   };

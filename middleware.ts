@@ -16,7 +16,8 @@ export function middleware(request: NextRequest) {
     "/auth/verify",
     "/auth/client/signin",
     "/auth/employee/signin",
-    "/admin-dashboard"
+    "/admin-dashboard",
+    "/coordinator-dashboard"
   ];
 
   const pathname = request.nextUrl.pathname;
@@ -43,6 +44,10 @@ export function middleware(request: NextRequest) {
     const res = NextResponse.redirect(url);
     res.headers.set("x-middleware-cache", "no-cache");
     return res;
+  }
+
+  if (role === "ROLE_COORDINATOR") {
+    const url = request.nextUrl.clone();
   }
 
   // 🔹 3. Allow normal requests

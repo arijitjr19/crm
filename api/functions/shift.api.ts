@@ -20,28 +20,28 @@ export const cancelShift = async (id: number) => {
   return res.data;
 };
 
-export const getAllShifts = async ({
-  token,
-  startDate = "",
-  endDate = ""
-}: {
-  token?: string;
-  startDate?: string;
-  endDate?: string;
-}) => {
-  const res = await axiosInstance.get(endpoints.shift.get_all_shifts, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`
-        }
-      : {},
-    params: {
-      startDate,
-      endDate
-    }
-  });
-  return res.data;
-};
+// export const getAllShifts = async ({
+//   token,
+//   startDate = "",
+//   endDate = ""
+// }: {
+//   token?: string;
+//   startDate?: string;
+//   endDate?: string;
+// }) => {
+//   const res = await axiosInstance.get(endpoints.shift.get_all_shifts, {
+//     headers: token
+//       ? {
+//           Authorization: `Bearer ${token}`
+//         }
+//       : {},
+//     params: {
+//       startDate,
+//       endDate
+//     }
+//   });
+//   return res.data;
+// };
 
 export const getAllShiftsForClient = async ({
   id,
