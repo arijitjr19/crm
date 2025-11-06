@@ -417,7 +417,7 @@ const navConfig: NavItem[] = (() => {
     ];
   } else if (role === "ROLE_CLIENT") {
     return [
-       {
+      {
         title: "Web Guidance",
         path: "/web-guidance",
         icon: MenuBookIcon,
@@ -425,8 +425,253 @@ const navConfig: NavItem[] = (() => {
         hasChild: false
       }
     ]
+  } else if (role === "ROLE_COORDINATOR") {
+    return [
+      {
+        title: "Scheduler",
+        path: "/home",
+        icon: CalendarMonthIcon,
+        children: [],
+        hasChild: false
+      },
+      {
+        title: "Staff",
+        path: "/staff/list",
+        icon: PersonIcon,
+        children: [
+          {
+            title: "List",
+            path: "/staff/list",
+            icon: TocIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Archived ",
+            path: "/staff/archived",
+            icon: ArchiveIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Document Hub",
+            path: "/staff/document-hub",
+            icon: FolderIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "New",
+            path: "/staff/new",
+            icon: PersonAddIcon,
+            children: [],
+            hasChild: false
+          }
+        ],
+        hasChild: true
+      },
+      {
+        title: "Clients",
+        path: "/clients/list",
+        icon: PeopleAltIcon,
+        children: [
+          {
+            title: "List",
+            path: "/clients/list",
+            icon: TocIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Temporary List",
+            path: "/clients/temporarylist",
+            icon: TocIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Archived",
+            path: "/clients/archived",
+            icon: ArchiveIcon,
+            children: [],
+            hasChild: false
+          },
+          // {
+          //   title: "Expired Documents",
+          //   path: "/clients/expired-documents",
+          //   icon: RuleFolderIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          {
+            title: "Documents Templates",
+            path: "/clients/document-templates",
+            icon: RuleFolderIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "New",
+            path: "/clients/new",
+            icon: PersonAddIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Client Notes",
+            path: "/client-notes",
+            icon: TocIcon,
+            children: [],
+            hasChild: false
+          }
+        ],
+        hasChild: true
+      },
+      {
+        title: "Invoices",
+        path: "/invoices/list",
+        icon: ReceiptIcon,
+        children: [
+          {
+            title: "List",
+            path: "/invoices/list",
+            icon: TocIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "List void",
+            path: "/invoices/list-void",
+            icon: SegmentIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Generate",
+            path: "/invoices/generate",
+            icon: PlaylistAddIcon,
+            children: [],
+            hasChild: false
+          }
+        ],
+        hasChild: true
+      },
+      {
+        title: "Reports",
+        path: "/reports/activity",
+        icon: TocIcon,
+        children: [
+          // {
+          //   title: "Activity",
+          //   path: "/reports/activity",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          // {
+          //   title: "Billing",
+          //   path: "/reports/billing",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          // {
+          //   title: "Fund Balances",
+          //   path: "/reports/fund-balances",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          {
+            title: "Geolocation",
+            path: "/reports/geolocation",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          },
+          // {
+          //   title: "Performance",
+          //   path: "/reports/performances",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          // {
+          //   title: "Exception report",
+          //   path: "/reports/exception-reports",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          // {
+          //   title: "Timesheet",
+          //   path: "/reports/timesheet",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
+          {
+            title: "KPI",
+            path: "/reports/kpi",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Competencies",
+            path: "/reports/competencies",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Compliance",
+            path: "/reports/compliance",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Qualifications",
+            path: "/reports/qualifications",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          },
+          {
+            title: "Other",
+            path: "/reports/other",
+            icon: SettingsIcon,
+            children: [],
+            hasChild: false
+          }
+          // {
+          //   title: "Events",
+          //   path: "/reports/events",
+          //   icon: SettingsIcon,
+          //   children: [],
+          //   hasChild: false
+          // }
+        ],
+        hasChild: true
+      },
+      {
+        title: "Shift Notes",
+        path: "/shift-notes",
+        icon: NoteAltIcon,
+        children: [],
+        hasChild: false
+      },
+      {
+        title: "Web Guidance",
+        path: "/web-guidance",
+        icon: MenuBookIcon,
+        children: [],
+        hasChild: false
+      }
+    ];
   }
-   else {
+  else {
     return [
       // {
       //   title: "Roster",
