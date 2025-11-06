@@ -30,15 +30,15 @@ export const getAllShifts = async ({
   endDate?: string;
 }) => {
   const res = await axiosInstance.get(endpoints.shift.get_all_shifts, {
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`
-        }
-      : {},
-    params: {
-      startDate,
-      endDate
-    }
+    // headers: token
+    //   ? {
+    //       Authorization: `Bearer ${token}`
+    //     }
+    //   : {},
+    // params: {
+    //   startDate,
+    //   endDate
+    // }
   });
   return res.data;
 };

@@ -107,7 +107,10 @@ export default function LoginView() {
       setCookieClient("user", JSON.stringify(data));
       if (data.role[0].name === "ROLE_ADMIN") {
         window.location.href = "/admin-dashboard";
-      } else {
+      } else if (data.role[0].name === "ROLE_COORDINATOR") {
+        window.location.href = "/coordinator-dashboard";
+      }
+      else {
         // window.location.href = "/staff-roster";
         // window.location.href = "/";
       }
@@ -124,13 +127,13 @@ export default function LoginView() {
     mutate(data);
   };
 
-useEffect(()=>{
-  console.log("----- Auth Employee Signin-----")
-},[])
+  useEffect(() => {
+    console.log("----- Auth Employee Signin-----")
+  }, [])
 
-const handleGoHome = () => {
-  router.push('/');
-};
+  const handleGoHome = () => {
+    router.push('/');
+  };
   return (
     <StyledLoginPage
       sx={{
@@ -169,13 +172,13 @@ const handleGoHome = () => {
                   label="Email Address"
                   type="email"
                   size="small"
-                  sx={{width: "100%"}}
+                  sx={{ width: "100%" }}
                 />
                 <CustomInput
                   label="Password"
                   name="password"
                   size="small"
-                  sx={{width: "100%"}}
+                  sx={{ width: "100%" }}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (
@@ -220,9 +223,9 @@ const handleGoHome = () => {
                 >
                   Sign In
                 </LoadingButton>
-                 <Button onClick={handleGoHome} variant="text" color="primary">
-                      Go to Home
-                    </Button>
+                <Button onClick={handleGoHome} variant="text" color="primary">
+                  Go to Home
+                </Button>
               </Stack>
             </FormProvider>
           </Box>
