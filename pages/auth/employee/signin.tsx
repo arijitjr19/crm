@@ -107,12 +107,8 @@ export default function LoginView() {
       setCookieClient("user", JSON.stringify(data));
       if (data.role[0].name === "ROLE_ADMIN") {
         window.location.href = "/admin-dashboard";
-      } else if (data.role[0].name === "ROLE_COORDINATOR") {
-        window.location.href = "/coordinator-dashboard";
-      }
-      else {
-        // window.location.href = "/staff-roster";
-        // window.location.href = "/";
+      } else {
+        window.location.href = "/home";
       }
 
       // router.push(data.role[0].name === "ROLE_ADMIN" ? "/" : "/staff-roster");

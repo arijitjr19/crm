@@ -428,13 +428,6 @@ const navConfig: NavItem[] = (() => {
   } else if (role === "ROLE_COORDINATOR") {
     return [
       {
-        title: "Dashboard",
-        path: "/coordinator-dashboard",
-        icon: DashboardIcon,
-        children: [],
-        hasChild: false
-      },
-      {
         title: "Scheduler",
         path: "/home",
         icon: CalendarMonthIcon,
@@ -450,13 +443,6 @@ const navConfig: NavItem[] = (() => {
             title: "List",
             path: "/staff/list",
             icon: TocIcon,
-            children: [],
-            hasChild: false
-          },
-          {
-            title: "Teams",
-            path: "/staff/teams",
-            icon: GroupsIcon,
             children: [],
             hasChild: false
           },
@@ -675,63 +661,6 @@ const navConfig: NavItem[] = (() => {
         icon: NoteAltIcon,
         children: [],
         hasChild: false
-      },
-      {
-        title: "Account",
-        path: "/account/settings",
-        icon: ManageAccountsIcon,
-        children: [
-          // {
-          //   title: "Settings",
-          //   path: "/account/settings",
-          //   icon: SettingsIcon,
-          //   children: [],
-          //   hasChild: false
-          // },
-          // {
-          //   title: "Invoice Settings",
-          //   path: "/account/invoice-settings",
-          //   icon: ContentPasteGoIcon,
-          //   children: [],
-          //   hasChild: false
-          // },
-          {
-            title: "Prices",
-            path: "/account/prices",
-            icon: AttachMoneyIcon,
-            children: [],
-            hasChild: false
-          },
-          {
-            title: "Pay Groups",
-            path: "/account/pay-groups",
-            icon: PersonAddIcon,
-            children: [],
-            hasChild: false
-          },
-          {
-            title: "Allowances",
-            path: "/account/allowances",
-            icon: PersonAddIcon,
-            children: [],
-            hasChild: false
-          }
-          // {
-          //   title: "Reminders",
-          //   path: "/account/reminders",
-          //   icon: UpdateIcon,
-          //   children: [],
-          //   hasChild: false
-          // },
-          // {
-          //   title: "Subscription",
-          //   path: "/account/subscription",
-          //   icon: SubscriptionsIcon,
-          //   children: [],
-          //   hasChild: false
-          // }
-        ],
-        hasChild: true
       },
       {
         title: "Web Guidance",

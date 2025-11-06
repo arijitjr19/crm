@@ -46,6 +46,10 @@ export function middleware(request: NextRequest) {
     return res;
   }
 
+  if (role === "ROLE_COORDINATOR") {
+    const url = request.nextUrl.clone();
+  }
+
   // 🔹 3. Allow normal requests
   return NextResponse.next();
 }
