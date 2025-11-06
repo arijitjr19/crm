@@ -183,70 +183,15 @@ export default function Settings({ settings }: { settings: ISettings }) {
           </Grid>
           <Grid item lg={5} md={6} sm={12} xs={12}>
             <Typography variant="body1">Access To All Participants</Typography>
-            <Typography variant="body1">Teams:</Typography>
+          </Grid>
+          <Grid item lg={5} md={6} sm={12} xs={12}>
+            <Iconify
+              icon={`eva:${settings?.hasAccessToAllClients ? "checkmark" : "close"
+                }-fill`}
+            ></Iconify>
           </Grid>
           {/* <Grid item lg={7} md={6} sm={12} xs={12}>
-            {edit ? (
-              <Controller
-                name="teamIds"
-                control={control}
-                render={({
-                  field: { value, onChange },
-                  fieldState: { invalid, error }
-                }) => (
-                  <Box>
-                    <Select
-                      fullWidth
-                      size="small"
-                      displayEmpty
-                      renderValue={
-                        value?.length !== 0 ? undefined : () => "Select Teams"
-                      }
-                      multiple
-                      value={value}
-                      onChange={(e) => {
-                        const _value = e.target.value;
-                        onChange(
-                          typeof _value === "string"
-                            ? _value.split(",")
-                            : _value
-                        );
-                      }}
-                    >
-                      {data.teams.map(
-                        (_team: { id: number; teamName: string }) => (
-                          <MenuItem value={_team.id} key={_team.id}>
-                            {_team.teamName}
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
-                    {invalid && (
-                      <FormHelperText sx={{ color: "#FF5630" }}>
-                        {error?.message}
-                      </FormHelperText>
-                    )}
-                  </Box>
-                )}
-              />
-            ) : (
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap={1}
-                flexWrap="wrap"
-              >
-                {settings?.teams?.map((_team) => (
-                  <Chip
-                    variant="outlined"
-                    label={_team.teamName}
-                    color="primary"
-                    size="small"
-                    key={_team.id}
-                  />
-                ))}
-              </Stack>
-            )}
+            <Typography>{settings?.hasAccessToAllClients}</Typography>
           </Grid> */}
           <Grid item lg={5} md={6} sm={12} xs={12}>
             <Typography variant="body1">Notify Timesheet Approval</Typography>

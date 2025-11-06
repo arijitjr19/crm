@@ -55,13 +55,6 @@ const Cockpit = () => {
             <Typography sx={{ marginLeft: 5 }} variant='h6'>Shifts by yearly</Typography>
             <Typography sx={{ marginLeft: 5 }}>{today.getFullYear()}</Typography>
           </Box>
-          {/* <Box sx={{ marginRight: 5, display: "flex", flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Typography sx={{ fontSize: 15 }}>Filter by shift: </Typography>
-            <Select placeholder='Select value' size="small" value={filterByShiftGraph} onChange={(e) => setFilterByShiftGraph(e.target.value)} sx={{ padding: "0px" }}>
-              <MenuItem value={"yearly"}>Yearly</MenuItem>
-              <MenuItem value={"monthly"}>Monthly</MenuItem>
-            </Select>
-          </Box> */}
         </Box>
         <AdminDashboardGraph data={data?.shiftsByMonth} />
       </Box>
@@ -73,17 +66,10 @@ const Cockpit = () => {
             <Typography sx={{ marginLeft: 5 }} variant='h6'>Shifts by monthly</Typography>
             <Typography sx={{ marginLeft: 5 }}>{today.toLocaleString("default", { month: "long" })}</Typography>
           </Box>
-          {/* <Box sx={{ marginRight: 5, display: "flex", flexDirection: "row", alignItems: "center", gap: 1 }}>
-            <Typography sx={{ fontSize: 15 }}>Filter by shift: </Typography>
-            <Select placeholder='Select value' size="small" value={filterByShiftGraph} onChange={(e) => setFilterByShiftGraph(e.target.value)} sx={{ padding: "0px" }}>
-              <MenuItem value={"yearly"}>Yearly</MenuItem>
-              <MenuItem value={"monthly"}>Monthly</MenuItem>
-            </Select>
-          </Box> */}
         </Box>
         <AdminDashboardHeatMap data={data?.shiftsByDayCurrentMonth} />
       </Box>
-    </Container >
+    </Container>
   )
 }
 

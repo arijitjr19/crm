@@ -435,7 +435,7 @@ export default function TimeSheetTable({
   // ----------------- CODE FOR STAFFs --------------------
   const renderStaffs = staffs?.map((_carer: IStaff) => {
     let hours = 0;
-    shifts.forEach((_shift) => {
+    shifts?.forEach((_shift) => {
       if (type === "daily") {
         if (
           day.format("DD/MM/YYYY") ===
@@ -550,20 +550,20 @@ export default function TimeSheetTable({
               ) : null;
             })
           : dates.map((_date, index) => {
-              const carerShiftsByDate = shifts.filter(
+              const carerShiftsByDate = shifts?.filter(
                 (_shift) =>
                   moment(_shift.startDate).format("DD/MM/YYYY") ===
                     _date.format("DD/MM/YYYY") &&
                   _carer.id === _shift.employee.id
               );
-              const prevCarerShiftsByDate = shifts.filter(
+              const prevCarerShiftsByDate = shifts?.filter(
                 (_shift) =>
                   moment(_shift.startDate).format("DD/MM/YYYY") ===
                     dates[index !== 0 ? index - 1 : 0].format("DD/MM/YYYY") &&
                   _carer.id === _shift.employee.id
               );
 
-              return prevCarerShiftsByDate[0]?.isShiftEndsNextDay &&
+              return prevCarerShiftsByDate && prevCarerShiftsByDate[0]?.isShiftEndsNextDay &&
                 prevCarerShiftsByDate[0]?.id !==
                   carerShiftsByDate[0]?.id ? null : (
                 <TableCell
@@ -580,13 +580,13 @@ export default function TimeSheetTable({
                         : "rgb(249, 250, 251)"
                   }}
                   colSpan={
-                    carerShiftsByDate[0]?.isShiftEndsNextDay &&
+                    carerShiftsByDate && carerShiftsByDate[0]?.isShiftEndsNextDay &&
                     index !== dates.length - 1
                       ? 2
                       : 1
                   }
                 >
-                  {carerShiftsByDate.length > 0 ? (
+                  {carerShiftsByDate?.length > 0 ? (
                     <>
                       <ShiftBox
                         shifts={carerShiftsByDate}
@@ -645,7 +645,7 @@ export default function TimeSheetTable({
   // ----------------- CODE FOR CLIENTs --------------------
   const renderClients = clients?.map((_client: IClient) => {
     let hours = 0;
-    shifts.forEach((_shift) => {
+    shifts?.forEach((_shift) => {
       if (type === "daily") {
         if (
           day.format("DD/MM/YYYY") ===
@@ -734,20 +734,20 @@ export default function TimeSheetTable({
               ) : null;
             })
           : dates.map((_date, index) => {
-              const carerShiftsByDate = shifts.filter(
+              const carerShiftsByDate = shifts?.filter(
                 (_shift) =>
                   moment(_shift.startDate).format("DD/MM/YYYY") ===
                     _date.format("DD/MM/YYYY") &&
                   _client.id === _shift.client.id
               );
-              const prevCarerShiftsByDate = shifts.filter(
+              const prevCarerShiftsByDate = shifts?.filter(
                 (_shift) =>
                   moment(_shift.startDate).format("DD/MM/YYYY") ===
                     dates[index !== 0 ? index - 1 : 0].format("DD/MM/YYYY") &&
                   _client.id === _shift.client.id
               );
 
-              return prevCarerShiftsByDate[0]?.isShiftEndsNextDay &&
+              return prevCarerShiftsByDate && prevCarerShiftsByDate[0]?.isShiftEndsNextDay &&
                 prevCarerShiftsByDate[0]?.id !==
                   carerShiftsByDate[0]?.id ? null : (
                 <TableCell
@@ -764,13 +764,13 @@ export default function TimeSheetTable({
                         : "rgb(249, 250, 251)"
                   }}
                   colSpan={
-                    carerShiftsByDate[0]?.isShiftEndsNextDay &&
+                   carerShiftsByDate && carerShiftsByDate[0]?.isShiftEndsNextDay &&
                     index !== dates.length - 1
                       ? 2
                       : 1
                   }
                 >
-                  {carerShiftsByDate.length > 0 ? (
+                  {carerShiftsByDate?.length > 0 ? (
                     <ShiftBox
                       shifts={carerShiftsByDate}
                       bulkaction={bulkaction}

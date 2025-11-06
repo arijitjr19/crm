@@ -117,8 +117,7 @@ export default function CalendarComponent({
                             isMonthly
                           />
                         ) : (
-                          <></>
-                          // <ShiftBox shifts={filteredShifts} isMonthly />
+                          <ShiftBox shifts={filteredShifts} isMonthly />
                         )}
                       </TableCell>
                     );
