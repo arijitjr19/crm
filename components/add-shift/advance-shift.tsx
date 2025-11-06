@@ -443,6 +443,7 @@ export default function AdvanceShift({
   shift,
   ...props
 }: AddShiftProps) {
+   const [selectedClientAddress, setSelectedClientAddress] = useState("");
   const router = useRouter();
   const { id } = useParams();
   const role = getRole();
@@ -800,9 +801,10 @@ export default function AdvanceShift({
               {/* Column 1 */}
               <Stack direction="column" sx={{ width: "50%" }}>
                 {/* Content for Column 1 */}
-                <ClientSectionAdvance view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef} />
+                <ClientSectionAdvance  view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef} />
                 <br></br>
                 <TimeLocation
+                selectedClientAddress={selectedClientAddress}
                   view={view}
                   edit={edit}
                   shift={shift}
