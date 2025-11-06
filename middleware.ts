@@ -17,7 +17,8 @@ export function middleware(request: NextRequest) {
     "/auth/client/signin",
     "/auth/employee/signin",
     "/admin-dashboard",
-    "/coordinator-dashboard"
+    "/coordinator-dashboard",
+    "/kiosk_scheduler",
   ];
 
   const pathname = request.nextUrl.pathname;

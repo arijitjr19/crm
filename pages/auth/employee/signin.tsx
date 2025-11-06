@@ -105,8 +105,13 @@ export default function LoginView() {
       // console.log("User Role::::::::")
       delete data.jwtToken;
       setCookieClient("user", JSON.stringify(data));
+      
       if (data.role[0].name === "ROLE_ADMIN") {
         window.location.href = "/admin-dashboard";
+      } else if (data.role[0].name === "ROLE_CARER") {
+        window.location.href = "/staff-roster";
+      } else if(data.role[0].name === "ROLE_KIOSK") {
+        window.location.href = "/kiosk_scheduler";
       } else {
         window.location.href = "/home";
       }
