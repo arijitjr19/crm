@@ -127,13 +127,13 @@ const navConfig: NavItem[] = (() => {
             children: [],
             hasChild: false
           },
-          {
-            title: "Teams",
-            path: "/staff/teams",
-            icon: GroupsIcon,
-            children: [],
-            hasChild: false
-          },
+          // {
+          //   title: "Teams",
+          //   path: "/staff/teams",
+          //   icon: GroupsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
           {
             title: "Archived ",
             path: "/staff/archived",
@@ -1045,13 +1045,13 @@ const navConfig: NavItem[] = (() => {
             children: [],
             hasChild: false
           },
-          {
-            title: "Teams",
-            path: "/staff/teams",
-            icon: GroupsIcon,
-            children: [],
-            hasChild: false
-          },
+          // {
+          //   title: "Teams",
+          //   path: "/staff/teams",
+          //   icon: GroupsIcon,
+          //   children: [],
+          //   hasChild: false
+          // },
           {
             title: "Archived ",
             path: "/staff/archived",
