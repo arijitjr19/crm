@@ -474,7 +474,7 @@ export default function Index() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item lg={6} md={12} sm={12} xs={12}>
+              {/* <Grid item lg={6} md={12} sm={12} xs={12}>
                 <Grid container spacing={{ lg: 0, md: 2, sm: 2, xs: 2 }}>
                   <Grid
                     item
@@ -487,56 +487,55 @@ export default function Index() {
                     <Typography>Date of Birth:</Typography>
                   </Grid>
                   <Grid item lg={9} md={12} sm={12} xs={12}>
-                    {/* <Controller
-                      control={methods.control}
-                      name="dateOfBirth"
-                      render={({
-                        field: { value, onChange },
-                        fieldState: { error, invalid }
-                      }) => (
-                        <Box>
-                          <DatePicker
-                            sx={{ width: "100%" }}
-                            className="date-picker"
-                            value={value}
-                            onChange={onChange}
-                            maxDate={dayjs().subtract(18, "years")}
-                            slotProps={{
-                              textField: {
-                                size: "small"
-                              }
-                            }}
-                          />
-                          {invalid && (
-                            <FormHelperText sx={{ color: "#FF5630" }}>
-                              {error?.message}
-                            </FormHelperText>
-                          )}
-                        </Box>
-                      )}
-                    /> */}
                     <CustomInput fullWidth name="dateOfBirth" type="date" />
-                    {/* <Controller
-                        name="dateOfBirth"
-                         control={methods.control}
-                        render={({ field, fieldState: { error } }) => (
-                          <DatePicker
-                            label="Date of Birth"
-                            value={field.value || null}
-                            onChange={(newValue) => field.onChange(newValue)}
-                            slotProps={{
-                              textField: {
-                                fullWidth: true,
-                                error: !!error,
-                                helperText: error?.message,
-                              },
-                            }}
-                          />
-                        )}
-                      /> */}
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
+                <Grid item lg={6} md={12} sm={12} xs={12}>
+                              <Grid container spacing={{ lg: 0, md: 2, sm: 2, xs: 2 }}>
+                                <Grid
+                                  item
+                                  lg={3}
+                                  md={12}
+                                  sm={12}
+                                  xs={12}
+                                  sx={{ display: "flex", alignItems: "center" }}
+                                >
+                                  <Typography>Date of Birth:</Typography>
+                                </Grid>
+                                <Grid item lg={9} md={12} sm={12} xs={12}>
+                                  <Controller
+                                    control={methods.control}
+                                    name="dateOfBirth"
+                                    render={({
+                                      field: { value, onChange },
+                                      fieldState: { error, invalid }
+                                    }) => (
+                                      <Box>
+                                        <DatePicker
+                                          sx={{ width: "100%" }}
+                                          className="date-picker"
+                                          value={value}
+                                          onChange={onChange}
+                                          maxDate={dayjs().subtract(18, "years")}
+                                          format="DD/MM/YYYY" // ✅ Set date format
+                                          slotProps={{
+                                            textField: {
+                                              size: "small"
+                                            }
+                                          }}
+                                        />
+                                        {invalid && (
+                                          <FormHelperText sx={{ color: "#FF5630" }}>
+                                            {error?.message}
+                                          </FormHelperText>
+                                        )}
+                                      </Box>
+                                    )}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Grid>
               <Grid item lg={3} md={12} sm={12} xs={12}>
                 <Typography variant="body1">Employment Type:</Typography>
               </Grid>

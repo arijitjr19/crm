@@ -414,6 +414,28 @@ const navConfig: NavItem[] = (() => {
         children: [],
         hasChild: false
       }
+      // {
+      //   title: "Guidance",
+      //   path: "/web-guidance",
+      //   icon: MenuBookIcon,
+      //   children: [
+      //     {
+      //       title: "Web Guidance",
+      //       path: "/web-guidance",
+      //       icon: PersonAddIcon,
+      //       children: [],
+      //       hasChild: false
+      //     },
+      //     {
+      //       title: "Sample Price Book",
+      //       path: "/sample-price-book",
+      //       icon: TocIcon,
+      //       children: [],
+      //       hasChild: false
+      //     }
+      //   ],
+      //   hasChild: true
+      // },
     ];
   } else if (role === "ROLE_CLIENT") {
     return [

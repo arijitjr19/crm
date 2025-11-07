@@ -31,6 +31,7 @@ import React, { useEffect, useState } from "react";
 import PriceImport from "./price-import";
 import Iconify from "@/components/Iconify/Iconify";
 import { queryClient } from "pages/_app";
+import SamplePriceBook from "pages/sample-price-book";
 
 const StyledPage = styled(Box)`
   padding: 20px 10px;
@@ -179,6 +180,7 @@ export default function Prices() {
               }
               label="Hide Expired Date"
             />
+            <SamplePriceBook></SamplePriceBook>
             <Button variant="contained" size="large" onClick={handleImport}>
               Update October 2024 NDIS Price{" "}
               <Iconify icon="eva:download-outline" sx={{ ml: "5px" }} />

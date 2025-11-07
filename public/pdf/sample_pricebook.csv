@@ -1,0 +1,32 @@
+PriceBook Name,External ID,Company,Is Provider Travel,Is Fixed Price Only,Days,DaysOfWeek,Start Time Hours,End Time Hours,Rate Per Hour,Reference Number,Reference Number In Hours,Rate Per KM,Date,Fixed Price,Reference Number Fixed Price
+Skills Development and Training,09_009_0117_6_3,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,24,77,09_009_0117_6_3,09_799_0117_6_3,1,2024-10-22,0,null
+Support Coordination Level 2: Coordination of Support,07_002_0106_8_3,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,24,100.14,07_002_0106_8_3,07_799_0106_6_3,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,6,67.56,01_002_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",6,20,74.44,01_011_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",20,24,75.82,01_015_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Saturday,SATURDAY,0,24,95.07,01_013_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Sunday,SUNDAY,0,24,122.59,01_014_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Standard),01_011_0107_1_1,Company_X,TRUE,FALSE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,150.1,01_012_0107_1_1,01_799_0107_1_1,1,2024-10-22,0,null
+Access Community Social and Rec Activ - Standard,04_104_0125_6_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",6,20,67.56,04_104_0125_6_1,04_799_0125_6_1,1,2024-10-22,0,null
+Access Community Social and Rec Activ - Standard,04_104_0125_6_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",20,24,74.44,04_103_0125_6_1,04_799_0125_6_1,1,2024-10-22,0,null
+Access Community Social and Rec Activ - Standard,04_104_0125_6_1,Company_X,TRUE,FALSE,Saturday,SATURDAY,0,24,95.07,04_105_0125_6_1,04_799_0125_6_1,1,2024-10-22,0,null
+Access Community Social and Rec Activ - Standard,04_104_0125_6_1,Company_X,TRUE,FALSE,Sunday,SUNDAY,0,24,122.59,04_106_0125_6_1,04_799_0125_6_1,1,2024-10-22,0,null
+Access Community Social and Rec Activ - Standard,04_104_0125_6_1,Company_X,TRUE,FALSE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,150.1,04_102_0125_6_1,04_799_0125_6_1,1,2024-10-22,0,null
+STA And Assistance (Inc. Respite),01_058_0115_1_1,Company_X,FALSE,TRUE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,24,0,null,null,0,2024-10-22,2098.8,01_058_0115_1_1
+STA And Assistance (Inc. Respite),01_058_0115_1_1,Company_X,FALSE,TRUE,Saturday,SATURDAY,0,24,0,null,null,0,2024-10-22,2682.32,01_059_0115_1_1
+STA And Assistance (Inc. Respite),01_058_0115_1_1,Company_X,FALSE,TRUE,Sunday,SUNDAY,0,24,0,null,null,0,2024-10-22,3396.56,01_060_0115_1_1
+STA And Assistance (Inc. Respite),01_058_0115_1_1,Company_X,FALSE,TRUE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,0,null,null,0,2024-10-22,4110.8,01_061_0115_1_1
+House Cleaning and Other Household Activities,01_020_0120_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,24,56.23,01_020_0120_1_1,01_799_0120_1_1,1,2024-10-22,0,null
+House Cleaning and Other Household Activities,01_020_0120_1_1,Company_X,TRUE,FALSE,Saturday,SATURDAY,0,24,56.23,01_020_0120_1_1,01_799_0120_1_1,1,2024-10-22,0,null
+House Cleaning and Other Household Activities,01_020_0120_1_1,Company_X,TRUE,FALSE,Sunday,SUNDAY,0,24,56.23,01_020_0120_1_1,01_799_0120_1_1,1,2024-10-22,0,null
+House Cleaning and Other Household Activities,01_020_0120_1_1,Company_X,TRUE,FALSE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,56.23,01_020_0120_1_1,01_799_0120_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,6,108.74,01_605_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",6,20,96.78,01_600_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",20,24,106.76,01_601_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Saturday,SATURDAY,0,24,138.06,01_602_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Sunday,SUNDAY,0,24,158.71,01_603_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Delivery of Health Supports by an Enrolled Nurse,01_600_0114_1_1,Company_X,TRUE,FALSE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,179.34,01_604_0114_1_1,01_799_0114_1_1,1,2024-10-22,0,null
+Assistance with Self-Care Activities (Sleepover),01_010_0107_1_1,Company_X,TRUE,TRUE,Weekdays,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY",0,24,0,null,01_799_0107_1_1,1,2024-10-22,286.56,01_010_0107_1_1
+Assistance with Self-Care Activities (Sleepover),01_010_0107_1_1,Company_X,TRUE,TRUE,Saturday,SATURDAY,0,24,0,null,01_799_0107_1_1,1,2024-10-22,286.56,01_010_0107_1_1
+Assistance with Self-Care Activities (Sleepover),01_010_0107_1_1,Company_X,TRUE,TRUE,Sunday,SUNDAY,0,24,0,null,01_799_0107_1_1,1,2024-10-22,286.56,01_010_0107_1_1
+Assistance with Self-Care Activities (Sleepover),01_010_0107_1_1,Company_X,TRUE,TRUE,Public_Holiday,"MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY",0,24,0,null,01_799_0107_1_1,1,2024-10-22,286.56,01_010_0107_1_1
