@@ -660,6 +660,7 @@ export default function AddShift({
     mutationFn: createShift,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+      queryClient.invalidateQueries({ queryKey: ["shift_id_list"] });
       methods.reset();
       props.onClose();
     }
@@ -669,6 +670,7 @@ export default function AddShift({
     mutationFn: editShift,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+      queryClient.invalidateQueries({ queryKey: ["shift_id_list"] });
       methods.reset();
       props.onClose();
     }

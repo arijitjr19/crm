@@ -72,6 +72,7 @@ export default function JobApplicant({
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["applied_shift"] });
       queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+      queryClient.invalidateQueries({ queryKey: ["shift_id_list"] });
       
       toast.success(response);
     },   

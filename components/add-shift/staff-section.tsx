@@ -217,7 +217,7 @@ export default function StaffSection({
                 render={({ field }) => (
                   <FormControlLabel
                     control={<Checkbox size="small" />}
-                    checked={staffId === "OPEN SHIFT" ? true : field.value} // Check if staffId is 1
+                    checked={staffId === "OPEN SHIFT" ? true : field.value} 
                     {...field}
                     label="Is Open Shift"
                   />
@@ -225,7 +225,7 @@ export default function StaffSection({
               />
             </Grid>
             )}
-                     {!isOpenShift && staffId !== "OPEN SHIFT" && (
+                     {/* {!isOpenShift && staffId !== "OPEN SHIFT" && (
                         <Grid item lg={4} md={6} sm={12} xs={12}>
                           <Controller
                             name="isPickupJob"
@@ -237,8 +237,7 @@ export default function StaffSection({
                                     size="small"
                                     checked={staffId === "PICKUP SHIFT" ? true : field.value} 
                                     onChange={(e) => {
-                                      field.onChange(e.target.checked); // Update the field value
-                                      // console.log("Checked:", e.target.checked); // Log the checked state
+                                      field.onChange(e.target.checked); 
                                     }}
                                   />
                                 }
@@ -248,7 +247,29 @@ export default function StaffSection({
                             )}
                           />
                         </Grid>
-                    )}
+                    )} */}
+
+
+{!isOpenShift && staffId !== "OPEN SHIFT" && (
+  <Grid item lg={4} md={6} sm={12} xs={12}>
+    <Controller
+      name="isPickupJob"
+      control={control}
+      render={({ field }) => (
+        <FormControlLabel
+          control={<Checkbox size="small" />}
+          checked={staffId === "PICKUP SHIFT" ? true : field.value}
+          {...field}
+          label="Is Pickup Job"
+        />
+      )}
+    />
+  </Grid>
+)}
+
+
+
+
             {/* <Grid item lg={8} md={6} sm={12} xs={12}></Grid> */}
             {/* {!isOpenShift && ( */}
             {!isOpenShift &&

@@ -344,26 +344,43 @@ export default function TimeSheetTable({
   });
   // console.log(":::::::::::::TOKEN::::::::::::", token);
 
+  // useEffect(() => {
+  //   // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",ShiftIdList.shifts)
+  //   if (
+  //     ShiftIdList &&
+  //     ShiftIdList.shiftIds &&
+  //     ShiftIdList.shiftIds.length > 0
+  //   ) {
+  //     const formattedShiftIds = ShiftIdList.shiftIds.map(
+  //       (id: any, index: number) => index + 1
+  //     );
+  //     setAllselecteddata(formattedShiftIds);
+  //     // console.log("Shift Id List is here::::::::::::", formattedShiftIds);
+  //     // console.log("Shift Id List is here::::::::::::", allSelectedData);
+  //     sessionStorage.setItem("shiftIdsList",JSON.stringify(ShiftIdList.shiftIds));
+  //   } else {
+  //     // console.log("ShiftIdList or shiftIds is empty or undefined");
+  //   }
+  // }, [ShiftIdList.shifts]);
+
+
   useEffect(() => {
-    if (
-      ShiftIdList &&
-      ShiftIdList.shiftIds &&
-      ShiftIdList.shiftIds.length > 0
-    ) {
-      const formattedShiftIds = ShiftIdList.shiftIds.map(
-        (id: any, index: number) => index + 1
-      );
-      setAllselecteddata(formattedShiftIds);
-      // console.log("Shift Id List is here::::::::::::", formattedShiftIds);
-      // console.log("Shift Id List is here::::::::::::", allSelectedData);
-      sessionStorage.setItem(
-        "shiftIdsList",
-        JSON.stringify(ShiftIdList.shiftIds)
-      );
+    if (ShiftIdList?.shifts && ShiftIdList.shifts.length > 0) {
+      // Filter out shifts where category is "PICKUP_SHIFT"
+      const filteredShiftIds = ShiftIdList.shifts
+        .filter((shift: any) => shift.category !== "PICKUP_SHIFT")
+        .map((shift: any) => shift.id);
+  
+      // Update the component state
+      setAllselecteddata(filteredShiftIds);
+  
+      // Save the filtered IDs to session storage
+      sessionStorage.setItem("shiftIdsList", JSON.stringify(filteredShiftIds));
     } else {
-      // console.log("ShiftIdList or shiftIds is empty or undefined");
+      console.log("ShiftIdList.shifts is empty or undefined");
     }
-  }, [ShiftIdList]); // Only runs when ShiftIdList changes
+  }, [ShiftIdList?.shifts]);
+  
 
   const times = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -389,7 +406,7 @@ export default function TimeSheetTable({
     mutationFn: cancelShiftInBulk,
     onSuccess: () => {
       // Invalidate and refetch the "all_shifts" query
-      queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
+       queryClient.invalidateQueries({ queryKey: ["all_shifts"] });
     },
   });
 
@@ -845,7 +862,9 @@ export default function TimeSheetTable({
             color="error" // This makes the button red
             startIcon={<ArrowBackIcon />}
             onClick={() => {
-              setBulkAction(false); // Set bulkaction to false on click
+              setBulkAction(false);
+              setSelectAll(false);
+              // Set bulkaction to false on click
               // console.log("bulkaction after click:", bulkaction);
             }}
             sx={{ marginBottom: "10px" }}
@@ -1007,7 +1026,7 @@ export default function TimeSheetTable({
           </TableBody>
         </StyledTable>
       </TableContainer>
-      <AddShift
+      <AddShift    
         open={Boolean(selectedDate)}
         onClose={() => {
           router.replace(
@@ -1020,6 +1039,9 @@ export default function TimeSheetTable({
           setSelectedDate(null);
         }}
         selectedDate={selectedDate}
+        slotProps={{
+          backdrop: { sx: { pointerEvents: "none" } }
+        }}
       />
       <Dialog
         open={openStaffListModal}

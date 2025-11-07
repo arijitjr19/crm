@@ -84,16 +84,20 @@ export default function Shift({
     return savedIds ? JSON.parse(savedIds) : [];
   });
 
-  const handleClick = (id: number) => {
+  const handleClick = (shift: any) => {
+    if (shift.shiftCategory === "PICKUP_SHIFT") {
+      toast.error("You are not allowed to cancel Pickup Shift");
+      return;
+    }
     setSelectedShiftId(selectedShiftId === shift.id ? null : shift.id);
     // Read the current array from session storage
     const savedIds = sessionStorage.getItem("shiftIds");
     const currentIds = savedIds ? JSON.parse(savedIds) : [];
 
     // Update the array based on the clicked ID
-    const updatedIds = currentIds.includes(id)
-      ? currentIds.filter((existingId: number) => existingId !== id)
-      : [...currentIds, id];
+    const updatedIds = currentIds.includes(shift.id)
+      ? currentIds.filter((existingId: number) => existingId !== shift.id)
+      : [...currentIds, shift.id];
 
     // Save the updated array to session storage
     sessionStorage.setItem("shiftIds", JSON.stringify(updatedIds));
@@ -107,9 +111,7 @@ export default function Shift({
   useEffect(() => {
     if (selectall) {
       // Retrieve the list of shift IDs from session storage
-      const shiftIdsList = JSON.parse(
-        sessionStorage.getItem("shiftIdsList") || "[]"
-      );
+      const shiftIdsList = JSON.parse(sessionStorage.getItem("shiftIdsList") || "[]");
 
       // Update the state with the shift IDs
       if (shiftIdsList !== "" || shiftIdsList !== null) {
@@ -119,10 +121,10 @@ export default function Shift({
           "All Selected Shift Ids shiftIdsList----------------------------",
           shiftIdsList
         );
-        console.log(
-          "All Selected Shift Ids shiftIds----------------------------",
-          shiftIds
-        );
+        // console.log(
+        //   "All Selected Shift Ids shiftIds----------------------------",
+        //   shiftIds
+        // );
       }
     } else {
       sessionStorage.removeItem("shiftIds");
@@ -349,7 +351,8 @@ export default function Shift({
 
           onClick={() => {
             if (bulkaction) {
-              handleClick(shift.id);
+              // handleClick(shift.id);
+              handleClick(shift);
             } else {
               if (shift.isPickupJob && role === "ROLE_CARER") {
                 setSelectedShiftId(shift.id);
