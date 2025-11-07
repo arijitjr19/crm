@@ -258,7 +258,11 @@ export default function StaffSection({
       render={({ field }) => (
         <FormControlLabel
           control={<Checkbox size="small" />}
-          checked={staffId === "PICKUP SHIFT" ? true : field.value}
+          checked={
+            staffId === "PICKUP SHIFT"
+              ? true
+              : field.value ?? true // 👈 precheck if undefined
+          }
           {...field}
           label="Is Pickup Job"
         />
@@ -266,6 +270,7 @@ export default function StaffSection({
     />
   </Grid>
 )}
+
 
 
 
