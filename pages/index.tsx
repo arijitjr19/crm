@@ -35,7 +35,7 @@ export default function Home() {
       <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1, color: "white" }}>
-            Sensible Health
+            Roaster Management
           </Typography>
           <Button color="inherit" onClick={() => router.push("/auth/signup")}>
             Admin sign up
@@ -162,7 +162,7 @@ export default function Home() {
           }}
         >
           <Typography variant="body2" color={"white"}>
-            &copy; {new Date().getFullYear()} Sensible Health. All Rights
+            &copy; {new Date().getFullYear()} Roaster Management. All Rights
             Reserved.
           </Typography>
         </Box>
