@@ -185,18 +185,6 @@ export default function Settings({ settings }: { settings: ISettings }) {
             <Typography variant="body1">Access To All Participants</Typography>
           </Grid>
           <Grid item lg={5} md={6} sm={12} xs={12}>
-            <Iconify
-              icon={`eva:${settings?.hasAccessToAllClients ? "checkmark" : "close"
-                }-fill`}
-            ></Iconify>
-          </Grid>
-          {/* <Grid item lg={7} md={6} sm={12} xs={12}>
-            <Typography>{settings?.hasAccessToAllClients}</Typography>
-          </Grid> */}
-          <Grid item lg={5} md={6} sm={12} xs={12}>
-            <Typography variant="body1">Notify Timesheet Approval</Typography>
-          </Grid>
-          <Grid item lg={7} md={6} sm={12} xs={12}>
             {edit ? (
               <Controller
                 name="hasAccessToAllClients"
@@ -213,6 +201,33 @@ export default function Settings({ settings }: { settings: ISettings }) {
             ) : (
               <Iconify
                 icon={`eva:${settings?.hasAccessToAllClients ? "checkmark" : "close"
+                  }-fill`}
+              ></Iconify>
+            )}
+          </Grid>
+          {/* <Grid item lg={7} md={6} sm={12} xs={12}>
+            <Typography>{settings?.hasAccessToAllClients}</Typography>
+          </Grid> */}
+          <Grid item lg={5} md={6} sm={12} xs={12}>
+            <Typography variant="body1">Notify Timesheet Approval</Typography>
+          </Grid>
+          <Grid item lg={7} md={6} sm={12} xs={12}>
+            {edit ? (
+              <Controller
+                name="isNotifyTimesheetApproval"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label=""
+                    {...field}
+                    checked={field.value}
+                  />
+                )}
+              />
+            ) : (
+              <Iconify
+                icon={`eva:${settings?.isNotifyTimesheetApproval ? "checkmark" : "close"
                   }-fill`}
               ></Iconify>
             )}

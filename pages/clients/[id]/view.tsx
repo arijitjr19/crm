@@ -59,7 +59,7 @@ import ParticipantSignDocument from "./participant-sign-document";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const StyledViewPage = styled(Grid)`
-  padding: 20px 10px;
+  padding: 10px;
   h4 {
     margin-bottom: 40px;
   }
@@ -200,7 +200,7 @@ export default function Index() {
               variant="contained"
               onClick={handlePopoverOpen}
               size="large"
-              // onMouseLeave={handlePopoverClose}
+            // onMouseLeave={handlePopoverClose}
             >
               Manage{" "}
               <Iconify
@@ -314,51 +314,53 @@ export default function Index() {
           </Grid>
         </Grid> */}
 
-          <Grid item md={8} sm={12} xs={12}  >
-            <Grid container spacing={2} >
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <Box sx={{ paddingBlock: "0px" }}>
-                  <Details client={data.client} />
-                </Box>
-              </Grid>
+        <Grid item md={8} sm={12} xs={12}>
+          <Grid container spacing={2} >
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Box sx={{ paddingBlock: "0px" }}>
+                <Details client={data.client} />
+              </Box>
             </Grid>
+          </Grid>
           <br></br>
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Document Template</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ paddingBlock: "0px" }}>
-              <DocumentTemplateInside></DocumentTemplateInside>
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+          <Grid item md={12} sm={12} xs={12} sx={{border: "1px solid #008d8d",borderRadius: "6px", boxShadow: "0 0 10px 0 #dad8d8ff"}}>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Document Template</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box sx={{ paddingBlock: "0px" }}>
+                  <DocumentTemplateInside></DocumentTemplateInside>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
 
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Client Fund</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ paddingBlock: "0px" }}>
-              {role === "ROLE_ADMIN" && (
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <ClientFunds funds_data={data.funds[0]?.funds} />
-              </Grid>
-            )}
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Client Fund</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box sx={{ paddingBlock: "0px" }}>
+                  {role === "ROLE_ADMIN" && (
+                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                      <ClientFunds funds_data={data.funds[0]?.funds} />
+                    </Grid>
+                  )}
+                </Box>
+              </AccordionDetails>
+            </Accordion>
 
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Document Signature</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ paddingBlock: "0px" }}>
-              <ParticipantSignDocument />
-              </Box>
-            </AccordionDetails>
-          </Accordion>   
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Document Signature</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box sx={{ paddingBlock: "0px" }}>
+                  <ParticipantSignDocument />
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
         </Grid>
 
 

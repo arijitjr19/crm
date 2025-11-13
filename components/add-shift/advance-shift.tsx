@@ -72,7 +72,7 @@ interface DrawerInterface extends DrawerProps {
   open?: boolean;
 }
 
-export const StyledDrawer = styled(Drawer)<DrawerInterface>`
+export const StyledDrawer = styled(Drawer) <DrawerInterface>`
   z-index: 3000;
   > .drawer {
     width: auto;
@@ -425,7 +425,7 @@ const schema = yup.object().shape({
   clientPriceBooks: yup.array().of(
     yup.object().shape({
       clientId: yup.number(),
-      priceBookIds: yup.array().of(yup.string()),
+      priceBookIds: yup.array().of(yup.string()).required("Please select at least one Price Book"),
       fundIds: yup.array().of(yup.string())
     })
   )
@@ -443,7 +443,7 @@ export default function AdvanceShift({
   shift,
   ...props
 }: AddShiftProps) {
-   const [selectedClientAddress, setSelectedClientAddress] = useState("");
+  const [selectedClientAddress, setSelectedClientAddress] = useState("");
   const router = useRouter();
   const { id } = useParams();
   const role = getRole();
@@ -462,6 +462,7 @@ export default function AdvanceShift({
 
   const methods = useForm({
     resolver: yupResolver(schema),
+    mode: "onSubmit",
     defaultValues: {
       startDate: dayjs(),
       isShiftEndsNextDay: false,
@@ -492,13 +493,13 @@ export default function AdvanceShift({
       clientIds: router.pathname.includes("participants")
         ? [parseInt(id as string)]
         : client
-        ? [parseInt(client as string)]
-        : [],
+          ? [parseInt(client as string)]
+          : [],
       employeeIds: router.pathname.includes("staff")
         ? [parseInt(id as string)]
         : staff
-        ? [parseInt(staff as string)]
-        : [],
+          ? [parseInt(staff as string)]
+          : [],
       isOpenShift: false,
       // priceBookIds: [],
       // fundIds: [],
@@ -655,15 +656,15 @@ export default function AdvanceShift({
   const handleRepeatShift = (id: any) => {
     setSelectedId(id);
     // Logic to handle repeating the shift with the given ID
-    console.log("---------------Repeating shift with ID:---------------------",id);
+    console.log("---------------Repeating shift with ID:---------------------", id);
   };
 
-      // --------- Parent to child access start here ----------
-      const clientSectionRef = useRef<any>(null);
-      const handleClearAll = () => {
-        clientSectionRef.current?.handleRemoveAllNames(); // ✅ Calls child function
-      };
-      // --------- Parent to child access end here ----------
+  // --------- Parent to child access start here ----------
+  const clientSectionRef = useRef<any>(null);
+  const handleClearAll = () => {
+    clientSectionRef.current?.handleRemoveAllNames(); // ✅ Calls child function
+  };
+  // --------- Parent to child access end here ----------
 
   return (
     <StyledDrawer
@@ -801,10 +802,10 @@ export default function AdvanceShift({
               {/* Column 1 */}
               <Stack direction="column" sx={{ width: "50%" }}>
                 {/* Content for Column 1 */}
-                <ClientSectionAdvance  view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef} />
+                <ClientSectionAdvance view={!!view} edit={!!edit} shift={shift!} ref={clientSectionRef} />
                 <br></br>
                 <TimeLocation
-                selectedClientAddress={selectedClientAddress}
+                  selectedClientAddress={selectedClientAddress}
                   view={view}
                   edit={edit}
                   shift={shift}

@@ -46,7 +46,7 @@ export default function Sidebar({ openNav, onCloseNav }: SidebarProps) {
         display: "flex",
         borderRadius: 1.5,
         alignItems: "center",
-        bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12)
+        bgcolor: "#226865"
       }}
     >
       <Avatar src={user?.data?.data?.photoDownloadURL} alt="photoURL">
@@ -54,14 +54,14 @@ export default function Sidebar({ openNav, onCloseNav }: SidebarProps) {
       </Avatar>
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2" sx={{ color: "#000000" }}>
+        <Typography variant="subtitle2" sx={{ color: "#ffffffff" }}>
           {user?.data?.data?.name}
         </Typography>
 
         {/* <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {roleParser(user?.data?.data?.role?.[0].name || "")}
         </Typography> */}
-        <Typography variant="body2" sx={{ color: "#747474" }}>
+        <Typography variant="body2" sx={{ color: "#b4dfdd" }}>
           {roleParser(user?.data?.data?.role?.[0].name || "")}
         </Typography>
       </Box>

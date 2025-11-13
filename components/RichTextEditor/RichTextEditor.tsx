@@ -122,6 +122,99 @@ const Toolbar = () => {
   );
 };
 
+
+const EditorWrapper = styled("div")`
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  min-height: 250px;
+  font-family: "Inter", "Roboto", sans-serif;
+  transition: all 0.2s ease;
+
+  &:focus-within {
+    border-color: #00a0a0;
+    box-shadow: 0 0 0 2px rgba(0, 160, 160, 0.2);
+  }
+
+  .ProseMirror {
+    padding: 16px;
+    min-height: 220px;
+    outline: none;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+
+    /* Paragraphs */
+    p {
+      margin: 0 0 12px;
+    }
+
+    /* Headings */
+    h1, h2, h3 {
+      font-weight: 600;
+      margin: 1em 0 0.4em;
+      line-height: 1.3;
+    }
+
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+
+    /* Lists */
+    ul, ol {
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    /* Bold, Italic, Underline */
+    strong { color: #111; font-weight: 600; }
+    em { color: #555; font-style: italic; }
+    u { text-decoration: underline; }
+
+    /* Blockquotes */
+    blockquote {
+      border-left: 3px solid #00a0a0;
+      padding-left: 10px;
+      color: #666;
+      font-style: italic;
+      margin: 10px 0;
+    }
+
+    /* Code blocks */
+    pre {
+      background: #f6f8fa;
+      color: #333;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    code {
+      background: #f2f2f2;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #d63384;
+    }
+
+    /* Links */
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 const RichTextEditor = ({
   value = "",
   onChange
@@ -131,14 +224,17 @@ const RichTextEditor = ({
 }) => {
   const content = value;
   return (
-    <EditorProvider
-      extensions={extensions}
-      content={content}
-      slotBefore={<Toolbar />}
-      onUpdate={({ editor }) => {
-        onChange(editor.getHTML().toString());
-      }}
-    ></EditorProvider>
+    <EditorWrapper>
+
+      <EditorProvider
+        extensions={extensions}
+        content={content}
+        slotBefore={<Toolbar />}
+        onUpdate={({ editor }) => {
+          onChange(editor.getHTML().toString());
+        }}
+      ></EditorProvider>
+    </EditorWrapper>
   );
 };
 

@@ -57,6 +57,7 @@ const StyledDetailsBox = styled(Paper)`
   min-width: 4px;
   min-height: 4px;
   border-radius: 8px;
+  border: 1px solid #008d8d;
 
   .MuiInputBase-root {
     font-size: 14px;

@@ -418,8 +418,8 @@ export default function StaffSection({
                     sx={{
                       minWidth: 275,
                       position: "relative",
-                      bgcolor: "#f5f5f5",
-                      border: "1px solid #ccc",
+                      bgcolor: "#ffffffff",
+                      border: "1px solid #008d8d",
                       boxShadow: 2,
                       margin: "10px 0px 0px 6px"
                     }}
