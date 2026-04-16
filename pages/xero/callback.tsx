@@ -34,7 +34,7 @@ export default function ThankYouPage() {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => router.push("/dashboard")}
+            onClick={() => router.push("/home")}
           >
             Go to Dashboard
           </Button>
