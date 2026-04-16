@@ -28,6 +28,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useEffect, useState } from "react";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import LinkIcon from '@mui/icons-material/Link';
 
 
 export interface NavItem {
@@ -426,6 +427,13 @@ const navConfig: NavItem[] = (() => {
         title: "Web Guidance",
         path: "/web-guidance",
         icon: MenuBookIcon,
+        children: [],
+        hasChild: false
+      },
+      {
+        title: "Connect To Xero",
+        path: "/xero/connect-to-xero",
+        icon: LinkIcon,
         children: [],
         hasChild: false
       }

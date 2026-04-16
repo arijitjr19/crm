@@ -279,7 +279,10 @@ export const endpoints = {
     price_items: {
       update_price_items: (id: number) => `/payItems/update/${id}`
     }
-  }
+  },
+  xero: {
+     connect_to_xero: (companyName: string) => `/xero/authorize?company=${companyName}`
+  },
 };
 
 export const sucessNotificationEndPoints = [
