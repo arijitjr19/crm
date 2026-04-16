@@ -12,3 +12,17 @@ export const connectToXero = async ({
   
     return res.data;
   };
+
+  export const callbackApi = async ({
+    code,
+    state
+  }: {
+    code: string;
+    state: string;
+  }) => {
+    const res = await axiosInstance.get(
+      endpoints.xero.callbacl_api(code,state)
+    );
+  
+    return res.data;
+  };

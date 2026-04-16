@@ -281,7 +281,8 @@ export const endpoints = {
     }
   },
   xero: {
-     connect_to_xero: (companyName: string) => `/xero/authorize?company=${companyName}`
+     connect_to_xero: (companyName: string) => `/xero/authorize?company=${companyName}`,
+     callbacl_api: (code:string,state:string) => `/xero/callback?code=${code}&state=${state}`
   },
 };
 

@@ -15,7 +15,6 @@ export default function ConnectToXero() {
     mutationFn: connectToXero,
     onSuccess: (data) => {
       toast.success(data.message);
-
       // If backend sends redirect URL
       if (data?.redirectUrl) {
         window.location.href = data.redirectUrl;
