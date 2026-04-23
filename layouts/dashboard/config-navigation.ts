@@ -430,13 +430,13 @@ const navConfig: NavItem[] = (() => {
         children: [],
         hasChild: false
       },
-      {
-        title: "Connect To Xero",
-        path: "/xero/connect-to-xero",
-        icon: LinkIcon,
-        children: [],
-        hasChild: false
-      }
+      // {
+      //   title: "Connect To Xero",
+      //   path: "/xero/connect-to-xero",
+      //   icon: LinkIcon,
+      //   children: [],
+      //   hasChild: false
+      // }
       // {
       //   title: "Guidance",
       //   path: "/web-guidance",

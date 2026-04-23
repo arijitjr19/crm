@@ -26,3 +26,29 @@ export const connectToXero = async ({
   
     return res.data;
   };
+
+  // To get Xero Status
+  export const XeroStatus = async ({
+    companyName,
+  }: {
+    companyName: string;
+  }) => {
+    const res = await axiosInstance.get(
+      endpoints.xero.xero_status(companyName)
+    );
+  
+    return res.data;
+  };
+
+    // To disconnect from Xero
+    export const XeroDisconnect = async ({
+      companyName,
+    }: {
+      companyName: string;
+    }) => {
+      const res = await axiosInstance.post(
+        endpoints.xero.xero_disconnect(companyName)
+      );
+    
+      return res.data;
+    };

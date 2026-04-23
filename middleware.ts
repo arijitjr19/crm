@@ -29,6 +29,8 @@ export function middleware(request: NextRequest) {
     "/ndis-guidelines",
     "/blog",
     "/faqs",
+    "/success",
+    "/cancel",
     "/test",
   ];
 

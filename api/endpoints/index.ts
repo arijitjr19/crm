@@ -282,8 +282,10 @@ export const endpoints = {
   },
   xero: {
      connect_to_xero: (companyName: string) => `/xero/authorize?company=${companyName}`,
-     callbacl_api: (code:string,state:string) => `/xero/callback?code=${code}&state=${state}`
-  },
+     callbacl_api: (code:string,state:string) => `/xero/callback?code=${code}&state=${state}`,
+     xero_status: (companyName: string) => `/xero/is-connected?company=${companyName}`,
+     xero_disconnect: (companyName: string) => `/xero/disconnect?company=${companyName}`,
+    },
 };
 
 export const sucessNotificationEndPoints = [

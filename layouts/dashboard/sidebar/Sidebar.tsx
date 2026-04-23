@@ -21,6 +21,7 @@ import NewLogo from "@/components/logo/new-logo";
 import { Paper } from "@mui/material";
 import NewLogoSidebar from "@/components/logo/new-logo-sidebar";
 import { useRouter } from "next/router"; // pages router
+import ConnectToXero from "pages/xero/connect-to-xero";
 
 interface SidebarProps {
   openNav: boolean;
@@ -116,6 +117,8 @@ export default function Sidebar({ openNav, onCloseNav }: SidebarProps) {
       {renderAccount}
 
       {renderMenu}
+      
+      <ConnectToXero></ConnectToXero>
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
@@ -152,6 +155,7 @@ export default function Sidebar({ openNav, onCloseNav }: SidebarProps) {
   }}
 >
           {renderContent}
+         
         </Paper>
       ) : (
         <Drawer
