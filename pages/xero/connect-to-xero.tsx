@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
 import {
-  connectToXero,
   XeroDisconnect,
-  XeroStatus
+  XeroStatus,
+  connectToXero
 } from "@/api/functions/xero.api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";

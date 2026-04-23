@@ -2,11 +2,11 @@
 
 import DashboardLayout from "@/layout/dashboard/DashboardLayout";
 import {
-  Container,
-  Typography,
-  Paper,
-  Box,
-  Button
+    Box,
+    Button,
+    Container,
+    Paper,
+    Typography
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useParams, useRouter } from "next/navigation";
